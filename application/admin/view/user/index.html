@@ -1,6 +1,6 @@
-<include file="public::head"/>
+{include file="public/head" /}
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{:DOCUMENT_ROOT}/js/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="__STATIC__/js/datatables/dataTables.bootstrap.css">
     <script type="text/javascript">
         var member = {:json_encode($list)};
         $().ready(function () {
@@ -26,7 +26,7 @@
                     //console.log( val )
                     if( $(this).css("background") != "#ccc" && $(this).val() != '' )
                     {
-                        $.post('{:U("Recharge")}',
+                        $.post('{:url("Recharge")}',
                         {   
                             uid : member_id,
                             recharge_setmeal : $("select[name='recharge_setmeal']").val(),
@@ -75,7 +75,6 @@
         })
     </script>
     <script type="text/javascript">
-        var order_list= {:json_encode($order_list)};
 
         var goods_lists_goodsTpl = '<div class="list">'
 
@@ -92,11 +91,7 @@
                 '<p>注册时间：[%c_add_time%]</p>'
 
         $(document).ready(function () {
-            try{
-                $('[name="status"] [value="{$_GET['status']}"]')[0].selected = true;
-             /*   $('[name="is_failure"] [value="{$_GET['is_failure']}"]')[0].selected = true;
-                $('[name="is_off"] [value="{$_GET['is_off']}"]')[0].selected = true;*/
-            }catch (e){}
+
 
 
             $('#catorderinfo').on('show.bs.modal', function (event) {
@@ -104,8 +99,9 @@
                 var button = $(event.relatedTarget)
                 var id = button.data('order-id');
                 mdal = this;
+                var url = '{:url('User/getInfo')}';
                 $.ajax({
-                    url:'__CONTROLLER__/getInfo?id='+id,
+                    url:url+'?id='+id,
                     type:'get',
                     success:function (result) {
                         if (result.status == 0) {
@@ -181,18 +177,18 @@
 <body class="page-body">
 <div class="page-container">
     <div class="sidebar-menu toggle-others fixed">
-        <include file="public::menu"/>
+        {include file="public/menu" /}
     </div>
     <div class="main-content">
         <!-- User Info, Notifications and Menu Bar -->
-        <include file="public::nav"/>
+        {include file="public/nav" /}
         
         <!-- <button type="button" class="btn btn-info" id="BatchAdd" style="float:left;margin-right:20px;">
             <i class="fa fa-plus"></i> 批量添加收银系统会员 
         </button> -->
         <!-- 导出 -->
-        <!-- <form method="get" action="{:U('User/msgOut')}" style="width:150px;float:left;">
-            <input type="hidden" name="so" class="form-control" size="30" placeholder="姓名、电话" value="{:I('so')}">
+        <!-- <form method="get" action="{:url('User/msgOut')}" style="width:150px;float:left;">
+            <input type="hidden" name="so" class="form-control" size="30" placeholder="姓名、电话" value="{$so}">
             <button type="submit" class="btn btn-info"><i class="fa fa-long-arrow-down"></i> 导出 </button>
         </form> -->
         <div class="row">
@@ -201,7 +197,7 @@
                     <div class="panel-heading">
                         <div class="breadcrumb-env" >
                             <ol class="breadcrumb bc-1">
-                                <li><a href="{:U('Index/index')}"><i class="fa-home"></i> 首页</a></li>
+                                <li><a href="{:url('Index/index')}"><i class="fa-home"></i> 首页</a></li>
                                 <li class="active"><strong>会员列表</strong></li>
                             </ol>
                         </div>
@@ -217,10 +213,10 @@
                                     <option value="3">审核会员</option>
                                     <option value="2">高级会员</option>
                                         </select> -->
-                                    关键字：<input type="search" name="so" class="form-control" size="30" placeholder="ID，昵称，手机号" value="{:I('so')}">
+                                    关键字：<input type="search" name="so" class="form-control" size="30" placeholder="ID，昵称，手机号" value="{:$so}">
                                     <button type="submit" class="btn btn-sm btn-primary" > <i class="fa fa-search"></i>查询 </button>
 
-                                    <a href="{:U('index')}" class="btn btn-sm btn-primary"> 清除 </a>
+                                    <a href="{:url('index')}" class="btn btn-sm btn-primary"> 清除 </a>
                                 </form>
                                 
                             </div>
@@ -239,23 +235,23 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <volist name="list" id="v" key="k">
+                                {volist name="list" id="v" key="k"}
                                     <tr>
                                         <td>{$v.c_id}</td>
                                         <td>{$v.c_nickname}</td>
                                         <td>{$v.c_tel}</td>
                                         <td>
-                                            <if condition="$v['c_sex'] eq 1">
+                                            {if condition="$v['c_sex'] eq 1"}
                                                 女
-                                            <elseif condition="$v['c_sex'] eq 2"/>
+                                            {elseif condition="$v['c_sex'] eq 2"/}
                                                 男
-                                            <else />
+                                            {else /}
                                                 未知
-                                            </if>
+                                            {/if}
                                         </td>
                                         <td>{$v.c_pro}</td>
                                         <td>{$v.c_city}</td>
-                                        <td>{$v.c_add_time|date='Y-m-d H:i:s',###}</td>
+                                        <td>{$v.c_add_time}</td>
                                         <td style="">
                                             <!-- <a href="__CONTROLLER__/edit.html?id={$v.c_id}" class="btn btn-xs btn-info"  title="编辑">
                                                 <i class="fa fa-edit"></i> 
@@ -272,21 +268,21 @@
                                             </a> -->
                                         </td>
                                     </tr>
-                                </volist>
-                                <if condition="!$list">
+                                {/volist}
+                                {if condition="!$list"}
                                     <tr>
                                         <td colspan="22">
                                             暂无记录
                                         </td>
                                     </tr>
-                                </if>
+                                {/if}
                                 </tbody>
                             </table>
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
                                     <ul class="pagination">
-                                        {$page}
+                                        {$list->render()}
                                     </ul>
                                 </div>
                             </div>
@@ -298,47 +294,7 @@
     </div>
 </div>
 
-<!--
-会员充值
--->
-<!-- <div class="modal fade" id="Recharge" tabindex="-1" role="dialog" >
-    <div class="modal-dialog" role="document" style="z-index: 10000">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" >会员充值</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="control-label">套餐充值： </label>
-                    <select name="recharge_setmeal" class="form-control aaa">
-                        <option value="">--&nbsp;请选择&nbsp;--</option>
-                    <volist name="vip_list" id="vv">
-                        <option value="{$vv.c_id}">{$vv.level}&nbsp;&nbsp;&nbsp;金额：{$vv.c_price}&nbsp;&nbsp;&nbsp;赠送积分：{$vv.c_integral}</option>
-                    </volist>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">金额充值：</label>
-                    <input type="number" name="recharge_price" class="form-control aaa" placeholder="请输入充值金额" value="" />
-                </div>
-                <div class="form-group red">
-                    <span>两种充值类型，二选一！</span>
-                </div>
-                <div class="form-group red">
-                    <label class="control-label">充值原因：</label>
-                    <input type="test" name="recharge_reason" class="form-control" placeholder="请输入充值原因" value="" required="" />
-                </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal" >关闭</button>
-                <button type="button" class="btn btn-turquoise" send="1"><i class="fa fa-check"></i> 确认充值</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-<!-- 个人资料modal -->
+
 
 <div class="modal fade" id="catorderinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document" style="z-index: 10000">
@@ -358,16 +314,16 @@
 </div>
 
 
-<include file="public::foot"/>
+{include file="public/foot" /}
 <!-- layer 插件 -->
-<script type="text/javascript" src="__PUBLIC__/Admin/js/layer/layer.js"></script>
+<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
 <script type="text/javascript">
     $(function () {
         //点击删除
         $(document).on("click","#remove",function () {
             if(confirm('您确定要删除吗？不可恢复。')){
                 //实现删除业务逻辑
-                $.get("__CONTROLLER__/del",
+                $.get("{:url('User/del')}",
                     {id:$(this).attr("c_id")},
                     function (data) {
                         if(data.status == 0){
@@ -385,7 +341,7 @@
         $(document).on("click","#BatchAdd",function () {
             if(confirm('您确定要批量向收银系统添加会员吗？')){
                 //实现删除业务逻辑
-                $.get("__CONTROLLER__/userBatchAdd",
+                $.get("{:url('User/userBatchAdd')}",
                     {},
                     function (reg) {
                         if(reg.status == 0){

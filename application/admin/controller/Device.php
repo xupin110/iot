@@ -27,37 +27,9 @@ class Device extends Base {
 		$status = input('get.status');
 		$where['c_isdel'] = 0;
 		if (!empty($so)) {
-			// $where['c_name'] = ['like', "%sdfsdf%"];
-			// $where['c_name']=['like','%'.$so.'%'];
-			$map['c_name'] = ['c_name', 'like', '%{$so}%'];
-			$map['c_deviceid'] = ['c_deviceid', 'like', "%{$so}%"];
-			$map['c_device_sn'] = ['c_device_sn', '=', $so];
-			$list = $this->device->where($map)
-
-			// ->where(['c_deviceid',$so])
-				->paginate();
-			// $where[] = ['c_device_sn',$so];
-			// $where[0]['c_deviceid'] = $so;
-			// $where[0]['_logic'] = 'OR';
-		} else {
-			$list = $this->device->getDeviceList($where, 'c_deviceid desc');
+			$where['c_device_sn'] = ['c_device_sn', 'like', "%" . $so . "%"];
 		}
-
-		//设置查询状态的条件
-		// if (!empty($status)) {
-		//     if ($status == 1) {
-		//         $where['c_type'] = 2;
-		//     } elseif ($status == 2) {
-		//         $where['c_type'] = 1;
-		//     } elseif ($status == 3) {
-		//         $where['c_lease_status'] = 0;
-		//     } elseif ($status == 4) {
-		//         $where['c_lease_status'] = 1;
-		//     } elseif ($status == 5) {
-		//         $where['c_isdel'] = 1;
-		//     }
-		// }
-		// var_dump($where);exit;
+		$list = $this->device->getDeviceList($where, 'c_deviceid desc');
 		if ($list) {
 			foreach ($list as $k => $v) {
 				$list[$k]['c_type'] = $this->type[$v['c_type']];
@@ -150,7 +122,7 @@ class Device extends Base {
 	}
 	public function edit() {
 		//接收数据，回显页面
-		$list = $this->device->getDeviceList(['c_deviceid' => intput('get.id')]);
+		$list = $this->device->where(['c_deviceid' => input('get.id')])->find();
 		return $this->fetch('', [
 			'title' => '修改设备',
 			'list' => $list,
@@ -163,13 +135,13 @@ class Device extends Base {
 		if (request()->isPost()) {
 			//接收数据
 			$data = [
-				'c_deviceid' => intput('c_deviceid'),
-				'c_name' => intput('post.c_name'),
-				'c_device_sn' => intput('post.c_device_sn'),
-				'c_lng' => intput('post.c_lng'),
-				'c_lat' => intput('post.c_lat'),
-				'c_address' => intput('post.c_address'),
-				'c_type' => intput('post.c_type'),
+				'c_deviceid' => input('post.pc_deviceid'),
+				'c_name' => input('post.c_name'),
+				'c_device_sn' => input('post.c_device_sn'),
+				'c_lng' => input('post.c_lng'),
+				'c_lat' => input('post.c_lat'),
+				'c_address' => input('post.c_address'),
+				'c_type' => input('post.c_type'),
 			];
 			if ($this->validate->check($data)) {
 				if ($this->device->save($data)) {
@@ -198,7 +170,7 @@ class Device extends Base {
 	public function isStatus() {
 
 		if (request()->isGet()) {
-			$where['c_deviceid'] = intput('get.id');
+			$where['c_deviceid'] = input('get.id');
 			$status = $this->device->where($where)->value('c_status');
 			if ($status == 0) {
 				$data['c_status'] = 1;
@@ -224,7 +196,8 @@ class Device extends Base {
 	public function del() {
 		if (request()->isGet()) {
 			$data['c_isdel'] = 1;
-			if ($this->device->save($data, ['c_deviceid' => intput('get.id')])) {
+			$data['c_deviceid'] = input('get.id');
+			if ($this->device->save(['c_isdel' => 1], ['c_deviceid' => (int) input('get.id')])) {
 				return json([
 					'msg' => '删除成功！',
 					'status' => 0,

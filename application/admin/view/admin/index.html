@@ -1,4 +1,4 @@
-<include file="public::head"/>
+{include file="public/head" /}
     <!-- <script type="text/javascript">
         $().ready(function () {
             setTimeout(function () {
@@ -10,12 +10,12 @@
 <body class="page-body">
 <div class="page-container">
     <div class="sidebar-menu toggle-others fixed">
-        <include file="public::menu"/>
+        {include file="public/menu" /}
     </div>
     <div class="main-content">
         <!-- User Info, Notifications and Menu Bar -->
-        <include file="public::nav"/>
-        <button type="button" class="btn btn-info" onclick="location = '__MODULE__/Admin/add.html'"><i class="fa fa-plus"></i> Add </button>
+        {include file="public/nav" /}
+        <button type="button" class="btn btn-info" onclick="location = '{:url('Admin/add')}'"><i class="fa fa-plus"></i> Add </button>
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
@@ -25,7 +25,7 @@
 
                             <ol class="breadcrumb bc-1">
                                 <li>
-                                    <a href="{:U('Index/index')}"><i class="fa-home"></i> 首页</a>
+                                    <a href="{:url('Index/index')}"><i class="fa-home"></i> 首页</a>
                                 </li>
                                 <li class="active">
                                     <strong>管理员列表</strong>
@@ -44,7 +44,7 @@
                                     <option value="3">审核会员</option>
                                     <option value="2">高级会员</option>
                                 </select> -->
-                                    关键字：<input type="search" name="so" class="form-control" size="30" placeholder="登录账号，姓名，手机号码" value="{:I('so')}">
+                                    关键字：<input type="search" name="so" class="form-control" size="30" placeholder="登录账号，姓名，手机号码" value="{$so}">
                                     <button type="submit" class="btn btn-sm btn-primary" > <i class="fa fa-search"></i>查询 </button>
                                 </form>
                             </div>
@@ -63,52 +63,51 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <empty name="list">
+                                {empty name="list"}
                                     <tr>
                                         <td colspan="9">没有数据。。。</td>
                                     </tr>
-                                <else />
-                                <volist name="list" id="vo">
+                                {else /}
+                                {volist name="list" id="vo"}
                                     <tr>
                                         <td>{$vo.id}</td>
                                         <td>{$vo.adminuser}</td>
                                         <td>{$vo.name}</td>
                                         <td>
-                                            <if condition="$vo['mobile'] eq 0">
+                                            {if condition="$vo['mobile'] eq 0"}
                                                 <span>NULL</span>
-                                            <else />
+                                            {else /}
                                                 {$vo.mobile}
-                                            </if>
+                                            {/if}
                                         </td>
-                                        <!-- <td>{$vo.rolename}</td> -->
-                                        <td>{$vo.regtime|date='Y-m-d H:i',###}</td>
+                                        <td>{$vo.regtime}</td>
                                         <td>
-                                            <if condition="$vo['c_status'] eq 0">
+                                            {if condition="$vo['status'] eq 0"
                                                 <i class="fa fa-check" style="color:green;" title="启用中"></i>
-                                            <else />
+                                            {else /}
                                                 <i class="fa fa-close" style="color:red;" title="停用中"></i>
-                                            </if>
+                                            {/if}
                                         </td>
                                         <td>
-                                            <a class="btn btn-xs btn-info" href="__MODULE__/Admin/edit.html?id={$vo.id}" title="编辑">
+                                            <a class="btn btn-xs btn-info" href="{:url('Admin/edit',['id' => $vo.id])}" title="编辑">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-xs btn-info" href="__MODULE__/Admin/edit_pass.html?id={$vo.id}" title="修改密码">
+                                            <a class="btn btn-xs btn-info" href="{:url('Admin/edit_pass',['id' => $vo.id])}" title="修改密码">
                                                 <i class="fa fa-key"></i>
                                             </a>
-                                         <if condition="$vo['id'] eq 1">   
-                                         <else />
-                                           <if condition="$_SESSION['admin_uid'] eq 1">
+                                         {if condition="$vo['id'] eq 1"}   
+                                         {else /}
+                                           {if condition="$_SESSION['admin_uid'] eq 1"}
                                             <a href="javascript:void(0)" title="删除" id="remove" c_id="{$vo.id}" class="btn btn-xs btn-danger">
                                                 <i class="fa fa-trash-o"></i>
                                             </a>
-                                           <else />
-                                           </if>
-                                         </if>
+                                           {else /}
+                                           {/if}
+                                         {/if}
                                         </td>
                                     </tr>
-                                </volist>
-                                </empty>
+                                {/volist}
+                                {/empty}
                                 </tbody>
                                <!-- <tfoot>
 
@@ -118,7 +117,6 @@
                             <div class="col-xs-12">
                                 <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
                                     <ul class="pagination">
-                                        {$page}
                                     </ul>
                                 </div>
                             </div>
@@ -130,16 +128,16 @@
     </div>
 </div>
 
-<include file="public::foot"/>
+{include file="public/foot" /}
 <!-- layer 插件 -->
-<script type="text/javascript" src="__PUBLIC__/Admin/js/layer/layer.js"></script>
+<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
 <script type="text/javascript">
         $(function () {
             //点击删除
             $(document).on("click","#remove",function () {
                 if(confirm('您确定要删除吗？不可恢复。')){
                     //实现删除业务逻辑
-                    $.get("__CONTROLLER__/del",
+                    $.get("{:url('Admin/del')}",
                         {id:$(this).attr("c_id")},
                         function (data) {
                             if(data.status == 0){

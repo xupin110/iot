@@ -1,8 +1,7 @@
-<include file="public::head"/>
+{include file="public/head" /}
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{:DOCUMENT_ROOT}/js/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="__STATIC__/js/datatables/dataTables.bootstrap.css">
     <script type="text/javascript">
-        var list = {:json_encode($list)};
         $().ready(function () {
             $('#audit').on('show.bs.modal', function (event) {
                 //会员认证
@@ -25,7 +24,7 @@
 
         function audit(orderId, status) {
             $.ajax({
-                url:"__CONTROLLER__/audit",
+                url:"{:url('User/audit')}",
                 type:'get',
                 data:{orderId:orderId,status:status},
                 success:function ( res ) {
@@ -44,7 +43,6 @@
         }
     </script>
     <script type="text/javascript">
-        var order_list= {:json_encode($order_list)};
 
         var goods_lists_goodsTpl = '<div class="list">'
 
@@ -66,20 +64,15 @@
                 '<p>开始时间：[%c_start_time%]</p>'+
                 '<p>结束时间：[%c_shop_time%]</p>'
         $(document).ready(function () {
-            try{
-                $('[name="status"] [value="{$_GET['status']}"]')[0].selected = true;
-             /*   $('[name="is_failure"] [value="{$_GET['is_failure']}"]')[0].selected = true;
-                $('[name="is_off"] [value="{$_GET['is_off']}"]')[0].selected = true;*/
-            }catch (e){}
-
 
             $('#catorderinfo').on('show.bs.modal', function (event) {
                 //用户资料
                 var button = $(event.relatedTarget)
                 var id = button.data('order-id');
                 mdal = this;
+                var url = '{:url('User/orderDetail')}';
                 $.ajax({
-                     url:'__CONTROLLER__/orderDetail?id='+id,
+                     url:url+'?id='+id,
                      type:'get',
                      success:function (result) {
                         if (result.status == 0) {
@@ -155,11 +148,11 @@
 <body class="page-body">
 <div class="page-container">
     <div class="sidebar-menu toggle-others fixed">
-        <include file="public::menu"/>
+        {include file="public/menu" />
     </div>
     <div class="main-content">
         <!-- User Info, Notifications and Menu Bar -->
-        <include file="public::nav"/>
+        {include file="public::nav" /}
         <!-- <button type="button" class="btn btn-info" onclick="location = '__CONTROLLER__/add.html'">
             <i class="fa fa-plus"></i> Add 
         </button> -->
@@ -169,7 +162,7 @@
                     <div class="panel-heading">
                         <div class="breadcrumb-env" >
                             <ol class="breadcrumb bc-1">
-                                <li><a href="{:U('Index/index')}"><i class="fa-home"></i> 首页</a></li>
+                                <li><a href="{:url('Index/index')}"><i class="fa-home"></i> 首页</a></li>
                                 <li class="active"><strong>{$title}</strong></li>
                             </ol>
                         </div>
@@ -185,9 +178,9 @@
                                     <option value="3">审核会员</option>
                                     <option value="2">高级会员</option>
                                         </select> -->
-                                    关键字：<input type="search" name="so" class="form-control" size="30" placeholder="ID,订单编号,用户昵称,用户ID" value="{:I('so')}">
+                                    关键字：<input type="search" name="so" class="form-control" size="30" placeholder="ID,订单编号,用户昵称,用户ID" value="{$so)}">
                                     <button type="submit" class="btn btn-sm btn-primary" > <i class="fa fa-search"></i>查询 </button>
-                                    <a href="{:U('index')}"  class="btn btn-sm btn-primary">清除 </a>
+                                    <a href="{:url('index')}"  class="btn btn-sm btn-primary">清除 </a>
                                 </form>
 
                             </div>
@@ -211,53 +204,53 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <volist name="list" id="v" key="k">
+                                {volist name="list" id="v" key="k"}
                                     <tr>
                                         <td>{$v.c_orderid}</td>
                                         <td>{$v.c_order_sn}</td>
                                         <td>{$v.c_nickname}/{$v.c_uid}</td>
                                         <td>{$v.c_name}</td>
                                         <td>
-                                            <if condition="$v['c_type'] eq 1">
+                                            {if condition="$v['c_type'] eq 1"}
                                                 零时租用
-                                            <elseif condition="$v['c_type'] eq 2" />
+                                            {elseif condition="$v['c_type'] eq 2" /}
                                                 带走租用
-                                            <else />
+                                            {else /}
                                                 未知
-                                            </if>
+                                            {/if}
                                         </td>
                                         <td>{$v.c_charge_time}/小时</td>
                                         <td>{$v.c_price}</td>
                                         <td>{$v.c_add_time|date='Y-m-d H:i',###}</td>
                                         <td>
-                                            <if condition="$v['c_pay_status'] eq 0">
+                                            {if condition="$v['c_pay_status'] eq 0"}
                                                 <span style="color:red;">未支付</span>
-                                            <else />
+                                            {else /}
                                                 <span style="color:#2bf32b;">已支付</span>
-                                            </if>
+                                            {/if}
                                         </td>
                                         <td>
-                                            <if condition="$v['c_status'] eq 0">
+                                            {if condition="$v['c_status'] eq 0"}
                                                 <span style="color:red;">未开始</span>
-                                            <elseif condition="$v['c_status'] eq 1" />
+                                            {elseif condition="$v['c_status'] eq 1" /}
                                                 <span style="color:#2bf32b;">使用中</span>
-                                            <else />
+                                            {else /}
                                                 <span style="color:#2bf32b;">已结束</span>
-                                            </if>
+                                            {/if}
                                         </td>
                                         <td>
-                                            <if condition="$v['c_start_time'] eq 0">
+                                            {if condition="$v['c_start_time'] eq 0"}
                                                 <span style="color:red;">未开始</span>
-                                            <else />
+                                            {else /}
                                                 {$v.c_start_time|date='Y-m-d H:i',###}
-                                            </if>
+                                            {/if}
                                         </td>
                                         <td>
-                                            <if condition="$v['c_shop_time'] eq 0">
+                                            {if condition="$v['c_shop_time'] eq 0"}
                                                 <span style="color:red;">未结束</span>
-                                            <else />
+                                            {else /}
                                                 {$v.c_shop_time|date='Y-m-d H:i',###}
-                                            </if>
+                                            {/if}
                                         </td>
                                         <td>
                                             <a class="btn btn-xs btn-info" data-toggle="modal" data-target="#catorderinfo" data-order-id="{$v.c_orderid}" title="订单详情">
@@ -273,14 +266,14 @@
                                             </a>
                                         </td>
                                     </tr>
-                                </volist>
-                                <if condition="!$list">
+                                {/volist}
+                                {if condition="!$list"}
                                     <tr>
                                         <td colspan="22">
                                             暂无记录
                                         </td>
                                     </tr>
-                                </if>
+                                {/if}
                                 </tbody>
                             </table>
                         <div class="row">
@@ -352,16 +345,16 @@
 </div>
 
 
-<include file="public::foot"/>
+{include file="public/foot" /}
 <!-- layer 插件 -->
-<script type="text/javascript" src="__PUBLIC__/Admin/js/layer/layer.js"></script>
+<script type="text/javascript" src="__STATIC__/js/layer/layer.js"></script>
 <script type="text/javascript">
     $(function () {
         //点击删除
         $(document).on("click","#remove",function () {
             if(confirm('您确定要删除吗？')){
                 //实现删除业务逻辑
-                $.get("__CONTROLLER__/del",
+                $.get("{:url('Order/del')}",
                     {id:$(this).attr("c_id")},
                     function (data) {
                         if(data.status == 0){
@@ -379,7 +372,7 @@
         $(document).on("click","#Charege",function () {
             if(confirm('您确定要充值吗？')){
                 //实现删除业务逻辑
-                $.get("__CONTROLLER__/yhVipCharege",
+                $.get("{:url('Order/yhVipCharege')}",
                     {id:$(this).attr("c_id")},
                     function (data) {
                         if(data.status == 0){
