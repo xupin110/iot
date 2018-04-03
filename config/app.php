@@ -15,13 +15,13 @@
 
 return [
     // 应用名称
-    'app_name'               => '',
+    'app_name'               => 'app',
     // 应用地址
     'app_host'               => '',
     // 应用调试模式
-    'app_debug'              => false,
+    'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => false,
+    'app_trace'              => true,
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
@@ -66,7 +66,7 @@ return [
     // 默认验证器
     'default_validate'       => '',
     // 默认的空模块名
-    'empty_module'           => '',
+    'empty_module'           => 'index',
     // 默认的空控制器名
     'empty_controller'       => 'Error',
     // 操作方法前缀
@@ -91,7 +91,7 @@ return [
     // URL伪静态后缀
     'url_html_suffix'        => 'html',
     // URL普通方式参数 用于自动生成
-    'url_common_param'       => false,
+    'url_common_param'       => true,
     // URL参数方式 0 按名称成对解析 1 按顺序解析
     'url_param_type'         => 0,
     // 是否开启路由延迟解析

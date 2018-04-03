@@ -1,5 +1,5 @@
 <IfModule mod_rewrite.c>
-  Options +FollowSymlinks -Multiviews
+  Options +FollowSymlinks
   RewriteEngine On
 
   RewriteCond %{REQUEST_FILENAME} !-d

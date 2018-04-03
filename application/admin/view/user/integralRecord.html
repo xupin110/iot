@@ -1,0 +1,127 @@
+<include file="public::head"/>
+    <!-- <script type="text/javascript">
+        $().ready(function () {
+            setTimeout(function () {
+                $('.user-info-menu [data-toggle="sidebar"]').click();
+            },100);
+        });
+    </script> -->
+</head>
+<body class="page-body">
+<div class="page-container">
+    <div class="sidebar-menu toggle-others fixed">
+        <include file="public::menu"/>
+    </div>
+    <div class="main-content">
+        <!-- User Info, Notifications and Menu Bar -->
+        <include file="public::nav"/>
+        <button type="button" class="btn btn-info" onclick="location = '__CONTROLLER__/cashierRecord?uid={$_GET['uid']}'">
+            收银系统积分记录
+        </button>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    
+                    <div class="panel-heading">
+                        <div class="breadcrumb-env" >
+
+                            <ol class="breadcrumb bc-1">
+                                <li>
+                                    <a href="{:U('Index/index')}"><i class="fa-home"></i> 首页</a>
+                                </li>
+                                <li>
+                                    <a href="{:U('index')}"> 用户列表</a>
+                                </li>
+                                <li class="active">
+                                    <strong>{$title}</strong>
+                                </li>
+                            </ol>
+                            <p>当前会员本系统积分为：<span>{$info['c_integral']}</span></p>
+                            <?php if ($status == 0) {?>
+                                <p>收银系统提示：<span style="color:blue;"><?php echo $msg;?></span>    积分为：<?php echo $integral?></p>
+                            <?php } else { ?>
+                                <p>收银系统提示：<span style="color:red;"><?php echo $msg;?></span></p>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table style="padding: 0" class="table responsive" id="msg">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>金额</th>
+                                <th>操作原因</th>
+                                <th>操作时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <empty name="list">
+                                <tr>
+                                    <td colspan="9">没有数据。。。</td>
+                                </tr>
+                            <else />
+                            <volist name="list" id="vo">
+                                <tr>
+                                    <td>{$vo.c_id}</td>
+                                    <td>{$vo.c_amount}</td>
+                                    <td>{$vo.c_info}</td>
+                                    <td>{$vo.c_add_time|date='Y-m-d H:i:s',###}</td>
+                                    <td>
+                                        <a href="javascript:void(0)" title="删除" id="remove" c_id="{$vo.c_id}" class="btn btn-xs btn-danger">
+                                                <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </empty>
+                            </tbody>
+                           <!-- <tfoot>
+
+                            </tfoot>-->
+                        </table>
+                            <div class="form-group">
+                                <input class="btn btn-single" onclick="history.go(-1)" value="返回" type="button">
+                            </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
+                                    <ul class="pagination">
+                                        {$page}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="public::foot"/>
+<!-- layer 插件 -->
+<script type="text/javascript" src="__PUBLIC__/Admin/js/layer/layer.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //点击删除
+        $(document).on("click","#remove",function () {
+            if(confirm('您确定要删除吗？')){
+                //实现删除业务逻辑
+                $.get("__CONTROLLER__/integralDel",
+                    {id:$(this).attr("c_id")},
+                    function (data) {
+                        if(data.status == 0){
+                            layer.msg(data.msg,{icon:1,time: 1000},function () {
+                                location.reload();
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:2,time: 1000});
+                        }
+                    },'json');
+            }
+        });
+    })
+</script>
+</body>
+</html>

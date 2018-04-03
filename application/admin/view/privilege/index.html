@@ -1,0 +1,143 @@
+<include file="public::head"/>
+    <script type="text/javascript">
+        var member = {:json_encode($member)};
+        $().ready(function () {
+            $('#audit').on('show.bs.modal', function (event) {
+                //会员认证
+                var button = $(event.relatedTarget);
+                var user_key  = button.data('key');
+                $(this).find('#positive').attr('src','/'+member[user_key].card_img1);
+                $(this).find('#student_no').text(member[user_key].student_no);
+                $(this).find('[send=1]').attr('onclick','audit("'+member[user_key].member_id+'",1)');
+                $(this).find('[send=0]').attr('onclick','audit("'+member[user_key].member_id+'",0)');
+                console.log(member[user_key]);
+            });
+
+            // $('[name="level"] [value="{:I('level')}"]')[0].selected = true;
+            setTimeout(function () {
+                $('.user-info-menu [data-toggle="sidebar"]').click();
+            },100);
+
+        });
+        // function audit(member_id,status) {
+        //     $.post('{:U("audit")}?member_id='+member_id,{status:status},function (res) {
+        //         alert(res.code);
+        //         if(res.status){
+        //             window.location.reload();
+        //         }
+        //     });
+        // }
+    </script>
+</head>
+<body class="page-body">
+<div class="page-container">
+    <div class="sidebar-menu toggle-others fixed">
+        <include file="public::menu"/>
+    </div>
+    <div class="main-content">
+        <!-- User Info, Notifications and Menu Bar -->
+        <include file="public::nav"/>
+        <button type="button" class="btn btn-info" onclick="location = '__CONTROLLER__/add.html'"><i class="fa fa-plus"></i> Add </button>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    
+                    <div class="panel-heading">
+                        <div class="breadcrumb-env" >
+
+                            <ol class="breadcrumb bc-1">
+                                <li>
+                                    <a href="{:U('Index/index')}"><i class="fa-home"></i> 首页</a>
+                                </li>
+                                <li class="active">
+                                    <strong>权限列表</strong>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                            <table style="padding: 0" class="table responsive" id="msg">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>权限名称</th>
+                                    <th>模块名称</th>
+                                    <th>控制器名称</th>
+                                    <th>方法</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <empty name="list">
+                                    <tr>
+                                        <td colspan="9">没有数据。。。</td>
+                                    </tr>
+                                <else />
+                                <volist name="list" id="vo">
+                                    <tr>
+                                        <td>{$vo.id}</td>
+                                        <td><?php echo str_repeat('-',$vo['level']*8);?>{$vo.pri_name}</td>
+                                        <td>{$vo.mname}</td>
+                                        <td>{$vo.cname}</td>
+                                        <td>{$vo.aname}</td>
+                                        <td>
+                                            <a class="btn btn-xs btn-info" href="__CONTROLLER__/edit.html?id={$vo.id}" title="编辑">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <if condition="$_SESSION['admin_uid'] eq 1">
+                                                <a href="javascript:void(0)" title="删除" id="remove" c_id="{$vo.id}" class="btn btn-xs btn-danger">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+                                            <else />
+                                            </if>
+                                        </td>
+                                    </tr>
+                                </volist>
+                                </empty>
+                                </tbody>
+                               <!-- <tfoot>
+
+                                </tfoot>-->
+                            </table>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
+                                    <ul class="pagination">
+                                        {$page}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="public::foot"/>
+<!-- layer 插件 -->
+<script type="text/javascript" src="__PUBLIC__/Admin/js/layer/layer.js"></script>
+<script type="text/javascript">
+        $(function () {
+            //点击删除
+            $(document).on("click","#remove",function () {
+                if(confirm('您确定要删除吗？不可恢复。')){
+                    //实现删除业务逻辑
+                    $.get("__CONTROLLER__/del",
+                        {id:$(this).attr("c_id")},
+                        function (data) {
+                            if(data.status == 0){
+                                layer.msg(data.msg,{icon:1,time: 500},function () {
+                                    location.reload();
+                                });
+                            }else{
+                                layer.msg(data.msg,{icon:2,time: 500});
+                            }
+                        },'json');
+                }
+            });
+        })
+    </script>
+</body>
+</html>

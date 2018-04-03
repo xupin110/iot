@@ -1,0 +1,140 @@
+<include file="public::head"/>
+</head>
+<body class="page-body">
+<div class="page-container">
+    <div class="sidebar-menu toggle-others fixed">
+        <include file="public::menu"/>
+    </div>
+    <div class="main-content">
+        <!-- User Info, Notifications and Menu Bar -->
+        <include file="public::nav"/>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        <div class="breadcrumb-env" >
+
+                            <ol class="breadcrumb bc-1">
+                                <li>
+                                    <a href="{:U('Index/index')}"><i class="fa-home"></i> 首页</a>
+                                </li>
+                                <li class="active">
+                                    <strong>{$title}</strong>
+                                </li>
+                                <!-- <li class="active">
+
+                                     <strong>Native Elements</strong>
+                                 </li>-->
+                            </ol>
+
+                        </div>
+                        <!--<h3 class="panel-title">Default form inputs</h3>-->
+                    </div>
+                    <div class="panel-body">
+                            <table style="padding: 0" class="table responsive" id="msg">
+                                <thead>
+                                <tr>
+                                    <th colspan="9">
+
+                                        <button type="button" class="btn btn-info" onclick="location = '__MODULE__/Index/addadminuser.html'"><i class="fa fa-plus"></i> Add </button>
+                                        <!-- <button type="button" class="btn btn-danger" onclick="deles()"><i class="fa fa-trash-o"></i> 批量删除</button> -->
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>登录账号</th>
+                                    <th>姓名</th>
+                                    <th>联系电话</th>
+                                    <th>关联学校</th>
+                                    <th>注册时间</th>
+                                    <th>最后登录时间</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <empty name="list">
+                                    <tr>
+                                        <td colspan="9">没有数据。。。</td>
+                                    </tr>
+                                <else />
+                                <volist name="list" id="vo">
+                                    <tr>
+                                        <td>{$vo.id}</td>
+                                        <td>{$vo.name}</td>
+                                        <td>{$vo.nickname}</td>
+                                        <td>
+                                            <if condition="$vo['mobile'] eq 0">
+                                                <span>NULL</span>
+                                            <else />
+                                                {$vo.mobile}
+                                            </if>
+                                        </td>
+                                        <td>{$vo.school}</td>
+                                        <td>{$vo.lastime|date='Y-m-d H:i',###}</td>
+                                        <td>{$vo.login_time|date='Y-m-d H:i',###}</td>
+                                        <td>
+                                            <if condition="$vo['c_status'] eq 0">
+                                                <span>启用中</span>
+                                            <else />
+                                                <span>已禁用</span>
+                                            </if>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-xs btn-info" href="__MODULE__/Turn/edit.html?id={$v.id}" title="">
+                                                <i class="fa fa-unlock"></i>
+                                            </a>
+                                            <a class="btn btn-xs btn-danger" id="delBtn" title="{$v.id}" title="删除">
+                                                <i class="fa fa-trash-o"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </volist>
+                                </empty>
+                                </tbody>
+                            </table>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
+                                    <ul class="pagination">
+                                        {$showpage}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="public::foot"/>
+<script type="text/javascript" src="{:DOCUMENT_ROOT}/js/layer/layer.js"></script>
+<script type="text/javascript">
+    $(function () {
+       $("#delBtn").click(function () {
+           var id=$(this).attr("title");
+           layer.confirm('确定要删除该记录吗？不可恢复。', {
+               btn: ['确定','取消'] //按钮
+           }, function(){
+               $.post("{:U('Turn/del')}",{'id':id},function (data) {
+                   if(data.sta){
+                       window.location = '__MODULE__/Turn/index.html';
+                   }else {
+                       var dia = dialog({
+                           title: '提示',
+                           content: '<i class="fa fa-times-circle fa-2x"></i> '+data.tip,
+                           cancel: false,
+                           ok: function () {}
+                       });
+                       dia.width('300')
+                       dia.show();
+                   }
+               },"json");
+           });
+       }) ;
+    });
+</script>
+</body>
+</html>

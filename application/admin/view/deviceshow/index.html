@@ -1,0 +1,199 @@
+<include file="public::head"/>
+    <script type="text/javascript">
+        $().ready(function () {
+            setTimeout(function () {
+                $('.user-info-menu [data-toggle="sidebar"]').click();
+            },100);
+        });
+    </script>
+</head>
+<body class="page-body">
+<div class="page-container">
+    <div class="sidebar-menu toggle-others fixed">
+        <include file="public::menu"/>
+    </div>
+    <div class="main-content">
+        <!-- User Info, Notifications and Menu Bar -->
+        <include file="public::nav"/>
+    <form method="post" id="myform" name="myform">
+        <button type="button" class="btn btn-info" onclick="location = '__CONTROLLER__/add.html'">
+            <i class="fa fa-plus"></i> Add 
+        </button>
+        <!-- <a id="updateOrd" href="javascript:void(0)">
+            <button type="submit" tooltip="Banner排序" class="btn btn-info" form="myform" formaction="__CONTROLLER__/sort"> 
+                <i class="fa fa-arrows-v"></i> 排序
+            </button>
+        </a> -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    
+                    <div class="panel-heading">
+                        <div class="breadcrumb-env" >
+
+                            <ol class="breadcrumb bc-1">
+                                <li>
+                                    <a href="{:U('Index/index')}"><i class="fa-home"></i> 首页</a>
+                                </li>
+                                <li class="active">
+                                    <strong>{$title}</strong>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table style="padding: 0" class="table responsive" id="msg">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <!-- <th>图片</th> -->
+                                <th>名称</th>
+                                <th>电量</th>
+                                <th>电压</th>
+                                <th>逆变器</th>
+                                <th>输出</th>
+                                <!-- <th>接口</th> -->
+                                <th>添加时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <empty name="list">
+                                <tr>
+                                    <td colspan="9">没有数据。。。</td>
+                                </tr>
+                            <else />
+                            <volist name="list" id="vo">
+                                <tr>
+                                    <td>{$vo.c_id}</td>
+                                    <!-- <td><img class="lemoncode" src="{$vo.c_img}" height="60px" alt=""></td> -->
+                                    <td>{$vo.c_name}</td>
+                                    <td>{$vo.c_kwh}</td>
+                                    <td>{$vo.c_voltage}</td>
+                                    <td>{$vo.c_inverter}</td>
+                                    <td>{$vo.c_output}</td>
+                                    <!-- <td>{$vo.c_interface}</td> -->
+                                    <td>{$vo.c_add_time|date='Y-m-d H:i:s',###}</td>
+                                    <td>
+                                        <if condition="$vo['c_status'] eq 0">
+                                            <span style="color:#0dca0d;font-size:14px;" title="显示">
+                                                <i class="fa fa-check"></i>
+                                            </span>
+                                        <else />
+                                            <span style="color:red;font-size:14px;" title="不显示">
+                                                <i class="fa fa-close"></i>
+                                            </span>
+                                        </if>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-xs btn-info" href="__CONTROLLER__/edit.html?id={$vo.c_id}" title="编辑">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="javascript:void(0)" class="btn btn-xs btn-info" id="isStatus" c_id="{$vo.c_id}" title="显示状态">
+                                            <if condition="$vo['c_status'] eq 0">
+                                                <i class="fa fa-close"></i>
+                                            <else />
+                                                <i class="fa fa-check"></i>
+                                            </if>
+                                        </a>
+                                        <a href="javascript:void(0)" title="删除" id="remove" c_id="{$vo.c_id}" class="btn btn-xs btn-danger">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </empty>
+                            </tbody>
+
+                        </table>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
+                                    <ul class="pagination">
+                                        {$page}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+<include file="public::foot"/>
+<!-- layer 插件 -->
+<script type="text/javascript" src="__PUBLIC__/Admin/js/layer/layer.js"></script>
+<script type="text/javascript">
+        $(function () {
+            //点击删除
+            $(document).on("click","#remove",function () {
+                if(confirm('您确定要删除吗？不可恢复。')){
+                    //实现删除业务逻辑
+                    $.ajax({
+                        url:"__CONTROLLER__/del",
+                        type:'get',
+                        data:{id:$(this).attr("c_id")},
+                        success:function ( res ) {
+                            if(res.status == 0){
+                                layer.msg(res.msg,{icon:1,time: 1000},function () {
+                                    location.reload();
+                                });
+                            } else {
+                                layer.msg(res.msg,{icon:2,time: 1000});
+                            }
+                        },
+                        error:function ( res ) {
+                            layer.msg('网络错误，请稍候再试！',{icon:2,time: 1000});
+                        }
+                    });
+                }
+            });
+
+            //点击修改状态
+            $(document).on("click","#isStatus",function () {
+                if(confirm('您确定要修改状态吗？')){
+                    //实现业务逻辑
+                    $.ajax({
+                        url:"__CONTROLLER__/isStatus",
+                        type:'get',
+                        data:{id:$(this).attr("c_id")},
+                        success:function ( res ) {
+                            if(res.status == 0){
+                                layer.msg(res.msg,{icon:1,time: 1000},function () {
+                                    location.reload();
+                                });
+                            }else{
+                                layer.msg(res.msg,{icon:2,time: 1000});
+                            }
+                        },
+                        error:function ( res ) {
+                            layer.msg('网络错误，请稍候再试！',{icon:2,time: 1000});
+                        }
+                    });    
+                }
+            });
+
+            // 图片放大
+            var zindex=1;
+            $(".lemoncode").click(function(){
+                if(($(this).css("transform"))=="matrix(5, 0, 0, 5, 0, 0)"){
+                    $(this).css({
+                        "transform":"scale(1)",
+                        "position":"static"
+                    })
+                }else{
+                    $(this).css({
+                        "transform":"scale(5)",
+                        "position":"relative",
+                        "zIndex" : 1,
+                    })
+                }
+            })
+        })
+    </script>
+</body>
+</html>

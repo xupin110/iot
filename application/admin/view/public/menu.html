@@ -1,0 +1,92 @@
+<style>
+    .hongdian{
+        display:inline-block;
+        /*position:absolute;*/
+        /*top: 5px;*/
+        /*right:25px;*/
+        width:8px;
+        height:8px;
+        border-radius: 50%;
+        background-color:red;
+    }
+</style>
+<div class="sidebar-menu-inner">
+    <header class="logo-env">
+        <!-- logo -->
+        <div class="logo">
+            <a href="{:url('Index/index')}" class="logo-expanded">
+                <img src="__STATIC__/images/Qianwen_logo.png" width="152" alt="" />
+            </a>
+            <a href="{:url('Index/index')}" class="logo-collapsed">
+                <img src="__STATIC__/images/qw_logo.png" width="40" alt="" />
+            </a>
+        </div>
+    </header>
+    <ul id="main-menu" class="main-menu">
+        {volist name="menu_list" id="v"}
+            <li class='{:(strtolower(CONTROLLER_NAME) == strtolower($v["controller"]))?"active opened":""}'>
+            <a href="javascript:;">
+                <i class="{$v.icon}"></i>
+                <span class="title">{$v.tle}</span>
+            </a>
+            <ul>
+                {volist name="v.menu" id="vv"}
+                    <li class="{:((strtolower($vv['action']) == strtolower(ACTION_NAME)) and (strtolower(CONTROLLER_NAME) == strtolower($v['controller'])))?'active':''}">
+                        <a href="{$vv.href}">
+                            <span class="title">{$vv.name}</span>
+                        </a>
+                    </li>
+                {/volist}
+            </ul>
+            </li>
+       {/volist}
+    </ul>
+</div>
+<!-- <script>
+    var refresh = 0;
+
+    var interval = setInterval(function () {
+        var arr = [];
+        $.ajax({
+            type:'post',
+            url:'__MODULE__/system/newTip',
+            data:{refresh:refresh},
+            success:function (msg) {
+                if(msg.str){
+                    arr=msg.str.split(',')
+
+                    change(arr)
+                }
+            }
+        })
+        refresh++;
+    },5000)
+
+    function change(arrs) {
+
+        $("#mask_box").removeClass('hide');
+
+        var arr = arrs;
+        $("#main-menu").find('span').each(function () {
+            if( arr.indexOf($(this).html())>=0 ){
+                if(!($(this).find('b').length))
+                    $(this).html('<span class="hongdian"><b></b></span>'+$(this).html())
+            }
+        })
+    }
+
+    var refreshs = 0;
+
+    var intervals = setInterval(function () {
+
+        $.ajax({
+            type:'post',
+            url:'__MODULE__/Withdrawals/Clearing',
+            data:{refreshs:refreshs},
+            success:function (res) {
+
+            }
+        })
+        refreshs++;
+    },20000)
+</script> -->
