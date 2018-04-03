@@ -1,4 +1,4 @@
-<include file="public::head"/>
+{include file="public/head"/}
     <script type="text/javascript">
         $(document).ready(function(){
             $('#sub').click(function(){
@@ -53,11 +53,11 @@
 <body class="page-body">
 <div class="page-container">
     <div class="sidebar-menu toggle-others fixed">
-        <include file="public::menu"/>
+        {include file="public/menu"/}
     </div>
     <div class="main-content">
         <!-- User Info, Notifications and Menu Bar -->
-        <include file="public::nav"/>
+        {include file="public/nav"/}
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
@@ -67,10 +67,10 @@
 
                             <ol class="breadcrumb bc-1">
                                 <li>
-                                    <a href="{:U('Index/index')}"><i class="fa-home"></i> 首页</a>
+                                    <a href="{:url('Index/index')}"><i class="fa-home"></i> 首页</a>
                                 </li>
                                 <li class="active">
-                                    <a href="{:U('Admin/index')}"> 管理员列表</a>
+                                    <a href="{:url('Admin/index')}"> 管理员列表</a>
                                 </li>
                                  <li class="active">
                                     <strong>{$title}</strong>

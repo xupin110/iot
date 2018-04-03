@@ -1,15 +1,39 @@
 <?php
 namespace app\index\controller;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\QrCode;
 
-class Index
-{
-    public function index()
-    {
-        return '<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px;} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:) 2018新年快乐</h1><p> ThinkPHP V5.1<br/><span style="font-size:30px">12载初心不改（2006-2018） - 你值得信赖的PHP框架</span></p></div><script type="text/javascript" src="https://tajs.qq.com/stats?sId=64890268" charset="UTF-8"></script><script type="text/javascript" src="https://e.topthink.com/Public/static/client.js"></script><think id="eab4b9f840753f8e7"></think>';
-    }
+class Index {
+	public function index() {
 
-    public function hello($name = 'ThinkPHP5')
-    {
-        return 'hello,' . $name;
-    }
+		$qrCode = new QrCode('Life is too short to be generating QR codes');
+		$qrCode->setSize(300);
+
+		// Set advanced options
+		$qrCode->setWriterByName('png');
+		$qrCode->setMargin(10);
+		$qrCode->setEncoding('UTF-8');
+		$qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH);
+		$qrCode->setForegroundColor(['r' => 0, 'g' => 0, 'b' => 0, 'a' => 0]);
+		$qrCode->setBackgroundColor(['r' => 255, 'g' => 255, 'b' => 255, 'a' => 0]);
+		$qrCode->setLabel('Scan the code', 16, 'admin/library/font-awesome-4.5.0/fonts/FontAwesome.otf', 'right');
+		$qrCode->setLogoPath('admin/images/qw_logo.png');
+		$qrCode->setLogoWidth(150);
+		// $qrCode->setRoundBlockSize(true);
+		$qrCode->setValidateResult(false);
+
+		// Directly output the QR code
+		header('Content-Type: ' . $qrCode->getContentType());
+		// echo $qrCode->writeString();
+
+		// Save it to a file
+		$qrCode->writeFile(__DIR__ . '/qrcode.png');
+
+		// Create a response object
+		// $response = new QrCodeResponse($qrCode);
+	}
+
+	public function hello($name = 'ThinkPHP5') {
+		return 'hello,' . $name;
+	}
 }
