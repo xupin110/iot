@@ -25,3 +25,18 @@ IOT 物联网开发 (基于Swoole扩展)
 5.模拟充电桩设备
 ----------
 
+6.安装依赖
+----------
+
+    安装二维码扩展
+    composer require endoriod/qr-code
+
+    安装基于swoole的官方框架
+    `composer require matyhtf/swoole_framework`
+7.开发常见问题
+----------
+> web端怎么和socket服务器通信
+> 
+> socket怎么和设备通信
+> 
+> 数据传输协议怎么拟定

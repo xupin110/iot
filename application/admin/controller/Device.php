@@ -1,13 +1,13 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: user
- * Date: 2017/9/27
+ * User: liuxiaodong
+ * Date: 2018/3/5
  * Time: 18:43
  */
 
 namespace app\admin\controller;
-
+use app\service\Service;
 class Device extends Base {
 	public $device;
 	public $type;
@@ -29,7 +29,14 @@ class Device extends Base {
 		if (!empty($so)) {
 			$where['c_device_sn'] = ['c_device_sn', 'like', "%" . $so . "%"];
 		}
-		$list = $this->device->getDeviceList($where, 'c_deviceid desc');
+		// $list = $this->device->getDeviceList($where, 'c_deviceid desc');
+        if (empty($_GET["gid"])){
+            $gets["gid"] = '1';
+        }
+        $page = !empty($_GET['page']) ? $_GET['page'] : 1;
+        $pagesize = 20;       		
+		$list = Service::getInstance()->call("Agent::getAgents",$gets,$page,$pagesize)->getResult(10);
+		var_dump($list);exit;
 		if ($list) {
 			foreach ($list as $k => $v) {
 				$list[$k]['c_type'] = $this->type[$v['c_type']];
