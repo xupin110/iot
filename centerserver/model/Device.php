@@ -16,7 +16,7 @@ class Device {
 	 * @param    [type]      $where [where condition]
 	 * @return   [type]             [return all list]
 	 */
-	public static function getAllDevices($where) {
+	public static function getAllDevices($where = []) {
 		return db('Device')->where($where)->select();
 	}
 	/**
@@ -25,5 +25,8 @@ class Device {
 	 */
 	public static function getOneDevice($where) {
 		return db('Device')->where($where)->find();
+	}
+	public static function updateDevice($data) {
+		return db('Device')->update($data);
 	}
 }

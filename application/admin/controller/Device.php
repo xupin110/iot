@@ -127,7 +127,6 @@ class Device extends Base {
 		if (request()->isPost()) {
 			//接收数据
 			$data = [
-				'c_deviceid' => input('post.pc_deviceid'),
 				'c_name' => input('post.c_name'),
 				'c_devicesn' => input('post.c_devicesn'),
 				'c_lng' => input('post.c_lng'),
@@ -135,8 +134,9 @@ class Device extends Base {
 				'c_address' => input('post.c_address'),
 				'c_type' => input('post.c_type'),
 			];
+			$id = input('post.c_deviceid');
 			if ($this->validate->check($data)) {
-				if ($this->device->save($data)) {
+				if ($this->device->save($data, ['c_deviceid' => $id])) {
 					return json([
 						'msg' => '修改成功',
 						'status' => 0,
@@ -166,15 +166,9 @@ class Device extends Base {
 	public function isStatus() {
 
 		if (request()->isGet()) {
-			$where['c_deviceid'] = input('get.id');
-
-			$status = $this->device->where($where)->value('c_status');
-			if ($status == 0) {
-				$data['c_status'] = 1;
-			} else {
-				$data['c_status'] = 0;
-			}
-			if ($this->device->save($data, $where)) {
+			$id = input('get.id');
+			$list = Service::getInstance()->call("Device::updateDevice", $id)->getResult(10);
+			if ($list) {
 				return json([
 					'msg' => '修改成功',
 					'status' => 0,

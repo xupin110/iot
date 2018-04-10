@@ -5,8 +5,8 @@
  */
 
 namespace App;
-use app\admin\model\Device as ModelDevice;
 use Lib;
+use model\Device as DbDevice;
 
 class Device {
 
@@ -70,9 +70,7 @@ class Device {
 	 * @return array
 	 */
 	public static function getDevices($gets = [], $page = 1, $pagesize = 10) {
-
-		$device = new ModelDevice();
-		$list = $device->paginate();
+		$list = DbDevice::getInstance()->getAllDevices();
 		foreach ($list as $k => $task) {
 			$tmp = Lib\Robot::$table->get($task["c_devicesn"]);
 			if (!empty($tmp)) {
@@ -177,27 +175,33 @@ class Device {
 	 * @param $Device
 	 * @return array
 	 */
-	public static function updateDevice($id, $Device) {
+	public static function updateDevice($id) {
 		echo "APP ------ Device ----------updateDevice" . PHP_EOL;
-		if (empty($id) || empty($Device)) {
-			return Lib\Util::errCodeMsg(101, "参数为空");
+		print_r($id);
+		if (empty($id)) {
+			return false;
 		}
-		$gids = $Device["gids"];
-		unset($Device["gids"]);
-		if (!table("Devices")->set($id, $Device)) {
-			return Lib\Util::errCodeMsg(102, "更新失败");
+		$status = db('Device')->where(['c_deviceid' => $id])->value('c_status');
+		if ($status == 0) {
+			$data['c_status'] = 1;
+			$res = Lib\Robot::stopAgent($id);
+		} else {
+			$data['c_status'] = 0;
+			$res = Lib\Robot::startAgent($id);
 		}
-		$Device_group = table("Device_group");
-		$Device_group->dels(["aid" => $id]);
-		//var_dump($id);
-		foreach ($gids as $gid) {
-			if ($gid <= 0) {
-				continue;
-			}
-			$Device_group->put(["gid" => $gid, "aid" => $id]);
+		echo "stop or start \n";
+		$data['c_deviceid'] = $id;
+		$res1 = DbDevice::updateDevice($data);
+		echo 'res is ' . "\n";
+		print_r($res);
+		echo 'res1 is ' . "\n";
+		print_r($res1);
+		if ($res && $res1) {
+			echo 'isok';
+			return true;
 		}
-		self::reload($id);
-		return Lib\Util::errCodeMsg(0, "更新成功");
+		echo 'isfail;';
+		return false;
 	}
 
 	/**

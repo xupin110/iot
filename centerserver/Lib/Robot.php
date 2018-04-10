@@ -65,6 +65,45 @@ class Robot {
 		}
 		return true;
 	}
+	public static function stopAgent($id) {
+		echo "Lib ------ Robot ----------stopAgent" . PHP_EOL;
+		$res = self::$aTable->del($id);
+		$res = Device::getOneDevice(['c_deviceid' => $id]);
+		$devicesn = $res['c_devicesn'];
+		if (self::$table->exist($devicesn)) {
+			$client = new Client($devicesn);
+			$client->call("close", []);
+			if (self::$table->del($devicesn)) {
+				$res1 = true;
+			} else {
+				$res1 = false;
+			}
+		}
+		{
+			$res1 = true;
+		}
+		print_r('del' . $res1);
+		if ($res && $res1) {
+			return true;
+		}
+
+		return false;
+	}
+	/**
+	 * @param    [type]      $id [add id]
+	 * @return   [type]          [description]
+	 */
+	public static function startAgent($id) {
+		echo "Lib ------ Robot ----------startAgent\n" . PHP_EOL;
+		$agent = Device::getOneDevice(['c_deviceid' => $id]);
+		$res = self::$aTable->set($agent["c_deviceid"], [
+			"devicesn" => $agent["c_devicesn"],
+		]);
+		if ($res) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * 注册服务

@@ -10,7 +10,10 @@ class Index {
 		// 	# code...
 		// 	var_dump($value['c_deviceid']);
 		// }
-		$a = new Service();
+		if (!true && true) {
+			echo "test";
+		}
+
 	}
 
 }
