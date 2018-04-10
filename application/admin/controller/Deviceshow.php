@@ -15,6 +15,7 @@ class Deviceshow extends Base {
 		$list = $this->deviceShow->where($where)
 			->order('c_id asc')
 			->paginate();
+
 		return $this->fetch('', [
 			'title' => '展示设备列表',
 			'list' => $list,
@@ -25,16 +26,6 @@ class Deviceshow extends Base {
 	 * 渲染添加页面
 	 */
 	public function add() {
-		$this->assign([
-			'title' => '添加展示设备',
-		]);
-		return $this->fetch();
-	}
-
-	/**
-	 * 执行添加
-	 */
-	public function doAdd() {
 		if (request()->isPost()) {
 			//接收数据
 			$data = array(
@@ -65,28 +56,17 @@ class Deviceshow extends Base {
 				'status' => 1,
 			]);
 		}
+
+		$this->assign([
+			'title' => '添加展示设备',
+		]);
+		return $this->fetch();
 	}
 
 	/**
 	 * 修改页面渲染
 	 */
-	public function edit($id) {
-
-		$list = $this->deviceShow->where(['c_id' => $id])->find();
-		//$company = $this->comp->field('c_id,c_shop_name')->select();
-
-		$this->assign(array(
-			'title' => '修改积分商品',
-			'list' => $list,
-			'company' => $company,
-		));
-		return $this->fetch();
-	}
-
-	/**
-	 * 执行修改
-	 */
-	public function doEdit() {
+	public function edit() {
 		if (request()->isPost()) {
 			//接收数据
 			$data = array(
@@ -115,7 +95,26 @@ class Deviceshow extends Base {
 				'msg' => $this->deviceShow->getError(),
 				'status' => 1,
 			]);
+		} else {
+			$id = input('get.id');
+			$list = $this->deviceShow->where(['c_id' => $id])->find();
+			$company = model('Company')->field('c_id,c_company_name')->select();
+
+			$this->assign(array(
+				'title' => '修改展示设备',
+				'list' => $list,
+				'company' => $company,
+			));
+			return $this->fetch();
 		}
+
+	}
+
+	/**
+	 * 执行修改
+	 */
+	public function doEdit() {
+
 	}
 
 	/**

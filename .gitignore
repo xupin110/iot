@@ -4,6 +4,8 @@ runtime
 public/charge
 swoole_crontab.sql
 vendor
-centserver/logs/
 backup
 public/admin
+public/upload
+centsevice/logs
+centerserver/logs/application.log

@@ -24,14 +24,14 @@
     </header>
     <ul id="main-menu" class="main-menu">
         {volist name="menu_list" id="v"}
-            <li class='{:(strtolower(CONTROLLER_NAME) == strtolower($v["controller"]))?"active opened":""}'>
+            <li class="{if request()->controller() == $v['controller']}active opened{else /}{/if}">
             <a href="javascript:;">
                 <i class="{$v.icon}"></i>
                 <span class="title">{$v.tle}</span>
             </a>
             <ul>
                 {volist name="v.menu" id="vv"}
-                    <li class="{:((strtolower($vv['action']) == strtolower(ACTION_NAME)) and (strtolower(CONTROLLER_NAME) == strtolower($v['controller'])))?'active':''}">
+                    <li class="{if request()->action() == $vv['action']}active{else /}{/if}">
                         <a href="{$vv.href}">
                             <span class="title">{$vv.name}</span>
                         </a>

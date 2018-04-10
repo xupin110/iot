@@ -9,7 +9,7 @@
         var uploadbutton = K.uploadbutton({
             button : K('#uploadButton')[0],
             fieldName : 'imgFile',
-            url : "{：url('Tool/upload')}",
+            url : "{:url('Tool/upload')}",
             afterUpload : function(data) {
                 if (data.error === 0) {
                     var url = K.formatUrl(data.url, 'absolute');
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <form action="{:url('Deviceshow/doAdd')}" method="post" id="myform" class="form-horizontal">
+                        <form action="{:url('Deviceshow/add')}" method="post" id="myform" class="form-horizontal">
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" >名称</label>

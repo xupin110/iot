@@ -53,7 +53,7 @@
                                 <th>逆变器</th>
                                 <th>输出</th>
                                 <!-- <th>接口</th> -->
-                                <th>添加时间</th>
+                                <th>图片</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -74,7 +74,7 @@
                                     <td>{$vo.c_inverter}</td>
                                     <td>{$vo.c_output}</td>
                                     <!-- <td>{$vo.c_interface}</td> -->
-                                    <td>{$vo.c_add_time}</td>
+                                    <td><img width="100" height="100" src="{$vo.c_img}"></td>
                                     <td>
                                         {if condition="$vo['c_status'] eq 0"}
                                             <span style="color:#0dca0d;font-size:14px;" title="显示">

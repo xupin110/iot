@@ -227,3 +227,113 @@ Stack trace:
 [10-Apr-2018 16:32:05 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
 [10-Apr-2018 16:32:05 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
 [10-Apr-2018 16:32:05 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 16:42:59 PRC] PHP Fatal error:  Uncaught think\exception\ErrorException: SendToClient failed. code=1005 params=array (
+  'call' => 'register',
+  'params' => 
+  array (
+  ),
+)
+headers=array (
+  'length' => 51,
+  'type' => 1,
+  'uid' => 0,
+  'serid' => 702576159,
+  'fd' => 1,
+) in /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php:158
+Stack trace:
+#0 [internal function]: think\Error::appError(512, 'SendToClient fa...', '/website/iot/ve...', 158, Array)
+#1 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php(158): trigger_error('SendToClient fa...', 512)
+#2 {main}
+  thrown in /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php on line 158
+[10-Apr-2018 16:42:59 PRC] PHP Stack trace:
+[10-Apr-2018 16:42:59 PRC] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 16:42:59 PRC] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 16:42:59 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 16:42:59 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 16:42:59 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 16:43:09 PRC] PHP Fatal error:  Uncaught think\exception\ErrorException: SendToClient failed. code=1005 params=array (
+  'call' => 'register',
+  'params' => 
+  array (
+  ),
+)
+headers=array (
+  'length' => 51,
+  'type' => 1,
+  'uid' => 0,
+  'serid' => 765602957,
+  'fd' => 2,
+) in /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php:158
+Stack trace:
+#0 [internal function]: think\Error::appError(512, 'SendToClient fa...', '/website/iot/ve...', 158, Array)
+#1 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php(158): trigger_error('SendToClient fa...', 512)
+#2 {main}
+  thrown in /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php on line 158
+[10-Apr-2018 16:43:09 PRC] PHP Stack trace:
+[10-Apr-2018 16:43:09 PRC] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 16:43:09 PRC] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 16:43:09 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 16:43:09 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 16:43:09 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 16:43:19 PRC] PHP Fatal error:  Uncaught think\exception\ErrorException: SendToClient failed. code=1005 params=array (
+  'call' => 'register',
+  'params' => 
+  array (
+  ),
+)
+headers=array (
+  'length' => 51,
+  'type' => 1,
+  'uid' => 0,
+  'serid' => 813416697,
+  'fd' => 4,
+) in /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php:158
+Stack trace:
+#0 [internal function]: think\Error::appError(512, 'SendToClient fa...', '/website/iot/ve...', 158, Array)
+#1 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php(158): trigger_error('SendToClient fa...', 512)
+#2 {main}
+  thrown in /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php on line 158
+[10-Apr-2018 16:43:19 PRC] PHP Stack trace:
+[10-Apr-2018 16:43:19 PRC] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 16:43:19 PRC] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 16:43:19 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 16:43:19 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 16:43:19 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 04:43:19 America/New_York] PHP Warning:  Error while sending STMT_CLOSE packet. PID=9479 in Unknown on line 0
+[10-Apr-2018 04:43:19 America/New_York] PHP Stack trace:
+[10-Apr-2018 04:43:19 America/New_York] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 04:43:19 America/New_York] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 04:43:19 America/New_York] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 04:43:19 America/New_York] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 04:43:19 America/New_York] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 16:43:29 PRC] PHP Fatal error:  Uncaught think\exception\ErrorException: SendToClient failed. code=1005 params=array (
+  'call' => 'register',
+  'params' => 
+  array (
+  ),
+)
+headers=array (
+  'length' => 51,
+  'type' => 1,
+  'uid' => 0,
+  'serid' => 872030691,
+  'fd' => 6,
+) in /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php:158
+Stack trace:
+#0 [internal function]: think\Error::appError(512, 'SendToClient fa...', '/website/iot/ve...', 158, Array)
+#1 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php(158): trigger_error('SendToClient fa...', 512)
+#2 {main}
+  thrown in /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php on line 158
+[10-Apr-2018 16:43:29 PRC] PHP Stack trace:
+[10-Apr-2018 16:43:29 PRC] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 16:43:29 PRC] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 16:43:29 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 16:43:29 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 16:43:29 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 04:43:29 America/New_York] PHP Warning:  Error while sending STMT_CLOSE packet. PID=9490 in Unknown on line 0
+[10-Apr-2018 04:43:29 America/New_York] PHP Stack trace:
+[10-Apr-2018 04:43:29 America/New_York] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 04:43:29 America/New_York] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 04:43:29 America/New_York] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 04:43:29 America/New_York] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 04:43:29 America/New_York] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405

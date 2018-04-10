@@ -11,6 +11,11 @@ return [
 					'name' => '充电价格列表',
 					'href' => url('Charge/index'),
 				),
+				[
+					'action' => 'index',
+					'name' => '添加充电价格',
+					'href' => url('Charge/add'),
+				],
 			),
 		),
 		array(
@@ -24,12 +29,24 @@ return [
 					'font' => 'clone',
 					'href' => url('Device/index'),
 				),
+				[
+					'action' => 'index',
+					'name' => '添加设备',
+					'font' => 'clone',
+					'href' => url('Device/add'),
+				],
 				array(
 					'action' => 'index',
 					'name' => '展示设备列表',
 					'font' => 'clone',
 					'href' => url('Deviceshow/index'),
 				),
+				[
+					'action' => 'index',
+					'name' => '添加展示设备',
+					'font' => 'clone',
+					'href' => url('Deviceshow/add'),
+				],
 			),
 		),
 		array(

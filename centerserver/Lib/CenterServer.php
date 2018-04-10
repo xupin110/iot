@@ -130,6 +130,7 @@ class CenterServer extends Swoole\Protocol\SOAServer {
 			if (Robot::register($header['fd'], self::$clientEnv['_socket']['remote_ip'])) {
 				return array('errno' => 0, 'data' => Util::errCodeMsg(0, "注册成功"));
 			} else {
+				self::$_server->close($request['fd']);
 				return ['errno' => 8010, 'data' => Util::errCodeMsg(8010, "设备未注册，没有权限连接服务器")];
 			}
 		}
