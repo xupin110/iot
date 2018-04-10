@@ -73,6 +73,7 @@
                                 <th>设备类型</th>
                                 <th>设备状态</th>
                                 <th>租用状态</th>
+                                <th>连接状态</th>
                                 <th>添加时间</th>
                                 <th>操作</th>
                             </tr>
@@ -90,7 +91,7 @@
                                         <a href="{$vo.c_qr_code}" download="{$vo.c_name}_{$vo.c_deviceid}">下载二维码</a>
                                         <img class="codeImg" src="{$vo.c_qr_code}" />
                                     </td>
-                                    <td>{$vo.c_device_sn}</td>
+                                    <td>{$vo.c_devicesn}</td>
                                     <td>{$vo.c_name}</td>
                                     <td>{$vo.c_address}</td>
                                     <td>{$vo.c_type}</td>
@@ -120,7 +121,23 @@
                                             </span>
                                         {/if}
                                     </td>
-                                    
+
+                                     <td>
+                                        {if condition="$vo['isconnect'] eq 1"}
+                                            <span style="color:#0dca0d;font-size:14px;" title="已链接">
+                                                已链接
+                                            </span>  
+                                        {elseif condition="$vo['c_lease_status'] eq 0" /}
+                                            <span style="color:red;font-size:14px;" title="未链接">
+                                                未链接
+                                            </span>
+                                        {else /}
+                                            <span style="color:#00b6ff;font-size:14px;" title="异常">
+                                                异常
+                                            </span>
+                                        {/if}
+                                    </td>  
+
                                     <td>{$vo.c_add_time}</td>
                                     <td>
                                         <a class="btn btn-xs btn-info" href="{:url('Device/edit',['id' => $vo.c_deviceid])}" title="编辑">
@@ -146,7 +163,7 @@
                             <div class="col-xs-12">
                                 <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
                                     <ul class="pagination">
-                                        {$list->render()}
+                                        {$list->render()|html_entity_decode}
                                     </ul>
                                 </div>
                             </div>

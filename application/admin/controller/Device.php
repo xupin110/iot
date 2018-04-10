@@ -1,6 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
  * User: liuxiaodong
  * Date: 2018/3/5
  * Time: 18:43
@@ -8,6 +7,7 @@
 
 namespace app\admin\controller;
 use app\service\Service;
+
 class Device extends Base {
 	public $device;
 	public $type;
@@ -27,20 +27,20 @@ class Device extends Base {
 		$status = input('get.status');
 		$where['c_isdel'] = 0;
 		if (!empty($so)) {
-			$where['c_device_sn'] = ['c_device_sn', 'like', "%" . $so . "%"];
+			$where['c_devicesn'] = ['c_devicesn', 'like', "%" . $so . "%"];
 		}
 		// $list = $this->device->getDeviceList($where, 'c_deviceid desc');
-        if (empty($_GET["gid"])){
-            $gets["gid"] = '1';
-        }
-        $page = !empty($_GET['page']) ? $_GET['page'] : 1;
-        $pagesize = 20;       		
-		$list = Service::getInstance()->call("Agent::getAgents",$gets,$page,$pagesize)->getResult(10);
-		var_dump($list);exit;
+		// if (empty($_GET["gid"])) {
+		// 	$gets["gid"] = '1';
+		// }
+		// $page = !empty($_GET['page']) ? $_GET['page'] : 1;
+		// $pagesize = 20;
+		$list = Service::getInstance()->call("Device::getDevices")->getResult(10);
 		if ($list) {
 			foreach ($list as $k => $v) {
 				$list[$k]['c_type'] = $this->type[$v['c_type']];
 			}
+
 		}
 		return $this->fetch('', [
 			'title' => '设备列表',
@@ -54,30 +54,11 @@ class Device extends Base {
 	 * 添加渲染
 	 */
 	public function add() {
-		return $this->fetch('', [
-			'title' => '添加设备',
-		]);
-	}
-	public function csCode() {
-		// 二维码链接
-		//$qrUrl = 'http://'.$_SERVER['SERVER_NAME'].'/Home/Wechat/entry?c_staffid=1';
-		$qrUrl = 'http://www.baidu.com';
-		$logo = './Public/Admin/images/QwLogin.jpg';
-		// 生成二维码
-		$qrcdoe = controller('Common')->qrCode($qrUrl, 2, $logo);
-		var_dump($qrcdoe);
-		$error = controller('Common')->getError();
-		var_dump($error);
-	}
-	/**
-	 * 执行添加
-	 */
-	public function doAdd() {
 		if (request()->isPost()) {
 			//接收数据
 			$data = [
 				'c_name' => input('post.c_name'),
-				'c_device_sn' => input('post.c_device_sn'),
+				'c_devicesn' => input('post.c_devicesn'),
 				'c_lng' => input('post.c_lng'),
 				'c_lat' => input('post.c_lat'),
 				'c_address' => input('post.c_address'),
@@ -126,25 +107,29 @@ class Device extends Base {
 				]);
 			}
 		}
-	}
-	public function edit() {
-		//接收数据，回显页面
-		$list = $this->device->where(['c_deviceid' => input('get.id')])->find();
 		return $this->fetch('', [
-			'title' => '修改设备',
-			'list' => $list,
+			'title' => '添加设备',
 		]);
 	}
-	/**
-	 * 执行修改
-	 */
-	public function doEdit() {
+	public function csCode() {
+		// 二维码链接
+		//$qrUrl = 'http://'.$_SERVER['SERVER_NAME'].'/Home/Wechat/entry?c_staffid=1';
+		$qrUrl = 'http://www.baidu.com';
+		$logo = './Public/Admin/images/QwLogin.jpg';
+		// 生成二维码
+		$qrcdoe = controller('Common')->qrCode($qrUrl, 2, $logo);
+		var_dump($qrcdoe);
+		$error = controller('Common')->getError();
+		var_dump($error);
+	}
+	//接收数据，回显页面
+	public function edit() {
 		if (request()->isPost()) {
 			//接收数据
 			$data = [
 				'c_deviceid' => input('post.pc_deviceid'),
 				'c_name' => input('post.c_name'),
-				'c_device_sn' => input('post.c_device_sn'),
+				'c_devicesn' => input('post.c_devicesn'),
 				'c_lng' => input('post.c_lng'),
 				'c_lat' => input('post.c_lat'),
 				'c_address' => input('post.c_address'),
@@ -169,8 +154,12 @@ class Device extends Base {
 				]);
 			}
 		}
+		$list = $this->device->where(['c_deviceid' => input('get.id')])->find();
+		return $this->fetch('', [
+			'title' => '修改设备',
+			'list' => $list,
+		]);
 	}
-
 	/**
 	 * 显示状态修改
 	 */
@@ -178,6 +167,7 @@ class Device extends Base {
 
 		if (request()->isGet()) {
 			$where['c_deviceid'] = input('get.id');
+
 			$status = $this->device->where($where)->value('c_status');
 			if ($status == 0) {
 				$data['c_status'] = 1;

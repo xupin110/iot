@@ -20819,3 +20819,116 @@ Stack trace:
 [09-Apr-2018 19:00:02 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
 [09-Apr-2018 19:00:02 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
 [09-Apr-2018 19:00:02 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[09-Apr-2018 22:41:30 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /website/iot/libs/Swoole/Network/Server.php on line 240
+[09-Apr-2018 22:41:30 Asia/Shanghai] PHP Stack trace:
+[09-Apr-2018 22:41:30 Asia/Shanghai] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[09-Apr-2018 22:41:30 Asia/Shanghai] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[09-Apr-2018 22:41:30 Asia/Shanghai] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/libs/Swoole/Network/Server.php:195
+[09-Apr-2018 22:41:30 Asia/Shanghai] PHP   4. Swoole\Network\Server::autoCreate() /website/iot/centerserver/center.php:48
+[09-Apr-2018 22:41:30 Asia/Shanghai] PHP   5. Swoole\Network\Server->__construct() /website/iot/libs/Swoole/Network/Server.php:210
+[09-Apr-2018 22:41:30 Asia/Shanghai] PHP   6. Swoole\Server->__construct() /website/iot/libs/Swoole/Network/Server.php:240
+[09-Apr-2018 22:43:27 Asia/Shanghai] PHP Notice:  A non well formed numeric value encountered in /website/iot/libs/Swoole/Network/Server.php on line 240
+[09-Apr-2018 22:43:27 Asia/Shanghai] PHP Stack trace:
+[09-Apr-2018 22:43:27 Asia/Shanghai] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[09-Apr-2018 22:43:27 Asia/Shanghai] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[09-Apr-2018 22:43:27 Asia/Shanghai] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/libs/Swoole/Network/Server.php:195
+[09-Apr-2018 22:43:27 Asia/Shanghai] PHP   4. Swoole\Network\Server::autoCreate() /website/iot/centerserver/center.php:48
+[09-Apr-2018 22:43:27 Asia/Shanghai] PHP   5. Swoole\Network\Server->__construct() /website/iot/libs/Swoole/Network/Server.php:210
+[09-Apr-2018 22:43:27 Asia/Shanghai] PHP   6. Swoole\Server->__construct() /website/iot/libs/Swoole/Network/Server.php:240
+[10-Apr-2018 09:23:38 PRC] PHP Fatal error:  Uncaught think\exception\ErrorException: Swoole\Database\MySQLi SQL Error:Unknown column 'c_devicesn' in 'where clause'<hr />select * from agents where c_devicesn ='127.0.0.1' limit 1<hr />
+Server: 127.0.0.1:3306. <br/>
+Message: Unknown column 'c_devicesn' in 'where clause' <br/>
+Errno: 1054
+ in /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Database/MySQLi.php:158
+Stack trace:
+#0 [internal function]: think\Error::appError(512, 'Swoole\\Database...', '/website/iot/ve...', 158, Array)
+#1 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Database/MySQLi.php(158): trigger_error('Swoole\\Database...', 512)
+#2 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Database.php(166): Swoole\Database\MySQLi->query('select * from a...')
+#3 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Record.php(60): Swoole\Database->query('select * from a...')
+#4 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Model.php(82): Swoole\Record->__construct('127.0.0.1', Object(Swoole\Database), 'agen in /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Database/MySQLi.php on line 158
+[10-Apr-2018 09:23:38 PRC] PHP Stack trace:
+[10-Apr-2018 09:23:38 PRC] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 09:23:38 PRC] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 09:23:38 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 09:23:38 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 09:23:38 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 09:37:34 PRC] PHP Fatal error:  Uncaught Not defined Error
+  thrown in /website/iot/libs/Swoole/ModelLoader.php on line 63
+[10-Apr-2018 09:37:34 PRC] PHP Stack trace:
+[10-Apr-2018 09:37:34 PRC] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 09:37:34 PRC] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 09:37:34 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 09:37:34 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 09:37:34 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 09:38:14 PRC] PHP Fatal error:  Uncaught Not defined Error
+  thrown in /website/iot/libs/Swoole/ModelLoader.php on line 63
+[10-Apr-2018 09:38:14 PRC] PHP Stack trace:
+[10-Apr-2018 09:38:14 PRC] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 09:38:14 PRC] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 09:38:14 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 09:38:14 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 09:38:14 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 09:43:36 PRC] PHP Fatal error:  Uncaught think\exception\ErrorException: Trying to get property of non-object in /website/iot/centerserver/Lib/Robot.php:83
+Stack trace:
+#0 /website/iot/centerserver/Lib/Robot.php(83): think\Error::appError(8, 'Trying to get p...', '/website/iot/ce...', 83, Array)
+#1 /website/iot/centerserver/Device/Device.php(9): Lib\Robot::register(1, '127.0.0.1')
+#2 /website/iot/centerserver/Device/RequestCate.php(19): Device\Device->initConnect(Array)
+#3 /website/iot/centerserver/Device/RequestCate.php(10): Device\RequestCate::distributeRquest(Array, '1')
+#4 /website/iot/centerserver/Lib/CenterServer.php(130): Device\RequestCate::requestControl(Array)
+#5 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php(153): Lib\CenterServer->call(Array, Array)
+#6 {main}
+  thrown in /website/iot/centerserver/Lib/Robot.php on line 83
+[10-Apr-2018 09:43:36 PRC] PHP Stack trace:
+[10-Apr-2018 09:43:36 PRC] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 09:43:36 PRC] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 09:43:36 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 09:43:36 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 09:43:36 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 09:44:07 PRC] PHP Fatal error:  Uncaught think\exception\ErrorException: Trying to get property of non-object in /website/iot/centerserver/Lib/Robot.php:83
+Stack trace:
+#0 /website/iot/centerserver/Lib/Robot.php(83): think\Error::appError(8, 'Trying to get p...', '/website/iot/ce...', 83, Array)
+#1 /website/iot/centerserver/Device/Device.php(9): Lib\Robot::register(2, '127.0.0.1')
+#2 /website/iot/centerserver/Device/RequestCate.php(19): Device\Device->initConnect(Array)
+#3 /website/iot/centerserver/Device/RequestCate.php(10): Device\RequestCate::distributeRquest(Array, '1')
+#4 /website/iot/centerserver/Lib/CenterServer.php(130): Device\RequestCate::requestControl(Array)
+#5 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php(153): Lib\CenterServer->call(Array, Array)
+#6 {main}
+  thrown in /website/iot/centerserver/Lib/Robot.php on line 83
+[10-Apr-2018 09:44:07 PRC] PHP Stack trace:
+[10-Apr-2018 09:44:07 PRC] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 09:44:07 PRC] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 09:44:07 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 09:44:07 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 09:44:07 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 09:44:15 PRC] PHP Fatal error:  Uncaught think\exception\ErrorException: Trying to get property of non-object in /website/iot/centerserver/Lib/Robot.php:83
+Stack trace:
+#0 /website/iot/centerserver/Lib/Robot.php(83): think\Error::appError(8, 'Trying to get p...', '/website/iot/ce...', 83, Array)
+#1 /website/iot/centerserver/Device/Device.php(9): Lib\Robot::register(1, '127.0.0.1')
+#2 /website/iot/centerserver/Device/RequestCate.php(19): Device\Device->initConnect(Array)
+#3 /website/iot/centerserver/Device/RequestCate.php(10): Device\RequestCate::distributeRquest(Array, '1')
+#4 /website/iot/centerserver/Lib/CenterServer.php(130): Device\RequestCate::requestControl(Array)
+#5 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php(153): Lib\CenterServer->call(Array, Array)
+#6 {main}
+  thrown in /website/iot/centerserver/Lib/Robot.php on line 83
+[10-Apr-2018 09:44:15 PRC] PHP Stack trace:
+[10-Apr-2018 09:44:15 PRC] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 09:44:15 PRC] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 09:44:15 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 09:44:15 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 09:44:15 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405
+[10-Apr-2018 09:44:52 PRC] PHP Fatal error:  Uncaught think\exception\ErrorException: Trying to get property of non-object in /website/iot/centerserver/Lib/Robot.php:83
+Stack trace:
+#0 /website/iot/centerserver/Lib/Robot.php(83): think\Error::appError(8, 'Trying to get p...', '/website/iot/ce...', 83, Array)
+#1 /website/iot/centerserver/Device/Device.php(9): Lib\Robot::register(1, '127.0.0.1')
+#2 /website/iot/centerserver/Device/RequestCate.php(19): Device\Device->initConnect(Array)
+#3 /website/iot/centerserver/Device/RequestCate.php(10): Device\RequestCate::distributeRquest(Array, '1')
+#4 /website/iot/centerserver/Lib/CenterServer.php(130): Device\RequestCate::requestControl(Array)
+#5 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php(153): Lib\CenterServer->call(Array, Array)
+#6 {main}
+  thrown in /website/iot/centerserver/Lib/Robot.php on line 83
+[10-Apr-2018 09:44:52 PRC] PHP Stack trace:
+[10-Apr-2018 09:44:52 PRC] PHP   1. {main}() /website/iot/centerserver/center.php:0
+[10-Apr-2018 09:44:52 PRC] PHP   2. Swoole\Network\Server::start() /website/iot/centerserver/center.php:54
+[10-Apr-2018 09:44:52 PRC] PHP   3. {closure:/website/iot/centerserver/center.php:13-54}() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:195
+[10-Apr-2018 09:44:52 PRC] PHP   4. Swoole\Network\Server->run() /website/iot/centerserver/center.php:53
+[10-Apr-2018 09:44:52 PRC] PHP   5. Swoole\Server->start() /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Network/Server.php:405

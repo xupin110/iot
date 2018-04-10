@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <form action="{:url('Device/doEdit')}" method="post" id="myform" class="form-horizontal">
+                        <form action="{:url('Device/edit')}" method="post" id="myform" class="form-horizontal">
                         <input type="hidden" name="c_deviceid" value="{$list['c_deviceid']}" />
 
                             <div class="form-group">
@@ -131,7 +131,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" >设备编号</label>
                                 <div class="col-sm-10">
-                                    <input onkeyup="checkNull(this)" name="c_device_sn" type="text" class="form-control"  placeholder="请输入设备编号" value="{$list.c_device_sn}">
+                                    <input onkeyup="checkNull(this)" name="c_devicesn" type="text" class="form-control"  placeholder="请输入设备编号" value="{$list.c_devicesn}">
                                 </div>
                             </div>
                             <div class="form-group-separator"></div>
