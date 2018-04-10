@@ -46,4 +46,7 @@ class Client {
 		$ret = CenterServer::$_server->send($this->fd, $data);
 		return $ret;
 	}
+	function close() {
+		return CenterServer::$_server->close($this->fd);
+	}
 }

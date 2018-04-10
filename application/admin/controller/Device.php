@@ -66,8 +66,9 @@ class Device extends Base {
 				'c_add_time' => time(),
 			];
 			if ($this->validate->check($data)) {
-				if ($this->device->save($data)) {
-					$deviceID = $this->device->id;
+				$res = Service::getInstance()->call('Device::addDevice', $data)->getResult(10);
+				if ($res) {
+					$deviceID = $res;
 					// 当前域名
 					$DomainName = 'http://' . $_SERVER['SERVER_NAME'];
 					$qrUrl = $DomainName . url('app/home/Wechat/entry', ['deviceId' => $deviceID]);
@@ -167,8 +168,8 @@ class Device extends Base {
 
 		if (request()->isGet()) {
 			$id = input('get.id');
-			$list = Service::getInstance()->call("Device::updateDevice", $id)->getResult(10);
-			if ($list) {
+			$res = Service::getInstance()->call("Device::updateDevice", $id)->getResult(10);
+			if ($res) {
 				return json([
 					'msg' => '修改成功',
 					'status' => 0,
@@ -186,9 +187,11 @@ class Device extends Base {
 	 */
 	public function del() {
 		if (request()->isGet()) {
-			$data['c_isdel'] = 1;
-			$data['c_deviceid'] = input('get.id');
-			if ($this->device->save(['c_isdel' => 1], ['c_deviceid' => (int) input('get.id')])) {
+			// $data['c_isdel'] = 1;
+			$deviceid = input('get.id');
+			$res = Service::getInstance()->call("Device::delDevice", $deviceid)->getResult(10);
+
+			if ($res) {
 				return json([
 					'msg' => '删除成功！',
 					'status' => 0,

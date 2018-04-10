@@ -1,0 +1,64 @@
+[2018-04-10 04:21:45 *7346.3]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Uncaught PDOException: SQLSTATE[08004] [1040] Too many connections in /website/iot/thinkphp/library/think/db/Connection.php:527
+Stack trace:
+#0 /website/iot/thinkphp/library/think/db/Connection.php(527): PDO->__construct('mysql:host=127....', 'root', 'roadforhacker', Array)
+#1 /website/iot/thinkphp/library/think/db/Connection.php(1965): think\db\Connection->connect()
+#2 /website/iot/thinkphp/library/think/db/Connection.php(650): think\db\Connection->initConnec
+[2018-04-10 04:21:45 $7337.0]	WARNING	swManager_check_exit_status: worker#3 abnormal exit, status=255, signal=0
+[2018-04-10 04:22:32 *7720.3]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Uncaught PDOException: SQLSTATE[08004] [1040] Too many connections in /website/iot/thinkphp/library/think/db/Connection.php:527
+Stack trace:
+#0 /website/iot/thinkphp/library/think/db/Connection.php(527): PDO->__construct('mysql:host=127....', 'root', 'roadforhacker', Array)
+#1 /website/iot/thinkphp/library/think/db/Connection.php(1965): think\db\Connection->connect()
+#2 /website/iot/thinkphp/library/think/db/Connection.php(650): think\db\Connection->initConnec
+[2018-04-10 04:22:32 $7337.0]	WARNING	swManager_check_exit_status: worker#3 abnormal exit, status=255, signal=0
+[2018-04-10 04:22:38 *7868.3]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Uncaught PDOException: SQLSTATE[08004] [1040] Too many connections in /website/iot/thinkphp/library/think/db/Connection.php:527
+Stack trace:
+#0 /website/iot/thinkphp/library/think/db/Connection.php(527): PDO->__construct('mysql:host=127....', 'root', 'roadforhacker', Array)
+#1 /website/iot/thinkphp/library/think/db/Connection.php(1965): think\db\Connection->connect()
+#2 /website/iot/thinkphp/library/think/db/Connection.php(650): think\db\Connection->initConnec
+[2018-04-10 04:22:38 $7337.0]	WARNING	swManager_check_exit_status: worker#3 abnormal exit, status=255, signal=0
+[2018-04-10 04:23:01 *8015.3]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Uncaught PDOException: SQLSTATE[08004] [1040] Too many connections in /website/iot/thinkphp/library/think/db/Connection.php:527
+Stack trace:
+#0 /website/iot/thinkphp/library/think/db/Connection.php(527): PDO->__construct('mysql:host=127....', 'root', 'roadforhacker', Array)
+#1 /website/iot/thinkphp/library/think/db/Connection.php(1965): think\db\Connection->connect()
+#2 /website/iot/thinkphp/library/think/db/Connection.php(650): think\db\Connection->initConnec
+[2018-04-10 04:23:01 $7337.0]	WARNING	swManager_check_exit_status: worker#3 abnormal exit, status=255, signal=0
+[2018-04-10 04:24:12 *8164.3]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Uncaught PDOException: SQLSTATE[08004] [1040] Too many connections in /website/iot/thinkphp/library/think/db/Connection.php:527
+Stack trace:
+#0 /website/iot/thinkphp/library/think/db/Connection.php(527): PDO->__construct('mysql:host=127....', 'root', 'roadforhacker', Array)
+#1 /website/iot/thinkphp/library/think/db/Connection.php(1965): think\db\Connection->connect()
+#2 /website/iot/thinkphp/library/think/db/Connection.php(650): think\db\Connection->initConnec
+[2018-04-10 04:24:13 $7337.0]	WARNING	swManager_check_exit_status: worker#3 abnormal exit, status=255, signal=0
+[2018-04-10 04:24:46 *8315.3]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Uncaught PDOException: SQLSTATE[08004] [1040] Too many connections in /website/iot/thinkphp/library/think/db/Connection.php:527
+Stack trace:
+#0 /website/iot/thinkphp/library/think/db/Connection.php(527): PDO->__construct('mysql:host=127....', 'root', 'roadforhacker', Array)
+#1 /website/iot/thinkphp/library/think/db/Connection.php(1965): think\db\Connection->connect()
+#2 /website/iot/thinkphp/library/think/db/Connection.php(650): think\db\Connection->initConnec
+[2018-04-10 04:24:46 $7337.0]	WARNING	swManager_check_exit_status: worker#3 abnormal exit, status=255, signal=0
+[2018-04-10 04:25:49 *8468.3]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Uncaught PDOException: SQLSTATE[08004] [1040] Too many connections in /website/iot/thinkphp/library/think/db/Connection.php:527
+Stack trace:
+#0 /website/iot/thinkphp/library/think/db/Connection.php(527): PDO->__construct('mysql:host=127....', 'root', 'roadforhacker', Array)
+#1 /website/iot/thinkphp/library/think/db/Connection.php(1965): think\db\Connection->connect()
+#2 /website/iot/thinkphp/library/think/db/Connection.php(650): think\db\Connection->initConnec
+[2018-04-10 04:25:49 $7337.0]	WARNING	swManager_check_exit_status: worker#3 abnormal exit, status=255, signal=0
+[2018-04-10 04:30:59 *8880.3]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Uncaught Error: Call to protected method Lib\Client::close() from context 'Lib\Robot' in /website/iot/centerserver/Lib/Robot.php:76
+Stack trace:
+#0 /website/iot/centerserver/App/Device.php(186): Lib\Robot::stopAgent('9')
+#1 [internal function]: App\Device::updateDevice('9')
+#2 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php(365): call_user_func_array('App\\Device::upd...', Array)
+#3 /website/iot/centerserver/Lib/CenterServer.php
+[2018-04-10 04:30:59 $8871.0]	WARNING	swManager_check_exit_status: worker#3 abnormal exit, status=255, signal=0
+[2018-04-10 04:31:09 *8909.3]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Uncaught Error: Call to protected method Lib\Client::close() from context 'Lib\Robot' in /website/iot/centerserver/Lib/Robot.php:76
+Stack trace:
+#0 /website/iot/centerserver/App/Device.php(186): Lib\Robot::stopAgent('9')
+#1 [internal function]: App\Device::updateDevice('9')
+#2 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php(365): call_user_func_array('App\\Device::upd...', Array)
+#3 /website/iot/centerserver/Lib/CenterServer.php
+[2018-04-10 04:31:09 $8871.0]	WARNING	swManager_check_exit_status: worker#3 abnormal exit, status=255, signal=0
+[2018-04-10 04:32:05 *8982.3]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Uncaught Error: Using $this when not in object context in /website/iot/centerserver/Lib/Client.php:50
+Stack trace:
+#0 /website/iot/centerserver/Lib/Robot.php(76): Lib\Client::close()
+#1 /website/iot/centerserver/App/Device.php(186): Lib\Robot::stopAgent('9')
+#2 [internal function]: App\Device::updateDevice('9')
+#3 /website/iot/vendor/matyhtf/swoole_framework/libs/Swoole/Protocol/RPCServer.php(365): call_user_func_array('App\\Device::upd...', Array)
+#4 /website
+[2018-04-10 04:32:05 $8973.0]	WARNING	swManager_check_exit_status: worker#3 abnormal exit, status=255, signal=0

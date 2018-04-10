@@ -146,27 +146,27 @@ class Device {
 
 	/**
 	 * 添加任务
-	 * @param $Device
-	 * @return array
+	 * @Author   liuxiaodong
+	 * @DateTime 2018-04-10
+	 * @param    [type]      $Device [true]
 	 */
-	public static function addDevice($Device) {
+	public static function addDevice($data) {
 		echo "APP ------ Device ----------addDevice" . PHP_EOL;
-		if (empty($Device)) {
-			return Lib\Util::errCodeMsg(101, "参数为空");
+		if (empty($data)) {
+			return false;
 		}
-		$gids = $Device["gids"];
-		unset($Device["gids"]);
-		$id = table("Devices")->put($Device);
-		if ($id === false) {
-			return Lib\Util::errCodeMsg(102, "添加失败");
+		$id = db('Device')->insertGetId($data);
+		if ($id) {
+			//重新加载代理
+			if (Lib\Robot::$aTable->set($id, ["devicesn" => $data['c_devicesn']])) {
+				return $id;
+			} else {
+				db('Device')->delete($id);
+				return false;
+			}
+
 		}
-		$Device_group = table("Device_group");
-		foreach ($gids as $gid) {
-			$Device_group->put(["gid" => $gid, "aid" => $id]);
-		}
-		//重新加载代理
-		Lib\Robot::$aTable->set($id, ["ip" => $Device["ip"]]);
-		return Lib\Util::errCodeMsg(0, "保存成功", $id);
+		return false;
 	}
 
 	/**
@@ -177,7 +177,6 @@ class Device {
 	 */
 	public static function updateDevice($id) {
 		echo "APP ------ Device ----------updateDevice" . PHP_EOL;
-		print_r($id);
 		if (empty($id)) {
 			return false;
 		}
@@ -189,18 +188,28 @@ class Device {
 			$data['c_status'] = 0;
 			$res = Lib\Robot::startAgent($id);
 		}
-		echo "stop or start \n";
 		$data['c_deviceid'] = $id;
 		$res1 = DbDevice::updateDevice($data);
-		echo 'res is ' . "\n";
-		print_r($res);
-		echo 'res1 is ' . "\n";
-		print_r($res1);
 		if ($res && $res1) {
-			echo 'isok';
 			return true;
 		}
-		echo 'isfail;';
+		return false;
+	}
+	/**
+	 *del the device
+	 * @param    [type]      $id [deviceid]
+	 * @return   [type]          [boolean]
+	 */
+	public static function delDevice($id) {
+		echo "APP ------ Device ----------delDevice" . PHP_EOL;
+		if (empty($id)) {
+			return false;
+		}
+		$res = Lib\Robot::delAgent($id);
+		$res1 = db('Device')->delete($id);
+		if ($res && $res1) {
+			return true;
+		}
 		return false;
 	}
 

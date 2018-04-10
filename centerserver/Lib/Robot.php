@@ -72,7 +72,8 @@ class Robot {
 		$devicesn = $res['c_devicesn'];
 		if (self::$table->exist($devicesn)) {
 			$client = new Client($devicesn);
-			$client->call("close", []);
+			// $client->call("close", []);
+			$client->close();
 			if (self::$table->del($devicesn)) {
 				$res1 = true;
 			} else {
@@ -102,6 +103,35 @@ class Robot {
 		if ($res) {
 			return true;
 		}
+		return false;
+	}
+	/**
+	 * del agent device
+	 * del agent device
+	 * @param    [type]      $id [del id]
+	 * @return   [type]          [boolean]
+	 */
+	public static function delAgent($id) {
+		echo "Lib ------ Robot ----------delAgent" . PHP_EOL;
+		$res = self::$aTable->del($id);
+		$res = Device::getOneDevice(['c_deviceid' => $id]);
+		$devicesn = $res['c_devicesn'];
+		if (self::$table->exist($devicesn)) {
+			$client = new Client($devicesn);
+			$client->close();
+			if (self::$table->del($devicesn)) {
+				$res1 = true;
+			} else {
+				$res1 = false;
+			}
+		}
+		{
+			$res1 = true;
+		}
+		if ($res && $res1) {
+			return true;
+		}
+
 		return false;
 	}
 
