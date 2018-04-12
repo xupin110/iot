@@ -11,7 +11,7 @@ namespace Lib;
 
 use Device;
 use Swoole;
-
+use Lib\Robot;
 class CenterServer extends Swoole\Protocol\SOAServer {
 	/**
 	 * @var Swoole\Network\Server
@@ -123,6 +123,8 @@ class CenterServer extends Swoole\Protocol\SOAServer {
 		if ($res['key'] > 0) {
 			return Device\RequestCate::requestControl($res);
 		}
+		echo "------- page fd";
+		print_r(Robot::$table->get('127.0.0.1'));
 		//初始化日志
 		Flog::startLog($request['call']);
 		Flog::log("call:" . $request['call'] . ",params:" . json_encode($request['params']));

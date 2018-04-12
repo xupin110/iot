@@ -50,15 +50,21 @@ return [
 			),
 		),
 		array(
-			'controller' => 'News',
+			'controller' => 'Monitor',
 			'icon' => 'fa fa-newspaper-o',
 			'tle' => '监测管理',
 			'menu' => array(
-				array(
+				[
 					'action' => 'index',
-					'name' => '监测列表',
+					'name' => '租用设备列表',
 					'font' => 'clone',
-					'href' => url('News/index'),
+					'href' => url('Monitor/index'),
+				],
+				array(
+					'action' => 'status',
+					'name' => '设备实时状态',
+					'font' => 'clone',
+					'href' => url('Monitor/status'),
 				),
 			),
 		),

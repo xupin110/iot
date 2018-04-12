@@ -9,7 +9,7 @@
 
 namespace Lib;
 use model\Device;
-
+use Lib\Monitor;
 class Robot {
 
 	static public $table;
@@ -155,10 +155,12 @@ class Robot {
 				$client->call("close", []);
 			}
 			if (self::$table->set($devicesn, ['fd' => $fd, "lasttime" => time()])) {
+				echo "Lib ------ Robot ----------settable\n" . PHP_EOL;
 				return true;
 			}
 		}
 		return false;
+		echo "endLib ------ Robot ----------register\n" . PHP_EOL;
 	}
 
 	/**
@@ -169,7 +171,11 @@ class Robot {
 	public static function unRegister($fd) {
 		echo "Lib ------ Robot ----------unRegister\n" . PHP_EOL;
 		foreach (self::$table as $devicesn => $value) {
+			print_r($devicesn);
+			print_r($value);
+			echo 'fd == '; print_r($fd);
 			if ($value["fd"] == $fd) {
+				Monitor::unRegister($devicesn);
 				return self::$table->del($devicesn);
 			}
 		}

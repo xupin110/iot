@@ -1,0 +1,231 @@
+{include file="public/head"/}
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="__STATIC__/js/datatables/dataTables.bootstrap.css">
+
+</head>
+
+<style type="text/css">
+    .responsive tr td.codeTd{
+        position: relative;
+    }
+    .responsive tr td.codeTd:hover .codeImg{
+        display: block;
+    }
+    .responsive tr td .codeImg{
+        position: absolute;
+        top: 25px;
+        left:-75px;
+        z-index: 1000;
+        width: 200px;
+        display: none;
+    }
+</style>
+<body class="page-body">
+<div class="page-container">
+    <div class="sidebar-menu toggle-others fixed">
+        {include file="public/menu"/}
+    </div>
+    <div class="main-content">
+        <!-- User Info, Notifications and Menu Bar -->
+        {include file="public/nav"/}
+        <button type="button" class="btn btn-info" onclick="location = '{:url('Device/add')}'">
+            <i class="fa fa-plus"></i> Add 
+        </button>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="breadcrumb-env" >
+                            <ol class="breadcrumb bc-1">
+                                <li><a href="{:url('Index/index')}"><i class="fa-home"></i> 首页</a></li>
+                                <li class="active"><strong>设备列表</strong></li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row" style="padding: 12px 15px">
+                            <div class="col-sm-12">
+                                <form method="get" class="form-inline" id="search" action="?">
+
+                                    关键字：<input type="search" name="so" class="form-control" size="30" placeholder="ID，设备编号，名称" value="{$so}">
+                                    <button type="submit" class="btn btn-sm btn-primary" > <i class="fa fa-search"></i>查询 </button>
+                                    <a href="{:url('index')}" class="btn btn-sm btn-primary"> 清除 </a>
+                                </form>
+                                
+                            </div>
+                        </div>
+                        <table style="padding: 0" class="table responsive" id="msg">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>二维码</th>
+                                <th>设备编号</th>
+                                <th>名称</th>
+                                <th>地址</th>
+                                <th>设备类型</th>
+                                <th>设备状态</th>
+                                <th>连接状态</th>
+                                <th>添加时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {empty name="list"}
+                                <tr>
+                                    <td colspan="12">没有数据。。。</td>
+                                </tr>
+                            {else /}
+                            {volist name="list" id="vo"}
+                                <tr>
+                                    <td>{$vo.c_deviceid}</td>
+                                    <td class="codeTd">
+                                        <a href="{$vo.c_qr_code}" download="{$vo.c_name}_{$vo.c_deviceid}">下载二维码</a>
+                                        <img class="codeImg" src="{$vo.c_qr_code}" />
+                                    </td>
+                                    <td>{$vo.c_devicesn}</td>
+                                    <td>{$vo.c_name}</td>
+                                    <td>{$vo.c_address}</td>
+                                    <td>{$vo.c_type}</td>
+                                    <td>
+                                        {if condition="$vo['c_status'] eq 0"}
+                                            <span style="color:#0dca0d;font-size:14px;" title="启用">
+                                                <i class="fa fa-check"></i>
+                                            </span>
+                                        {else /}
+                                            <span style="color:red;font-size:14px;" title="停用">
+                                                <i class="fa fa-close"></i>
+                                            </span>
+                                        {/if}
+                                    </td>
+                                     <td>
+                                        {if condition="$vo['isconnect'] eq 1"}
+                                            <span style="color:#0dca0d;font-size:14px;" title="已链接">
+                                                设备已链接
+                                            </span>  
+                                        {elseif condition="$vo['c_lease_status'] eq 0" /}
+                                            <span style="color:red;font-size:14px;" title="未链接">
+                                                等待链接中
+                                            </span>
+                                        {else /}
+                                            <span style="color:#00b6ff;font-size:14px;" title="异常">
+                                                异常
+                                            </span>
+                                        {/if}
+                                         <a href="javascript:void(0)" class="btn btn-xs btn-info" id="isStatus" c_id="{$vo.c_deviceid}" title="启/停用">
+                                            {if condition="$vo['c_status'] eq 0"}
+                                                <i class="fa fa-close"></i>
+                                            {else /}
+                                                <i class="fa fa-check"></i>
+                                            {/if}
+                                        </a>                                       
+                                    </td>  
+
+                                    <td>{$vo.c_add_time}</td>
+                                    <td>
+                                        <a class="btn btn-xs btn-info" href="{:url('Device/edit',['id' => $vo.c_deviceid])}" title="编辑">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+
+                                        <a href="javascript:void(0)" title="删除" id="remove" c_id="{$vo.c_deviceid}" class="btn btn-xs btn-danger">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {/volist}
+                            {/empty}
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
+                                    <ul class="pagination">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="catorderinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document" style="z-index: 10000">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" > 个人资料 </h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal" >关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{include file="public/foot"/}
+<!-- layer 插件 -->
+<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //点击删除
+        $(document).on("click","#remove",function () {
+            if(confirm('您确定要删除吗？')){
+                //实现删除业务逻辑
+                $.get("{:url('Device/del')}",
+                    {id:$(this).attr("c_id")},
+                    function (data) {
+                        if(data.status == 0){
+                            layer.msg(data.msg,{icon:1,time: 1000},function () {
+                                location.reload();
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:2,time: 1000});
+                        }
+                    },'json');
+            }
+        });
+
+        //点击修改状态
+        $(document).on("click","#isStatus",function () {
+
+            $.get("{:url('Device/isStatus')}",
+                {id:$(this).attr("c_id")},
+                function (data) {
+                    if(data.status == 0){
+                        layer.msg(data.msg,{icon:1,time: 1000},function () {
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon:2,time: 1000});
+                    }
+                },'json');
+        });
+
+        // 图片放大
+        var zindex=1;
+        $(".lemoncode").click(function(){
+            if(($(this).css("transform"))=="matrix(5, 0, 0, 5, 0, 0)"){
+                $(this).css({
+                    "transform":"scale(1)",
+                    "position":"static"
+                })
+            }else{
+                $(this).css({
+                    "transform":"scale(5)",
+                    "position":"relative",
+                    "zIndex" : 1,
+                })
+            }
+
+        })
+    })
+</script>
+
+</body>
+</html>

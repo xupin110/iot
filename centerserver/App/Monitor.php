@@ -7,8 +7,8 @@
 namespace App;
 use Lib;
 use model\Device as DbDevice;
-
-class Device {
+use Lib\Monitor as Mon;
+class Monitor {
 
 	/**
 	 * worker回调中心服 任务执行状态
@@ -45,16 +45,25 @@ class Device {
 	 * 获取代理服务器
 	 * @return array
 	 */
-	public static function getDevices($gets = [], $page = 1, $pagesize = 10) {
-		$list = DbDevice::getAllDevices();
+	public static function getMonitors($gets = [], $page = 1, $pagesize = 10) {
+		// $list = DbDevice::getAllDevices();
+		echo '----------------monitor table'.PHP_EOL;
+		foreach (Mon::$table as $key => $value) {
+					# code...
+					print_r($key);
+					print_r($value);
+				}		
+		$list = DbDevice::getOneColumns([],['c_deviceid','c_devicesn','c_status']);
 		foreach ($list as $k => $task) {
 			$tmp = Lib\Robot::$table->get($task["c_devicesn"]);
+			$monitor = Lib\Monitor::$table->get($task['c_devicesn']);
 			if (!empty($tmp)) {
 				$list[$k]["lasttime"] = $tmp["lasttime"];
 				$list[$k]["isconnect"] = 1;
 			} else {
 				$list[$k]["isconnect"] = 0;
 			}
+			$list[$k]['monitor'] = $monitor;
 		}
 		return $list;
 	}

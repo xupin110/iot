@@ -11,30 +11,38 @@ namespace Lib;
 
 class Util
 {
+    /**
+     * [$data return masg data]
+     * @var [serialize json]
+     */
+    public static $data = [
+            'DeviceSn' => '127.0.0.1',
+            'ServerControl' => '1',
+            'RequestStatus' => '1'
+        ];
+    public static function split($type,$msg = []){
+        $data = self::$data;
+        foreach ($msg as $key => $value) {
+            # code...
+            $data[$key] = $value;
+        }
+        $data['ServerControl'] = $type;
+        return $data; 
+    }
+    public static function msg($type = '1' ,$msg = [])
+    {
+        print_r($msg);
+        if(!in_array($type, ['1','2','3','4','5','6','7','8','9'])){
+            return ['error' => 9001 ,'msg' => 'server wrong 502'];
+        }
+        return self::split($type, $msg); 
+
+    }
     static function listenHost()
     {
         echo "Lib ------ Util ----------listenHost\n".PHP_EOL;
         
         $listenHost = '127.0.0.1';
-        // if (ENV_NAME == 'product') {
-        //     $iplist = swoole_get_local_ip();
-        //     //监听局域网IP
-        //     foreach ($iplist as $k => $v) {
-        //         if (substr($v, 0, 7) == '192.168') {
-        //             $listenHost = $v;
-        //         }
-        //     }
-        // } else {
-        //     if (ENV_NAME == 'test') {
-        //         $iplist = swoole_get_local_ip();
-        //         //监听局域网IP
-        //         foreach ($iplist as $k => $v) {
-        //             if (substr($v, 0, 6) == '172.16') {
-        //                 $listenHost = $v;
-        //             }
-        //         }
-        //     }
-        // }
         return $listenHost;
     }
 
