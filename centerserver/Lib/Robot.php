@@ -179,6 +179,7 @@ class Robot {
 				return self::$table->del($devicesn);
 			}
 		}
+		return true;
 	}
 
 	private static function loadIps() {

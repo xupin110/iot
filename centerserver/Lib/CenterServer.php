@@ -121,6 +121,9 @@ class CenterServer extends Swoole\Protocol\SOAServer {
 		$request['fd'] = $header['fd'];
 		$res = Device\Split::isDevice($request);
 		if ($res['key'] > 0) {
+			if($res['key'] != 9){
+				return Util::msg('1',['DeviceSn' => $request['DeviceSn'],'RequestStatus' => '0']);
+			}
 			return Device\RequestCate::requestControl($res);
 		}
 		echo "------- page fd";

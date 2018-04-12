@@ -7,5 +7,5 @@ vendor
 backup
 public/admin
 public/upload
-centsevice/logs
+centerserver/logs
 centerserver/logs/application.log

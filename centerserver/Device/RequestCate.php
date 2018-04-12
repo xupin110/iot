@@ -75,7 +75,7 @@ class RequestCate {
 			$res = $device->deviceSet($data);
 			break;
 		default:
-			$res = ['errno' => '9205', 'msg' => '传入参数错误'];
+			$res = Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
 			break;
 		}
 		return $res;
