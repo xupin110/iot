@@ -33,6 +33,31 @@ class Tasks
         }
         self::$table->create();
     }
+    public static function updateRelay($data){
+        print_r('LIB------------------------Tasks ----------------updaterelay').PHP_EOL;
+        $devicesn = $data['c_devicesn'];
+        $fd = Robot::$table->get($devicesn);
+        if(!$fd){
+            return false;
+        }
+        $call = Util::msg('3',['DeviceSn' => $devicesn,'Relay' => $data['c_relay']]);
+        $client = new Client($devicesn);
+        $client->control($call);                
+        $res = Monitor::$table->get($devicesn);
+        $relay = unserialize($res['c_relay']);
+        foreach ($data['c_relay'] as $k => $v) {
+            # code...
+            if($relay[$k] == $v){
+                $ret = false;
+            }{
+                $ret = true;
+            }
+        }
+        if(!$ret){
+            return false;
+        }
+        return true;
+    }
 
     /**
      * 每分钟执行一次，判断下一分钟需要执行的任务

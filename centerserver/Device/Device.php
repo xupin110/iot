@@ -16,7 +16,7 @@ class Device {
 		echo "endDevice ------ Device ----------initConnect\n" . PHP_EOL;
 	}
 	//心跳设置状态
-	public function heartbeatSet() {
+	public function heartbeatSet($data) {
 			return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0','msg' => 'not allow use the heartbeat set']);
 	}
 	//预订单状态检查

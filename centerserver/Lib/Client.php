@@ -46,7 +46,28 @@ class Client {
 		$ret = CenterServer::$_server->send($this->fd, $data);
 		return $ret;
 	}
+	function control($data){
+		$data = $this->encode($data);
+		$this->sendControl($data);
+	}
+	//发送控制客户端数据
+	protected function sendControl($data)
+	{
+
+		$ret = CenterServer::$_server->send($this->fd, $data);
+		return $ret;
+
+	}
 	function close() {
 		return CenterServer::$_server->close($this->fd);
+	}
+	protected function encode($data){
+		$uid = 0;
+        $serid = intval(strval(strstr(microtime(), ' ', true) * 1000 * 1000) . rand(100, 999));
+        $length = strlen(serialize($data));
+        $type = 1;
+        $data = serialize($data);
+        $body = pack('NNNN',$length,$type,$uid,$serid).$data;
+        return $body;
 	}
 }

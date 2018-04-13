@@ -116,8 +116,7 @@ class CenterServer extends Swoole\Protocol\SOAServer {
 	public function call($request, $header) {
 		echo "Lib ------ CenterServer ----------call\n" . PHP_EOL;
 		print_r($request);
-		print_r($header);
-
+		// print_r($header);
 		$request['fd'] = $header['fd'];
 		$res = Device\Split::isDevice($request);
 		if ($res['key'] > 0) {

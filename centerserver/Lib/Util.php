@@ -18,7 +18,7 @@ class Util
     public static $data = [
             'DeviceSn' => '127.0.0.1',
             'ServerControl' => '1',
-            'RequestStatus' => '1'
+            // 'RequestStatus' => '1'
         ];
     public static function split($type,$msg = []){
         $data = self::$data;

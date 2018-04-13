@@ -33,7 +33,7 @@ class Split
             }
 
         }
-        if ($res['key']>0){
+        if ($res['key']>3){
             $res['RequestControl'] = $data['RequestControl'];
             $res['data'] = $data;
             return $res;

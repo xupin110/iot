@@ -143,9 +143,7 @@ class Robot {
 	 */
 	public static function register($fd, $devicesn) {
 		echo "Lib ------ Robot ----------register\n" . PHP_EOL;
-		print_r($devicesn);
 		$id = self::$tableAgent->getOneDevice(['c_devicesn' => $devicesn]);
-		print_r($id);
 		if (empty($id)) {
 			return false;
 		}
@@ -155,7 +153,6 @@ class Robot {
 				$client->call("close", []);
 			}
 			if (self::$table->set($devicesn, ['fd' => $fd, "lasttime" => time()])) {
-				echo "Lib ------ Robot ----------settable\n" . PHP_EOL;
 				return true;
 			}
 		}

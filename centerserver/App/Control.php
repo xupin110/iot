@@ -8,7 +8,8 @@ namespace App;
 use Lib;
 use model\Device as DbDevice;
 use Lib\Monitor as Mon;
-class Monitor {
+use Lib\Tasks;
+class Control {
 
 	/**
 	 * worker回调中心服 任务执行状态
@@ -45,48 +46,26 @@ class Monitor {
 	 * 获取代理服务器
 	 * @return array
 	 */
-	public static function getMonitors($gets = [], $page = 1, $pagesize = 10) {
+	public static function getControls($gets = [], $page = 1, $pagesize = 10) {
 		// $list = DbDevice::getAllDevices();
 		echo '----------------monitor table'.PHP_EOL;
 		$list = DbDevice::getOneColumns([],['c_deviceid','c_devicesn','c_status','c_type']);
+		$res = [];
 		foreach ($list as $k => $task) {
 			$tmp = Lib\Robot::$table->get($task["c_devicesn"]);
 			$monitor = Lib\Monitor::$table->get($task['c_devicesn']);
+			$res[$k]['c_devicesn'] = $task['c_devicesn'];
+			$res[$k]['c_deviceid'] = $task['c_deviceid'];
+			$res[$k]['c_type'] = $task['c_type'];
 			if (!empty($tmp)) {
-				$list[$k]["lasttime"] = $tmp["lasttime"];
-				$list[$k]["isconnect"] = 1;
+				$res[$k]["lasttime"] = $tmp["lasttime"];
+				$res[$k]["isconnect"] = 1;
+				$res[$k]['c_relay'] = $monitor['c_relay'];
 			} else {
-				$list[$k]["isconnect"] = 0;
+				$res[$k]["isconnect"] = 0;
 			}
-			$list[$k]['monitor'] = $monitor;
 		}
-		return $list;
-	}
-
-
-	/**
-	 * 添加任务
-	 * @Author   liuxiaodong
-	 * @DateTime 2018-04-10
-	 * @param    [type]      $Device [true]
-	 */
-	public static function addDevice($data) {
-		echo "APP ------ Device ----------addDevice" . PHP_EOL;
-		if (empty($data)) {
-			return false;
-		}
-		$id = DbDevice::insertDevice($data);
-		if ($id) {
-			//重新加载代理
-			if (Lib\Robot::$aTable->set($id, ["devicesn" => $data['c_devicesn']])) {
-				return $id;
-			} else {
-				db('Device')->delete($id);
-				return false;
-			}
-
-		}
-		return false;
+		return $res;
 	}
 
 	/**
@@ -95,25 +74,30 @@ class Monitor {
 	 * @param $Device
 	 * @return array
 	 */
-	public static function updateDevice($id) {
+	public static function update($data) {
 		echo "APP ------ Device ----------updateDevice" . PHP_EOL;
-		if (empty($id)) {
+		if (empty($data['c_deviceid']) && empty($data)) {
 			return false;
 		}
-		$status = db('Device')->where(['c_deviceid' => $id])->value('c_status');
-		if ($status == 0) {
-			$data['c_status'] = 1;
-			$res = Lib\Robot::stopAgent($id);
-		} else {
-			$data['c_status'] = 0;
-			$res = Lib\Robot::startAgent($id);
+		$ret = Tasks::updateRelay($data);
+		if(!$ret){
+			return false;
 		}
-		$data['c_deviceid'] = $id;
-		$res1 = DbDevice::updateDevice($data);
-		if ($res && $res1) {
-			return true;
-		}
-		return false;
+		return true;
+		// $status = db('Device')->where(['c_deviceid' => $id])->value('c_status');
+		// if ($status == 0) {
+		// 	$data['c_status'] = 1;
+		// 	$res = Lib\Robot::stopAgent($id);
+		// } else {
+		// 	$data['c_status'] = 0;
+		// 	$res = Lib\Robot::startAgent($id);
+		// }
+		// $data['c_deviceid'] = $id;
+		// $res1 = DbDevice::updateDevice($data);
+		// if ($res && $res1) {
+		// 	return true;
+		// }
+		// return false;
 	}
 	/**
 	 *del the device

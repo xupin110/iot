@@ -69,7 +69,7 @@ return [
 			),
 		),
 		array(
-			'controller' => 'Introduce',
+			'controller' => 'Control',
 			'icon' => 'fa fa-user-md',
 			'tle' => '控制管理',
 			'menu' => array(
@@ -77,7 +77,7 @@ return [
 					'action' => 'index',
 					'name' => '控制列表',
 					'font' => 'clone',
-					'href' => url('Introduce/index'),
+					'href' => url('Control/index'),
 				),
 			),
 		),
