@@ -53,7 +53,7 @@ class Monitor {
 					print_r($key);
 					print_r($value);
 				}		
-		$list = DbDevice::getOneColumns([],['c_deviceid','c_devicesn','c_status']);
+		$list = DbDevice::getOneColumns([],['c_deviceid','c_devicesn','c_status','c_type']);
 		foreach ($list as $k => $task) {
 			$tmp = Lib\Robot::$table->get($task["c_devicesn"]);
 			$monitor = Lib\Monitor::$table->get($task['c_devicesn']);

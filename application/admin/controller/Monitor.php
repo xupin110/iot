@@ -36,7 +36,7 @@ class Monitor extends Base {
 		// $page = !empty($_GET['page']) ? $_GET['page'] : 1;
 		// $pagesize = 20;
 		$list = Service::getInstance()->call("Monitor::getMonitors")->getResult(10);
-		print_r($list);
+		var_dump($list);exit;
 		if ($list) {
 			foreach ($list as $k => $v) {
 				$list[$k]['c_type'] = $this->type[$v['c_type']];
@@ -57,32 +57,39 @@ class Monitor extends Base {
 	 */
 	public function status() {
 
-		$so = input('get.so');
-		$status = input('get.status');
-		$where['c_isdel'] = 0;
-		if (!empty($so)) {
-			$where['c_devicesn'] = ['c_devicesn', 'like', "%" . $so . "%"];
-		}
-		// $list = $this->device->getDeviceList($where, 'c_deviceid desc');
-		// if (empty($_GET["gid"])) {
-		// 	$gets["gid"] = '1';
-		// }
-		// $page = !empty($_GET['page']) ? $_GET['page'] : 1;
-		// $pagesize = 20;
-		$list = Service::getInstance()->call("Monitor::getMonitors")->getResult(10);
-		var_dump($list);exit;
-		if ($list) {
-			foreach ($list as $k => $v) {
+		$res = Service::getInstance()->call("Monitor::getMonitors")->getResult(10);
+		$list = [];
+		foreach ($res as $k => $v) {
+			# code...
+			if($v['monitor']){
+				$v['monitor']['c_voltage'] = unserialize($v['monitor']['c_voltage']);
+				$v['monitor']['c_current'] = unserialize($v['monitor']['c_current']);
+				$v['monitor']['c_relay'] = unserialize($v['monitor']['c_relay']);
+				$list[$k] = $v['monitor'];
+				$list[$k]['c_deviceid'] = $v['c_deviceid'];
 				$list[$k]['c_type'] = $this->type[$v['c_type']];
+				$list[$k]['map'] = \map\Map::Staticimage($list[$k]['c_lng'].','.$list[$k]['c_lat']);
+				$list[$k]['isconnect'] = 1;
+				// $list[$k]['map'] = \map\Map::Staticimage('106.67923744596,28.87613983528');
 			}
-
+			else{
+				$list[$k]['c_deviceid'] = $v['c_deviceid'];
+				$list[$k]['c_devicesn'] = $v['c_devicesn'];
+				$list[$k]['c_type'] = $this->type[$v['c_type']];
+				$list[$k]['isconnect'] = 0;
+			}
 		}
+		// var_dump($list);exit;
 		return $this->fetch('', [
 			'title' => '设备列表',
 			'list' => $list,
-			'status' => empty($status) ? '' : $status,
-			'so' => empty($so) ? '' : $so,
 		]);
+	}
+	public function split($data){
+		foreach ($data as $k => $v) {
+					# code...
+			
+		}		
 	}
 
 	/**

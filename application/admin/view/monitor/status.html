@@ -28,7 +28,7 @@
     <div class="main-content">
         <!-- User Info, Notifications and Menu Bar -->
         {include file="public/nav"/}
-        <button type="button" class="btn btn-info" onclick="location = '{:url('Device/add')}'">
+        <button type="button" class="btn btn-info" onclick="location = '{:url('Monitor/add')}'">
             <i class="fa fa-plus"></i> Add 
         </button>
         <div class="row">
@@ -47,7 +47,7 @@
                             <div class="col-sm-12">
                                 <form method="get" class="form-inline" id="search" action="?">
 
-                                    关键字：<input type="search" name="so" class="form-control" size="30" placeholder="ID，设备编号，名称" value="{$so}">
+                                    关键字：<input type="search" name="so" class="form-control" size="30" placeholder="ID，设备编号，名称" value="$so}">
                                     <button type="submit" class="btn btn-sm btn-primary" > <i class="fa fa-search"></i>查询 </button>
                                     <a href="{:url('index')}" class="btn btn-sm btn-primary"> 清除 </a>
                                 </form>
@@ -58,82 +58,113 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>二维码</th>
                                 <th>设备编号</th>
-                                <th>名称</th>
-                                <th>地址</th>
                                 <th>设备类型</th>
-                                <th>设备状态</th>
-                                <th>连接状态</th>
-                                <th>添加时间</th>
-                                <th>操作</th>
+                                <th>设备电流</th>
+                                <th>设备电压</th>
+                                <th>设备温度</th>
+                                <th>继电器状态</th>
+                                <th>设备定位</th>
+                                <th>链接方式</th>
                             </tr>
                             </thead>
+
                             <tbody>
                             {empty name="list"}
                                 <tr>
-                                    <td colspan="12">没有数据。。。</td>
+                                    <td colspan="9">没有数据。。。</td>
                                 </tr>
                             {else /}
                             {volist name="list" id="vo"}
+                                {if $vo.isconnect != 1}                  
                                 <tr>
                                     <td>{$vo.c_deviceid}</td>
-                                    <td class="codeTd">
-                                        <a href="{$vo.c_qr_code}" download="{$vo.c_name}_{$vo.c_deviceid}">下载二维码</a>
-                                        <img class="codeImg" src="{$vo.c_qr_code}" />
-                                    </td>
                                     <td>{$vo.c_devicesn}</td>
-                                    <td>{$vo.c_name}</td>
-                                    <td>{$vo.c_address}</td>
+                                    <td>{$vo.c_type}</td>                                   
+                                    <td colspan="6" align="center" style="color: red;">设备未链接...</td>
+                                </tr> 
+                                {else /}    
+                                <tr>
+                                    <td>{$vo.c_deviceid}</td>
+                                    <td>{$vo.c_devicesn}</td>
                                     <td>{$vo.c_type}</td>
-                                    <td>
-                                        {if condition="$vo['c_status'] eq 0"}
-                                            <span style="color:#0dca0d;font-size:14px;" title="启用">
-                                                <i class="fa fa-check"></i>
-                                            </span>
-                                        {else /}
-                                            <span style="color:red;font-size:14px;" title="停用">
-                                                <i class="fa fa-close"></i>
-                                            </span>
-                                        {/if}
-                                    </td>
-                                     <td>
-                                        {if condition="$vo['isconnect'] eq 1"}
-                                            <span style="color:#0dca0d;font-size:14px;" title="已链接">
-                                                设备已链接
-                                            </span>  
-                                        {elseif condition="$vo['c_lease_status'] eq 0" /}
-                                            <span style="color:red;font-size:14px;" title="未链接">
-                                                等待链接中
-                                            </span>
-                                        {else /}
-                                            <span style="color:#00b6ff;font-size:14px;" title="异常">
-                                                异常
-                                            </span>
-                                        {/if}
-                                         <a href="javascript:void(0)" class="btn btn-xs btn-info" id="isStatus" c_id="{$vo.c_deviceid}" title="启/停用">
-                                            {if condition="$vo['c_status'] eq 0"}
-                                                <i class="fa fa-close"></i>
-                                            {else /}
-                                                <i class="fa fa-check"></i>
-                                            {/if}
-                                        </a>                                       
-                                    </td>  
 
-                                    <td>{$vo.c_add_time}</td>
                                     <td>
-                                        <a class="btn btn-xs btn-info" href="{:url('Device/edit',['id' => $vo.c_deviceid])}" title="编辑">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
+                                    
+                                    {volist name="vo.c_current" id="vc"}
+                                            <div class="xe-widget xe-counter" data-count=".num" data-from="0" data-to="{$vc.Value}" data-suffix="" data-duration="3">
+                                                <div class="xe-icon">
+                                                    <i class="">
+                                                      {$vc.No}  
+                                                    </i>
+                                                </div>                                               
+                                                <div class="xe-label">
+                                                    <strong class="num"></strong>
+                                                    <span>{if $vc.Type == 'DC'}直流{elseif $vc.Type == 'AC'}交流{/if}</span>
+                                                </div>
+                                            </div>                                    
+                                    {/volist}
 
-                                        <a href="javascript:void(0)" title="删除" id="remove" c_id="{$vo.c_deviceid}" class="btn btn-xs btn-danger">
-                                            <i class="fa fa-trash-o"></i>
-                                        </a>
+
                                     </td>
+<!-- //VOLTAGE -->
+                                    <td>
+                                    {volist name="vo.c_voltage" id="vv"}
+                                            <div class="xe-widget xe-counter" data-count=".num" data-from="0" data-to="{$vv.Value}" data-suffix="" data-duration="3">
+                                                <div class="xe-icon">
+                                                    <i class="">
+                                                      {$vv.No}  
+                                                    </i>
+                                                </div>                                               
+                                                <div class="xe-label">
+                                                    <strong class="num"></strong>
+                                                    <span>{if $vv.Type == 'DC'}直流{elseif $vv.Type == 'AC'}交流{/if}</span>
+                                                </div>
+                                            </div>                                    
+                                    {/volist}
+
+                                    </td>
+
+                                    <td>
+                                            <div class="xe-widget xe-counter" data-count=".num" data-from="0" data-to="{$vo.c_temp}" data-suffix="" data-duration="3">
+                                                <div class="xe-label">
+                                                    <strong class="num"></strong>
+                                                </div>
+                                            </div> 
+                                    </td>
+
+                                    <td>
+                                    {volist name="vo.c_relay" id="vr"}
+                                            <div class="xe-widget xe-counter" data-count=".num" data-from="0" data-to="sadf" data-suffix="" data-duration="3">
+                                                <div class="xe-icon">
+                                                    <i class="">
+                                                      {$key}  
+                                                    </i>
+                                                </div>                                               
+                                                <div class="xe-label">
+                                                    <strong class="num"></strong>
+                                                    <span>继电器{$key}{if $vr == '0'}未放电{elseif $vr == '1'}充电中{/if}</span>
+                                                </div>
+                                            </div>                                    
+                                    {/volist}
+
+                                    </td>
+                                    <td><img width="200" height="150" src="{$vo.map}"></td>
+                                    <td>{$vo.c_connect_type}</td>
+
+
+
+
                                 </tr>
+
+                   
+                                {/if}                     
                             {/volist}
                             {/empty}
                             </tbody>
+
+
+
                         </table>
                         <div class="row">
                             <div class="col-xs-12">
