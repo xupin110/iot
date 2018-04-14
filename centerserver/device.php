@@ -50,6 +50,12 @@ class Device
     public function onConnect(\swoole_client $cli)
     {
         $data = $this->data;
+        // $data['Relay'] = [
+        //         "1" => "0",
+        //         "2" => "0",
+        //         "3" => "0"
+        //     ];
+             
         $cli->send($this->data($data));
     }
     public function data($data = []){
@@ -83,19 +89,27 @@ class Device
         $a = substr($data, 16);
         $b = unserialize($a);
         print_r($b);
-        // if($b['Relay']['1'] == '1'){
-        //     $ret['Relay']['1'] = '1';
-        //     $ret = $this->data($ret);
-        //     echo '1---';
-        //     print_r($ret);
-        //     $cli->send($ret);            
-        // }else if ($b['Relay']['1'] == '0') {
-        //     # code...
-        //     $ret['Relay']['1'] = '0';
-        //     $ret = $this->data($ret);
-        //     print_r($ret);
-        //     $cli->send($ret); 
-        // }
+        if(isset($b['Relay']))
+        {
+            if($b['Relay']['1'] == '1'){
+                $ret = $this->data;
+                $ret['Relay']['1'] = '1';
+                $ret = $this->data($ret);
+                echo 'open-'.PHP_EOL;
+                print_r($ret);
+                $cli->send($ret);            
+            }else if ($b['Relay']['1'] == '0') {
+                # code...
+                $ret =$this->data;
+                $ret['Relay']['1'] = '0';
+                $ret = $this->data($ret);
+                echo "close".PHP_EOL;
+                print_r($ret);
+                $cli->send($ret); 
+            }
+
+        }
+
         //     print_r($b);
         //     print_r($b['errno']);
         //     print_r($b['call']);

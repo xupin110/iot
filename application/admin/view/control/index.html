@@ -95,12 +95,13 @@
                                                 设备未放电
                                             </span>                                            
                                             {/if} 
-                                            <span></span>
-                                             <a href="javascript:void(0)" class="btn btn-xs btn-info" id="isStatus" c_id="{$vo.c_deviceid}" title="启/停用">
+                                            <span style="width: 10px;"></span>
+                                             <a href="javascript:void(0)" class="btn btn-xs btn-info" id="isStatus" c_id="{$vo.c_deviceid}" c_devicesn="{$vo.c_devicesn}" key="{$key}" value="{if $vc eq 0}1{else /}0{/if}" title="{if $vc eq 0}充电{else /}断电{/if}">
                                                 {if $vc eq 0}
-                                                    <i class="fa fa-close"></i>
+                                                    <i class="fa fa-check"></i>                                                
+
                                                 {else /}
-                                                    <i class="fa fa-check"></i>
+                                                    <i class="fa fa-close"></i>
                                                 {/if}
                                              </a> 
                                         </p>
@@ -186,8 +187,13 @@
         //点击修改状态
         $(document).on("click","#isStatus",function () {
 
-            $.get("{:url('Device/isStatus')}",
-                {id:$(this).attr("c_id")},
+            $.post("{:url('Control/update')}",
+                {
+                    id:$(this).attr("c_id"),
+                    sn:$(this).attr("c_devicesn"),
+                    key:$(this).attr("key"),
+                    value:$(this).attr("value")
+                },
                 function (data) {
                     if(data.status == 0){
                         layer.msg(data.msg,{icon:1,time: 1000},function () {
