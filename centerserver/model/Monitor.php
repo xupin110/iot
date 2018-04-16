@@ -29,4 +29,7 @@ class Monitor {
 	public static function updateMonitor($data) {
 		return db('monitor')->update($data);
 	}
+	public static function insertMonitor($data){
+		return db('Monitor')->insertGetId($data);
+	}	
 }

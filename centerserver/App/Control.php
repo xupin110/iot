@@ -18,7 +18,7 @@ class Control {
 	 */
 
 	public static function notify($tasks) {
-		echo "APP ------ Device ----------notify" . PHP_EOL;
+		echo "APP ------ Control ----------notify" . PHP_EOL;
 		if (empty($tasks) || count($tasks) <= 0) {
 			return Lib\Util::errCodeMsg(101, "The tasks can't be empty");
 		}
@@ -48,7 +48,7 @@ class Control {
 	 */
 	public static function getControls($gets = [], $page = 1, $pagesize = 10) {
 		// $list = DbDevice::getAllDevices();
-		echo '----------------monitor table'.PHP_EOL;
+		echo '----------------Control table'.PHP_EOL;
 		$list = DbDevice::getOneColumns([],['c_deviceid','c_devicesn','c_status','c_type']);
 		$res = [];
 		foreach ($list as $k => $task) {
@@ -64,6 +64,7 @@ class Control {
 			} else {
 				$res[$k]["isconnect"] = 0;
 			}
+			$res[$k]['connecttype'] = $monitor['c_connect_type'];
 		}
 		return $res;
 	}
@@ -75,7 +76,7 @@ class Control {
 	 * @return array
 	 */
 	public static function update($data) {
-		echo "APP ------ Device ----------updateDevice" . PHP_EOL;
+		echo "APP ------ Control ----------updateDevice" . PHP_EOL;
 		if (empty($data['c_deviceid']) && empty($data)) {
 			return false;
 		}
@@ -84,21 +85,22 @@ class Control {
 			return false;
 		}
 		return true;
-		// $status = db('Device')->where(['c_deviceid' => $id])->value('c_status');
-		// if ($status == 0) {
-		// 	$data['c_status'] = 1;
-		// 	$res = Lib\Robot::stopAgent($id);
-		// } else {
-		// 	$data['c_status'] = 0;
-		// 	$res = Lib\Robot::startAgent($id);
-		// }
-		// $data['c_deviceid'] = $id;
-		// $res1 = DbDevice::updateDevice($data);
-		// if ($res && $res1) {
-		// 	return true;
-		// }
-		// return false;
 	}
+	/**
+	 * @param    [type]      $data [description]
+	 * @return   [type]            [description]
+	 */
+	public static function contype($data) {
+		echo "APP ------ Control ----------updateDevice" . PHP_EOL;
+		if (empty($data['c_devicesn']) && empty($data)) {
+			return false;
+		}
+		$ret = Tasks::contype($data);
+		if(!$ret){
+			return false;
+		}
+		return true;
+	}	
 	/**
 	 *del the device
 	 * @param    [type]      $id [deviceid]
