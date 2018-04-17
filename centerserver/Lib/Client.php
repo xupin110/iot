@@ -64,9 +64,9 @@ class Client {
 	protected function encode($data){
 		$uid = 0;
         $serid = intval(strval(strstr(microtime(), ' ', true) * 1000 * 1000) . rand(100, 999));
-        $length = strlen(serialize($data));
-        $type = 1;
-        $data = serialize($data);
+        $length = strlen(json_encode($data));
+        $type = 2;
+        $data = json_encode($data);
         $body = pack('NNNN',$length,$type,$uid,$serid).$data;
         return $body;
 	}
