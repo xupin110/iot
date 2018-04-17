@@ -58,7 +58,17 @@ class Tasks
         }
         return true;
     }
-
+    public static function contype($data){
+         $devicesn = $data['c_devicesn'];
+        $fd = Robot::$table->get($devicesn);
+        if(!$fd){
+            return false;
+        }
+        $call = Util::msg('9',['DeviceSn' => $devicesn,'WifiCon' => ['Acount' => 'user123','Pass' => 'pass123']]);
+        $client = new Client($devicesn);
+        $client->control($call);                
+        return true;       
+    }
     /**
      * 每分钟执行一次，判断下一分钟需要执行的任务
      */
