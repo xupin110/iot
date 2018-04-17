@@ -40,14 +40,14 @@ class Device {
 			return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '1']);	
 	}
 	//客户端设置状态
-	public function deviceSet() {
+	public function deviceSet($data) {
 		if(!Monitor::updateMonitor($data)){
 			return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
 		}
 		return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '1']); 
 	}
 	//断开电源
-	public function closePower() {
+	public function closePower($data) {
 		if(!Monitor::updateMonitor($data)){
 			return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
 		}
