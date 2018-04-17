@@ -60,6 +60,7 @@
                                 <th>设备类型</th>
                                 <th>连接状态</th>
                                 <th style="text-align: center">继电器控制</th>
+                                <th>链接方式</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -108,21 +109,32 @@
                                         {/volist}
                                       
                                     </td>
+                                     <td>
+                                        {$vo.connecttype}
+                                        <p style="float: right;">
+                                            
+                                            <button id='connecttype' c_sn="{$vo.c_devicesn}" c_value="{if $vo.connecttype == 'GPS'}WIFI{elseif $vo.connecttype == 'WIFI'}GPS{/if}">{if $vo.connecttype == 'GPS'}改为WIFI连接{elseif $vo.connecttype == 'WIFI'}改为WIFI连接{/if}</button>
+                                            
+                                        </p>
+                                    </td>                                    
                                     {elseif $vo.isconnect eq 0 /}
                                     <td>
                                             <span style="color:red;font-size:14px;" title="停用">
                                                 <i class="fa fa-close"></i>
                                             </span>                                        
                                     </td>
-                                    <td align="center" style="color: red" colspan="2">设备未开机</td>  
+
+                                    <td align="center" style="color: red" colspan="3">设备未开机</td>  
                                     {else /}
                                     <td>
                                             <span style="color:red;font-size:14px;" title="停用">
                                                 <i class="fa fa-close"></i>
                                             </span>                                        
                                     </td>
-                                    <td align="center" style="color: red" colspan="2">设备异常</td>
-                                    {/if}    
+                                    <td align="center" style="color: red" colspan="3">设备异常</td>
+
+                                    {/if}
+     
                                 </tr>
                             {/volist}
                             {/empty}
@@ -193,6 +205,25 @@
                     sn:$(this).attr("c_devicesn"),
                     key:$(this).attr("key"),
                     value:$(this).attr("value")
+                },
+                function (data) {
+                    if(data.status == 0){
+                        layer.msg(data.msg,{icon:1,time: 1000},function () {
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon:2,time: 1000});
+                    }
+                },'json');
+        });
+
+        //点击修改连接状态
+        $(document).on("click","#connecttype",function () {
+
+            $.post("{:url('Control/contype')}",
+                {
+                    sn:$(this).attr("c_sn"),
+                    value:$(this).attr("c_value")
                 },
                 function (data) {
                     if(data.status == 0){

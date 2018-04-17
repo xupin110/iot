@@ -45,6 +45,8 @@ class Monitor {
         $table['c_device_request'] = $data['RequestControl'];
         $table['c_relay'] = serialize($data['Relay']);
         $table['c_connect_type'] = $data['ConnectType'];
+        print_r($table);
+        DbMonitor::insertMonitor($table);
         if(!self::$table->set($data['DeviceSn'],$table)){
             return false;
         }
