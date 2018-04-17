@@ -74,36 +74,6 @@ class Control extends Base {
 	}	/**
 	 * 添加渲染
 	 */
-	public function contype() {
-		/**
-		 * [
-		 * 		'id' => '11',
-		 * 		'sn' => '127.0.0.1',
-		 * 		'key' => '2',
-		 * 		'value' => '0'
-		 * ]
-		 */
-		if (request()->isPost()) {
-			$data['c_devicesn'] = input('post.sn');
-			$data['c_connect_type']  = input('post.value');
-			$res = Service::getInstance()->call("Control::contype", $data)->getResult(2);
-			if ($res) {
-				return json([
-					'msg' => '成功',
-					'status' => 0,
-				]);
-			}
-			return json([
-				'msg' => '失败',
-				'status' => 1,
-			]);
-		}{
-			return json([
-				'msg' => '失败',
-				'status' => 1,
-			]);			
-		}
-	}	
 	public function add() {
 		if (request()->isPost()) {
 			//接收数据

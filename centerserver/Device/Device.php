@@ -30,6 +30,7 @@ class Device {
 		if(!Monitor::updateMonitor($data)){
 			return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
 		}
+		return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '1']);			
 	}
 	//断开连接
 	public function closeConnect($data) {
