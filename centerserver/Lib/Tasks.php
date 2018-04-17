@@ -33,10 +33,6 @@ class Tasks
         }
         self::$table->create();
     }
-    /**
-     * @param    [type]      $data [description]
-     * @return   [type]            [description]
-     */
     public static function updateRelay($data){
         print_r('LIB------------------------Tasks ----------------updaterelay').PHP_EOL;
         $devicesn = $data['c_devicesn'];
@@ -60,26 +56,6 @@ class Tasks
         if(!$ret){
             return false;
         }
-        return true;
-    }
-    /**
-     * @param    [type]      $data [description]
-     * @return   [type]            [description]
-     */
-    public static function contype($data){
-        print_r('LIB------------------------Tasks ----------------updaterelay').PHP_EOL;
-        $devicesn = $data['c_devicesn'];
-        $fd = Robot::$table->get($devicesn);
-        if(!$fd){
-            return false;
-        }
-        $call = Util::msg('9',['DeviceSn' => $devicesn,'WifiCon' => ["Acount" => "wifitest","Pass" => "123456"]]);
-        $client = new Client($devicesn);
-        $client->control($call);                
-        $res = Monitor::$table->get($devicesn);
-        if($res['c_connect_type'] != $data['c_connect_type']){
-            return false;
-        }        
         return true;
     }
 
