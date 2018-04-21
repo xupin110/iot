@@ -33,7 +33,7 @@ private $data = [
                 "Temp"=>"40",
                 "Lng"=>"135.2342342",
                 "Lat"=>"23.9978979",
-                "ConnectType">"wifi"
+                "ConnectType"=>"wifi"
                 ];
     public function __construct(){
         // 实例化客户端
