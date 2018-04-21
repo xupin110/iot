@@ -21,19 +21,19 @@ class Device
 //            "ConnectType" => "GPS",
 //        ];
 private $data = [
-                "DeviceSn":"cnki-232423",
-                "RequestControl":"1",
-                "Relay":[
-                "1":"0",
-                "2":"0",
-                "3":"0"
+                "DeviceSn"=>"cnki-232423",
+                "RequestControl"=>"1",
+                "Relay"=>[
+                "1"=>"0",
+                "2"=>"0",
+                "3"=>"0"
                 ],
-                "Vdc":[["Type":"DC","Value":"4","No":"1"],["Type":"AC","Value":"4","No":"2"]],
-                "Current":[["Type":"DC","Value":"4","No":"1"],["Type":"AC","Value":"4","No":"2"]],
-                "Temp":"40",
-                "Lng":"135.2342342",
-                "Lat":"23.9978979",
-                "ConnectType":"wifi"
+                "Vdc"=>[["Type"=>"DC","Value"=>"4","No"=>"1"],["Type"=>"AC","Value"=>"4","No"=>"2"]],
+                "Current"=>[["Type"=>"DC","Value"=>"4","No"=>"1"],["Type"=>"AC","Value"=>"4","No"=>"2"]],
+                "Temp"=>"40",
+                "Lng"=>"135.2342342",
+                "Lat"=>"23.9978979",
+                "ConnectType">"wifi"
                 ];
     public function __construct(){
         // 实例化客户端
