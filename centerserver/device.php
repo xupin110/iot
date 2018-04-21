@@ -55,8 +55,7 @@ class Device
         //         "2" => "0",
         //         "3" => "0"
         //     ];
-
-        print_r($this->data($data));
+        print_r($data);
         $cli->send($this->data($data));
     }
     public function data($data = []){
