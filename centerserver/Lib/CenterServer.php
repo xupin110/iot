@@ -125,24 +125,25 @@ class CenterServer extends Swoole\Protocol\SOAServer {
 			}
 			return Device\RequestCate::requestControl($res);
 		}
-		echo "------- page fd";
-		print_r(Robot::$table->get('127.0.0.1'));
-		//初始化日志
-		Flog::startLog($request['call']);
-		Flog::log("call:" . $request['call'] . ",params:" . json_encode($request['params']));
-		if ($request['call'] == 'register') {
-			if (Robot::register($header['fd'], self::$clientEnv['_socket']['remote_ip'])) {
-				return array('errno' => 0, 'data' => Util::errCodeMsg(0, "注册成功"));
-			} else {
-				self::$_server->close($request['fd']);
-				return ['errno' => 8010, 'data' => Util::errCodeMsg(8010, "设备未注册，没有权限连接服务器")];
-			}
-		}
+//		echo "------- page fd";
+//		print_r(Robot::$table->get('127.0.0.1'));
+//		//初始化日志
+//		Flog::startLog($request['call']);
+//		Flog::log("call:" . $request['call'] . ",params:" . json_encode($request['params']));
+//		if ($request['call'] == 'register') {
+//			if (Robot::register($header['fd'], self::$clientEnv['_socket']['remote_ip'])) {
+//				return array('errno' => 0, 'data' => Util::errCodeMsg(0, "注册成功"));
+//			} else {
+//				self::$_server->close($request['fd']);
+//				return ['errno' => 8010, 'data' => Util::errCodeMsg(8010, "设备未注册，没有权限连接服务器")];
+//			}
+//		}
 
 		$ret = parent::call($request, $header);
-		Flog::log($ret);
-		Flog::endLog();
-		Flog::flush();
+//		Flog::log($ret);
+//		Flog::endLog();
+//		Flog::flush();
+        print_r($ret);
 		return $ret;
 	}
 
