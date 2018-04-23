@@ -77,6 +77,8 @@ class Php
 
         if (isset($data['template'])) {
             $__template__ = $template;
+            $template     = $data['template'];
+            unset($data['template'], $data['__template__']);
             extract($data, EXTR_OVERWRITE);
             include $__template__;
         } else {
@@ -96,6 +98,8 @@ class Php
     {
         if (isset($data['content'])) {
             $__content__ = $content;
+            $content     = $data['content'];
+            unset($data['content'], $data['__content__']);
             extract($data, EXTR_OVERWRITE);
             eval('?>' . $__content__);
         } else {
@@ -141,7 +145,7 @@ class Php
             if ($controller) {
                 if ('' == $template) {
                     // 如果模板文件名为空 按照默认规则定位
-                    $template = str_replace('.', DIRECTORY_SEPARATOR, $controller) . $depr . (1 == $this->config['auto_rule'] ? Loader::parseName($request->action(true)) : $request->action());
+                    $template = str_replace('.', DIRECTORY_SEPARATOR, $controller) . $depr . $this->getActionTemplate($request);
                 } elseif (false === strpos($template, $depr)) {
                     $template = str_replace('.', DIRECTORY_SEPARATOR, $controller) . $depr . $template;
                 }
@@ -151,6 +155,14 @@ class Php
         }
 
         return $path . ltrim($template, '/') . '.' . ltrim($this->config['view_suffix'], '.');
+    }
+
+    protected function getActionTemplate($request)
+    {
+        $rule = [$request->action(true), Loader::parseName($request->action(true)), $request->action()];
+        $type = $this->config['auto_rule'];
+
+        return isset($rule[$type]) ? $rule[$type] : $rule[0];
     }
 
     /**
