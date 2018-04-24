@@ -4,6 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+    "hash": "4b5a61e6b541465f52a489a4878289dc",
     "content-hash": "0498b4ee3e16524b4e462668738546f9",
     "packages": [
         {
@@ -16,7 +17,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/Bacon/BaconQrCode/5a91b62b9d37cee635bbf8d553f4546057250bee.zip",
+                "url": "https://api.github.com/repos/Bacon/BaconQrCode/zipball/5a91b62b9d37cee635bbf8d553f4546057250bee",
                 "reference": "5a91b62b9d37cee635bbf8d553f4546057250bee",
                 "shasum": ""
             },
@@ -50,7 +51,7 @@
             ],
             "description": "BaconQrCode is a QR code generator for PHP.",
             "homepage": "https://github.com/Bacon/BaconQrCode",
-            "time": "2017-10-17T09:59:25+00:00"
+            "time": "2017-10-17 09:59:25"
         },
         {
             "name": "endroid/qr-code",
@@ -62,7 +63,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/endroid/qr-code/a9a57ab57ac75928fcdcfb2a71179963ff6fe573.zip",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/a9a57ab57ac75928fcdcfb2a71179963ff6fe573",
                 "reference": "a9a57ab57ac75928fcdcfb2a71179963ff6fe573",
                 "shasum": ""
             },
@@ -119,7 +120,7 @@
                 "qrcode",
                 "symfony"
             ],
-            "time": "2017-10-22T18:56:00+00:00"
+            "time": "2017-10-22 18:56:00"
         },
         {
             "name": "endroid/qrcode",
@@ -131,7 +132,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/endroid/qr-code/a9a57ab57ac75928fcdcfb2a71179963ff6fe573.zip",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/a9a57ab57ac75928fcdcfb2a71179963ff6fe573",
                 "reference": "a9a57ab57ac75928fcdcfb2a71179963ff6fe573",
                 "shasum": ""
             },
@@ -189,7 +190,7 @@
                 "symfony"
             ],
             "abandoned": "endroid/qr-code",
-            "time": "2017-10-22T18:56:00+00:00"
+            "time": "2017-10-22 18:56:00"
         },
         {
             "name": "filp/whoops",
@@ -201,7 +202,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/filp/whoops/c6081b8838686aa04f1e83ba7e91f78b7b2a23e6.zip",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/c6081b8838686aa04f1e83ba7e91f78b7b2a23e6",
                 "reference": "c6081b8838686aa04f1e83ba7e91f78b7b2a23e6",
                 "shasum": ""
             },
@@ -250,7 +251,7 @@
                 "throwable",
                 "whoops"
             ],
-            "time": "2017-11-23T18:22:44+00:00"
+            "time": "2017-11-23 18:22:44"
         },
         {
             "name": "khanamiryan/qrcode-detector-decoder",
@@ -262,7 +263,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/khanamiryan/php-qrcode-detector-decoder/96d5f80680b04803c4f1b69d6e01735e876b80c7.zip",
+                "url": "https://api.github.com/repos/khanamiryan/php-qrcode-detector-decoder/zipball/96d5f80680b04803c4f1b69d6e01735e876b80c7",
                 "reference": "96d5f80680b04803c4f1b69d6e01735e876b80c7",
                 "shasum": ""
             },
@@ -300,7 +301,7 @@
                 "qr",
                 "zxing"
             ],
-            "time": "2017-01-13T09:11:46+00:00"
+            "time": "2017-01-13 09:11:46"
         },
         {
             "name": "matyhtf/swoole_framework",
@@ -312,7 +313,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/matyhtf/framework/b60c52627b697dbd02c9a6177f928120ba7e06e4.zip",
+                "url": "https://api.github.com/repos/matyhtf/framework/zipball/b60c52627b697dbd02c9a6177f928120ba7e06e4",
                 "reference": "b60c52627b697dbd02c9a6177f928120ba7e06e4",
                 "shasum": ""
             },
@@ -347,7 +348,7 @@
                 "webserver",
                 "websocket"
             ],
-            "time": "2017-11-20T04:01:17+00:00"
+            "time": "2017-11-20 04:01:17"
         },
         {
             "name": "myclabs/php-enum",
@@ -359,7 +360,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/myclabs/php-enum/3ed7088cfd0a0e06534b7f8b0eee82acea574fac.zip",
+                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/3ed7088cfd0a0e06534b7f8b0eee82acea574fac",
                 "reference": "3ed7088cfd0a0e06534b7f8b0eee82acea574fac",
                 "shasum": ""
             },
@@ -391,7 +392,7 @@
             "keywords": [
                 "enum"
             ],
-            "time": "2017-06-28T16:24:08+00:00"
+            "time": "2017-06-28 16:24:08"
         },
         {
             "name": "paragonie/random_compat",
@@ -403,7 +404,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/paragonie/random_compat/5da4d3c796c275c55f057af5a643ae297d96b4d8.zip",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
                 "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
                 "shasum": ""
             },
@@ -439,7 +440,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-09-27T21:40:39+00:00"
+            "time": "2017-09-27 21:40:39"
         },
         {
             "name": "psr/log",
@@ -451,7 +452,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/php-fig/log/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d.zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "shasum": ""
             },
@@ -486,7 +487,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "symfony/console",
@@ -498,7 +499,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/console/d4bb70fa24d540c309d88a9d6e43fb2d339b1fbf.zip",
+                "url": "https://api.github.com/repos/symfony/console/zipball/d4bb70fa24d540c309d88a9d6e43fb2d339b1fbf",
                 "reference": "d4bb70fa24d540c309d88a9d6e43fb2d339b1fbf",
                 "shasum": ""
             },
@@ -555,7 +556,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2018-04-03T05:22:50+00:00"
+            "time": "2018-04-03 05:22:50"
         },
         {
             "name": "symfony/debug",
@@ -567,7 +568,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/debug/9cf7c2271cfb89ef9727db1b740ca77be57bf9d7.zip",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/9cf7c2271cfb89ef9727db1b740ca77be57bf9d7",
                 "reference": "9cf7c2271cfb89ef9727db1b740ca77be57bf9d7",
                 "shasum": ""
             },
@@ -611,7 +612,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2018-04-03T05:22:50+00:00"
+            "time": "2018-04-03 05:22:50"
         },
         {
             "name": "symfony/inflector",
@@ -623,7 +624,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/inflector/217fa0f0e8fce417bd225e4195b12c56e87273a8.zip",
+                "url": "https://api.github.com/repos/symfony/inflector/zipball/217fa0f0e8fce417bd225e4195b12c56e87273a8",
                 "reference": "217fa0f0e8fce417bd225e4195b12c56e87273a8",
                 "shasum": ""
             },
@@ -668,7 +669,7 @@
                 "symfony",
                 "words"
             ],
-            "time": "2018-01-03T17:14:19+00:00"
+            "time": "2018-01-03 17:14:19"
         },
         {
             "name": "symfony/options-resolver",
@@ -680,7 +681,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/options-resolver/f3109a6aedd20e35c3a33190e932c2b063b7b50e.zip",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/f3109a6aedd20e35c3a33190e932c2b063b7b50e",
                 "reference": "f3109a6aedd20e35c3a33190e932c2b063b7b50e",
                 "shasum": ""
             },
@@ -722,7 +723,7 @@
                 "configuration",
                 "options"
             ],
-            "time": "2018-01-11T07:56:07+00:00"
+            "time": "2018-01-11 07:56:07"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -734,7 +735,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/polyfill-mbstring/78be803ce01e55d3491c1397cf1c64beb9c1b63b.zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/78be803ce01e55d3491c1397cf1c64beb9c1b63b",
                 "reference": "78be803ce01e55d3491c1397cf1c64beb9c1b63b",
                 "shasum": ""
             },
@@ -781,7 +782,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-01-30T19:27:44+00:00"
+            "time": "2018-01-30 19:27:44"
         },
         {
             "name": "symfony/polyfill-php70",
@@ -793,7 +794,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/polyfill-php70/3532bfcd8f933a7816f3a0a59682fc404776600f.zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/3532bfcd8f933a7816f3a0a59682fc404776600f",
                 "reference": "3532bfcd8f933a7816f3a0a59682fc404776600f",
                 "shasum": ""
             },
@@ -840,7 +841,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-01-30T19:27:44+00:00"
+            "time": "2018-01-30 19:27:44"
         },
         {
             "name": "symfony/property-access",
@@ -852,7 +853,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/property-access/a6e8c778b220dfd5cd5f5dcb09f87ee232dd608a.zip",
+                "url": "https://api.github.com/repos/symfony/property-access/zipball/a6e8c778b220dfd5cd5f5dcb09f87ee232dd608a",
                 "reference": "a6e8c778b220dfd5cd5f5dcb09f87ee232dd608a",
                 "shasum": ""
             },
@@ -908,7 +909,7 @@
                 "property path",
                 "reflection"
             ],
-            "time": "2018-01-03T07:37:34+00:00"
+            "time": "2018-01-03 07:37:34"
         },
         {
             "name": "topthink/framework",
@@ -920,7 +921,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/framework/3156528b80dfa004109dfbfdbeb770b376a13f01.zip",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/3156528b80dfa004109dfbfdbeb770b376a13f01",
                 "reference": "3156528b80dfa004109dfbfdbeb770b376a13f01",
                 "shasum": ""
             },
@@ -959,7 +960,7 @@
                 "orm",
                 "thinkphp"
             ],
-            "time": "2018-04-19T10:12:09+00:00"
+            "time": "2018-04-19 10:12:09"
         },
         {
             "name": "topthink/think-installer",
@@ -971,7 +972,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/think-installer/1be326e68f63de4e95977ed50f46ae75f017556d.zip",
+                "url": "https://api.github.com/repos/top-think/think-installer/zipball/1be326e68f63de4e95977ed50f46ae75f017556d",
                 "reference": "1be326e68f63de4e95977ed50f46ae75f017556d",
                 "shasum": ""
             },
@@ -1000,7 +1001,7 @@
                     "email": "448901948@qq.com"
                 }
             ],
-            "time": "2017-05-27T06:58:09+00:00"
+            "time": "2017-05-27 06:58:09"
         }
     ],
     "packages-dev": [],

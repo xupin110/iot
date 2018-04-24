@@ -21,7 +21,7 @@ class Device
 //            "ConnectType" => "GPS",
 //        ];
 private $data = [
-                "DeviceSn"=>"cnki-232423",
+                "DeviceSn"=>"127.0.0.1",
                 "RequestControl"=>"1",
                 "Relay"=>[
                 "1"=>"0",
@@ -33,7 +33,7 @@ private $data = [
                 "Temp"=>"40",
                 "Lng"=>"135.2342342",
                 "Lat"=>"23.9978979",
-                "ConnectType"=>"wifi"
+                "ConnectType"=>"GPS"
                 ];
     public function __construct(){
         // 实例化客户端

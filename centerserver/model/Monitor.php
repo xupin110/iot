@@ -30,6 +30,7 @@ class Monitor {
 		return db('monitor')->update($data);
 	}
 	public static function insertMonitor($data){
+	    $data['create_time'] = time();
 		return db('Monitor')->insertGetId($data);
 	}	
 }

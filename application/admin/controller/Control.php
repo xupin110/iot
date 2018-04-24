@@ -37,6 +37,23 @@ class Control extends Base {
 			'list' => $list,
 		]);
 	}
+	public function preOrderCheck(){
+	    if(request()->isPost()){
+            $data['c_devicesn'] = input('post.sn');
+            $ret = Service::getInstance()->call("Control::preOrderCheck",$data)->getResult(10);
+            if(!$ret){
+                return json([
+                    'msg' => '失败',
+                    'status' => 1,
+                ]);
+            }
+            return json([
+                'msg' => '成功',
+                'status' => 0,
+            ]);
+
+        }
+    }
 	/**
 	 * 显示状态修改
 	 */

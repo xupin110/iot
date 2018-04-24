@@ -9,6 +9,9 @@ use Lib;
 use model\Device as DbDevice;
 use Lib\Monitor as Mon;
 use Lib\Tasks;
+use Lib\Robot;
+use Lib\Client;
+use Lib\Util;
 class Control {
 
 	/**
@@ -68,6 +71,17 @@ class Control {
 		}
 		return $res;
 	}
+	public static function preOrderCheck($data){
+	    $devicesn = $data['c_devicesn'];
+        $fd = Robot::$table->get($devicesn);
+        if(!$fd){
+            return false;
+        }
+        $call = Util::msg('5',['DeviceSn' => $devicesn]);
+        $client = new Client($devicesn);
+        $client->control($call);
+        return true;
+    }
 
 	/**
 	 *  修改任务

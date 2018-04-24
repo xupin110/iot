@@ -1,7 +1,7 @@
 <?php
 namespace app\index\controller;
-
-class Index {
+use think\Controller;
+class Index extends  Controller{
 	public function index() {
 		// $a = \map\Map::Staticimage('106.67923744596,28.87613983528');
 		// print_r($a);exit;
@@ -15,7 +15,7 @@ class Index {
 		// if (!true && true) {
 		// 	echo "test";
 		// }
-
+    return $this->fetch();
 	}
 
 }

@@ -60,12 +60,18 @@ return [
 					'font' => 'clone',
 					'href' => url('Monitor/index'),
 				],
-				array(
+				[
 					'action' => 'status',
 					'name' => '设备实时状态',
 					'font' => 'clone',
 					'href' => url('Monitor/status'),
-				),
+				],
+                [
+                    'action' => 'status',
+                    'name' => '数据展示',
+                    'font' => 'clone',
+                    'href' => url('Monitor/datashow'),
+                ]
 			),
 		),
 		array(

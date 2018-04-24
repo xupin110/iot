@@ -7,6 +7,8 @@
 
 namespace app\admin\controller;
 use app\service\Service;
+use \Swoole\Pager;
+use think\Paginator;
 
 class Device extends Base {
 	public $device;
@@ -35,7 +37,18 @@ class Device extends Base {
 		// }
 		// $page = !empty($_GET['page']) ? $_GET['page'] : 1;
 		// $pagesize = 20;
+        //页数
+        if (!empty($_GET['pagesize'])) {
+            $pagesize = intval($_GET['pagesize']);
+        } else {
+            $pagesize = 10;
+        }
+        $page = !empty($_GET['page']) ? $_GET['page'] : 1;
 		$list = Service::getInstance()->call("Device::getDevices")->getResult(10);
+//        $pager = new Pager(array('total'=> $list["total"], 'perpage'  => $pagesize, 'nowindex' => $page));
+//        $this->assign('pager', array('total' => $list["total"], 'pagesize' => $pagesize, 'render' => $pager->render()));
+//        var_dump($list->render());
+//        exit;
 		if ($list) {
 			foreach ($list as $k => $v) {
 				$list[$k]['c_type'] = $this->type[$v['c_type']];

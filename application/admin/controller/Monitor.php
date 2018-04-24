@@ -79,12 +79,42 @@ class Monitor extends Base {
 				$list[$k]['isconnect'] = 0;
 			}
 		}
-		// var_dump($list);exit;
+//		 var_dump($list);exit;
 		return $this->fetch('', [
 			'title' => '设备列表',
 			'list' => $list,
 		]);
 	}
+
+    public  function datashow(){
+        $res = Service::getInstance()->call("Monitor::getMonitors")->getResult(10);
+        $list = [];
+        foreach ($res as $k => $v) {
+            # code...
+            if($v['monitor']){
+                $v['monitor']['c_voltage'] = unserialize($v['monitor']['c_voltage']);
+                $v['monitor']['c_current'] = unserialize($v['monitor']['c_current']);
+                $v['monitor']['c_relay'] = unserialize($v['monitor']['c_relay']);
+                $list[$k] = $v['monitor'];
+                $list[$k]['c_deviceid'] = $v['c_deviceid'];
+                $list[$k]['c_type'] = $this->type[$v['c_type']];
+                $list[$k]['map'] = \map\Map::Staticimage($list[$k]['c_lng'].','.$list[$k]['c_lat']);
+                $list[$k]['isconnect'] = 1;
+                // $list[$k]['map'] = \map\Map::Staticimage('106.67923744596,28.87613983528');
+            }
+            else{
+                $list[$k]['c_deviceid'] = $v['c_deviceid'];
+                $list[$k]['c_devicesn'] = $v['c_devicesn'];
+                $list[$k]['c_type'] = $this->type[$v['c_type']];
+                $list[$k]['isconnect'] = 0;
+            }
+        }
+//		 var_dump($list);exit;
+        return $this->fetch('', [
+            'title' => '数据展示',
+            'list' => $list,
+        ]);
+    }
 	public function split($data){
 		foreach ($data as $k => $v) {
 					# code...

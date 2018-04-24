@@ -77,14 +77,18 @@
                             {volist name="list" id="vo"}
                                 {if $vo.isconnect != 1}                  
                                 <tr>
+                                    <a href="javascrip:;" onclick="showAjaxModal();" class="btn btn-primary btn-single btn-sm">
                                     <td>{$vo.c_deviceid}</td>
+                                    </a>
                                     <td>{$vo.c_devicesn}</td>
                                     <td>{$vo.c_type}</td>                                   
                                     <td colspan="6" align="center" style="color: red;">没有数据。。。</td>
                                 </tr> 
                                 {else /}    
                                 <tr>
+                                    <a href="javascrip:;" onclick="showAjaxModal();" class="btn btn-primary btn-single btn-sm">
                                     <td>{$vo.c_deviceid}</td>
+                                    </a>
                                     <td>{$vo.c_devicesn}</td>
                                     <td>{$vo.c_type}</td>
 

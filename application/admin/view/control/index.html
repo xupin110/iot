@@ -61,6 +61,7 @@
                                 <th>连接状态</th>
                                 <th style="text-align: center">继电器控制</th>
                                 <th>链接方式</th>
+                                <th>预订单检查</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -113,10 +114,16 @@
                                         {$vo.connecttype}
                                         <p style="float: right;">
                                             
-                                            <button id='connecttype' c_sn="{$vo.c_devicesn}" c_value="{if $vo.connecttype == 'GPS'}WIFI{elseif $vo.connecttype == 'WIFI'}GPS{/if}">{if $vo.connecttype == 'GPS'}改为WIFI连接{elseif $vo.connecttype == 'WIFI'}改为WIFI连接{/if}</button>
+                                            <button id='connecttype' c_sn="{$vo.c_devicesn}" c_value="{if $vo.connecttype == 'GPRS'}WIFI{elseif $vo.connecttype == 'WIFI'}GPS{/if}">{if $vo.connecttype == 'GPS'}改为WIFI连接{elseif $vo.connecttype == 'WIFI'}改为WIFI连接{/if}</button>
                                             
                                         </p>
-                                    </td>                                    
+                                    </td>
+
+
+                                    <td>
+                                        <button id='preOrderCheck' c_sn="{$vo.c_devicesn}" >预订单检查测试</button>
+
+                                    </td>
                                     {elseif $vo.isconnect eq 0 /}
                                     <td>
                                             <span style="color:red;font-size:14px;" title="停用">
@@ -134,8 +141,9 @@
                                     <td align="center" style="color: red" colspan="3">设备异常</td>
 
                                     {/if}
-     
+
                                 </tr>
+
                             {/volist}
                             {/empty}
                             </tbody>
@@ -216,7 +224,23 @@
                     }
                 },'json');
         });
+        //点击修改状态
+        $(document).on("click","#preOrderCheck",function () {
 
+            $.post("{:url('Control/preOrderCheck')}",
+                {
+                   sn:$(this).attr("c_sn"),
+                },
+                function (data) {
+                    if(data.status == 0){
+                        layer.msg(data.msg,{icon:1,time: 1000},function () {
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon:2,time: 1000});
+                    }
+                },'json');
+        });
         //点击修改连接状态
         $(document).on("click","#connecttype",function () {
 

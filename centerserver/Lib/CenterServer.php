@@ -138,7 +138,6 @@ class CenterServer extends Swoole\Protocol\SOAServer {
 //				return ['errno' => 8010, 'data' => Util::errCodeMsg(8010, "设备未注册，没有权限连接服务器")];
 //			}
 //		}
-
 		$ret = parent::call($request, $header);
 //		Flog::log($ret);
 //		Flog::endLog();
@@ -149,7 +148,7 @@ class CenterServer extends Swoole\Protocol\SOAServer {
 
 	public function onClose($serv, $fd, $from_id) {
 		echo "Lib ------ CenterServer ----------onClose\n" . PHP_EOL;
-		parent::onClose($serv, $fd, $from_id);
+//		parent::onClose($serv, $fd, $from_id);
 		Robot::unRegister($fd);
 	}
 }
