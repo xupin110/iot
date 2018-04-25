@@ -83,6 +83,13 @@ class Control {
         return true;
     }
 
+    /**
+     * 电流电压阈值控制
+     * @param $data
+     */
+    public static function doLimit($data){
+
+    }
 	/**
 	 *  修改任务
 	 * @param $id

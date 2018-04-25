@@ -66,12 +66,12 @@ return [
 					'font' => 'clone',
 					'href' => url('Monitor/status'),
 				],
-                [
-                    'action' => 'status',
-                    'name' => '数据渲染展示',
-                    'font' => 'clone',
-                    'href' => url('Monitor/datashow'),
-                ]
+				[
+					'action' => 'status',
+					'name' => '数据渲染展示',
+					'font' => 'clone',
+					'href' => url('Monitor/datashow'),
+				],
 			),
 		),
 		array(
@@ -79,12 +79,18 @@ return [
 			'icon' => 'fa fa-user-md',
 			'tle' => '控制管理',
 			'menu' => array(
-				array(
+				[
 					'action' => 'index',
 					'name' => '控制列表',
 					'font' => 'clone',
 					'href' => url('Control/index'),
-				),
+				],
+				[
+					'action' => 'safe',
+					'name' => '安全控制',
+					'font' => 'clone',
+					'href' => url('Control/safe'),
+				],
 			),
 		),
 		array(

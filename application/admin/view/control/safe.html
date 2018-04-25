@@ -1,0 +1,203 @@
+{include file="public/head"/}
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="__STATIC__/js/datatables/dataTables.bootstrap.css">
+
+</head>
+
+<style type="text/css">
+    .responsive tr td.codeTd{
+        position: relative;
+    }
+    .responsive tr td.codeTd:hover .codeImg{
+        display: block;
+    }
+    .responsive tr td .codeImg{
+        position: absolute;
+        top: 25px;
+        left:-75px;
+        z-index: 1000;
+        width: 200px;
+        display: none;
+    }
+</style>
+<body class="page-body">
+<div class="page-container">
+    <div class="sidebar-menu toggle-others fixed">
+        {include file="public/menu"/}
+    </div>
+    <div class="main-content">
+        <!-- User Info, Notifications and Menu Bar -->
+        {include file="public/nav"/}
+        <button type="button" class="btn btn-info" onclick="location = '{:url('Monitor/add')}'">
+            <i class="fa fa-plus"></i> Add
+        </button>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="breadcrumb-env" >
+                            <ol class="breadcrumb bc-1">
+                                <li><a href="{:url('Index/index')}"><i class="fa-home"></i> 首页</a></li>
+                                <li class="active"><strong>上下限控制</strong></li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row" style="padding: 12px 15px">
+                            <div class="col-sm-12">
+
+                            </div>
+                        </div>
+                        <table style="padding: 0" class="table responsive" id="msg">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>设备编号</th>
+                                <th>设备电流</th>
+                                <th>设备电压</th>
+                                <th>设备温度</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {empty name="list"}
+                            <tr>
+                                <td colspan="9">没有数据。。。</td>
+                            </tr>
+                            {else /}
+                            {volist name="list" id="vo"}
+
+                            <tr>
+                                <td>{$vo.c_deviceid}</td>
+                                <td>{$vo.c_devicesn}</td>
+                                {if $vo.isconnect == '1' }
+                                <td>
+                                <a href="javascript:;" onclick="o2o_open('电流上下限控制','{:url('Control/controlLimit',['devicesn' => $vo.c_devicesn,'type'=>'current'])}',700,350);" class="btn btn-turquoise">
+                                    <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">电流上下限控制</font>
+                                    </font>
+                                </a>
+                                </td>
+
+                                <td>
+                                    <a href="javascript:;" onclick="o2o_open('电压上下限控制','{:url('Control/controlLimit',['devicesn'=>$vo.c_devicesn,'type'=>'voltage'])}',700,350);" class="btn btn-red">
+                                        <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">电压上下限控制</font>
+                                        </font>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:;" onclick="o2o_open('温度上下限控制','{:url('Control/controlLimit',['devicesn' => $vo.c_devicesn,'type'=>'temp'])}',700,350);" class="btn btn-warning">
+                                        <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">温度上下限控制</font>
+                                        </font>
+                                    </a>
+                                </td>
+                                {else /}
+                                <td style="color:red" align="center" colspan="3">
+                                    没有连接设备
+                                </td>
+                                {/if}
+                            </tr>
+                           {/volist}
+                            {/empty}
+                            </tbody>
+
+
+
+                        </table>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
+                                    <ul class="pagination">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="catorderinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document" style="z-index: 10000">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"> 个人资料 </h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{include file="public/foot"/}
+<!-- layer 插件 -->
+<script type="text/javascript" src="__STATIC__/layer/layer.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //点击删除
+        $(document).on("click","#remove",function () {
+            if(confirm('您确定要删除吗？')){
+                //实现删除业务逻辑
+                $.get("{:url('Device/del')}",
+                    {id:$(this).attr("c_id")},
+                    function (data) {
+                        if(data.status == 0){
+                            layer.msg(data.msg,{icon:1,time: 1000},function () {
+                                location.reload();
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:2,time: 1000});
+                        }
+                    },'json');
+            }
+        });
+
+        //点击修改状态
+        $(document).on("click","#isStatus",function () {
+
+            $.get("{:url('Device/isStatus')}",
+                {id:$(this).attr("c_id")},
+                function (data) {
+                    if(data.status == 0){
+                        layer.msg(data.msg,{icon:1,time: 1000},function () {
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon:2,time: 1000});
+                    }
+                },'json');
+        });
+
+        // 图片放大
+        var zindex=1;
+        $(".lemoncode").click(function(){
+            if(($(this).css("transform"))=="matrix(5, 0, 0, 5, 0, 0)"){
+                $(this).css({
+                    "transform":"scale(1)",
+                    "position":"static"
+                })
+            }else{
+                $(this).css({
+                    "transform":"scale(5)",
+                    "position":"relative",
+                    "zIndex" : 1,
+                })
+            }
+
+        })
+    })
+</script>
+
+</body>
+</html>

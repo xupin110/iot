@@ -25,7 +25,7 @@ class Control extends Base {
 		if ($list) {
 			foreach ($list as $k => $v) {
 				$list[$k]['c_type'] = $this->type[$v['c_type']];
-				if(isset($v['c_relay'])){
+				if (isset($v['c_relay'])) {
 					$list[$k]['c_relay'] = unserialize($v['c_relay']);
 				}
 			}
@@ -37,23 +37,96 @@ class Control extends Base {
 			'list' => $list,
 		]);
 	}
-	public function preOrderCheck(){
-	    if(request()->isPost()){
-            $data['c_devicesn'] = input('post.sn');
-            $ret = Service::getInstance()->call("Control::preOrderCheck",$data)->getResult(10);
-            if(!$ret){
-                return json([
-                    'msg' => '失败',
-                    'status' => 1,
-                ]);
-            }
-            return json([
-                'msg' => '成功',
-                'status' => 0,
-            ]);
 
-        }
+	/**
+	 * 电流电压上下限控制
+	 * @return mixed
+	 */
+	public function safe() {
+		$res = Service::getInstance()->call("Monitor::getMonitors")->getResult(10);
+		$list = [];
+		foreach ($res as $k => $v) {
+			# code...
+			$list[$k]['c_deviceid'] = $v['c_deviceid'];
+			$list[$k]['c_devicesn'] = $v['c_devicesn'];
+			if ($v['monitor']) {
+				$list[$k]['isconnect'] = 1;
+			} else {
+				$list[$k]['isconnect'] = 0;
+			}
+		}
+		return $this->fetch('', [
+			'title' => '阈值控制',
+			'list' => $list,
+		]);
+	}
+
+    /**
+     * 上下限编辑页
+     * @return mixed
+     */
+	public function controlLimit() {
+		if (request()->isGet()) {
+			$devicesn = input('get.devicesn');
+			$type = input('get.type');
+			return $this->fetch('', [
+				'devicesn' => $devicesn,
+				'type' => $type,
+                'title' =>'阈值控制'
+			]);
+		}
+		$this->error('参数错误');
+	}
+	public function doLimit(){
+		if(request()->isPost()){
+            $devicesn = input('post.devicesn');
+            $type = input('post.type');
+            $upper = input('post.upper');
+            $lower = input('post.lower');
+            if(empty($upper) || empty($lower) || empty($devicesn) || empty($type)){
+                return json(['msg'=> 'arg error','status' => 1]);
+              }
+            $data = [
+                "DeviceSn" => $devicesn,
+                "ServerControl" => $type=='current'?'10':($type=='voltage'?'11':($type=='temp'?'12':'10')),
+                $type=='current'?'CurrentCon':($type=='voltage'?'VdcCon':($type=='temp'?'TempCon':'CurrentCon')) => [
+                    "Lower" => $lower,
+                    "Upper" => $upper,
+                ]
+            ];
+            return json([
+                'msg'=>'succes',
+                'status'=>0,
+                'type'=>$type,
+                'data' => $data,
+            ]);
+		}
+		return json([
+		    'msg' => '参数非法',
+            'status'=>1,
+        ]);
     }
+	/**
+	 * 预订单检查测试
+	 * @return \think\response\Json
+	 */
+	public function preOrderCheck() {
+		if (request()->isPost()) {
+			$data['c_devicesn'] = input('post.sn');
+			$ret = Service::getInstance()->call("Control::preOrderCheck", $data)->getResult(10);
+			if (!$ret) {
+				return json([
+					'msg' => '失败',
+					'status' => 1,
+				]);
+			}
+			return json([
+				'msg' => '成功',
+				'status' => 0,
+			]);
+
+		}
+	}
 	/**
 	 * 显示状态修改
 	 */
@@ -86,9 +159,9 @@ class Control extends Base {
 			return json([
 				'msg' => '失败',
 				'status' => 1,
-			]);			
+			]);
 		}
-	}	/**
+	}/**
 	 * 添加渲染
 	 */
 	public function contype() {
@@ -102,7 +175,7 @@ class Control extends Base {
 		 */
 		if (request()->isPost()) {
 			$data['c_devicesn'] = input('post.sn');
-			$data['c_connect_type']  = input('post.value');
+			$data['c_connect_type'] = input('post.value');
 			$res = Service::getInstance()->call("Control::contype", $data)->getResult(2);
 			if ($res) {
 				return json([
@@ -118,9 +191,9 @@ class Control extends Base {
 			return json([
 				'msg' => '失败',
 				'status' => 1,
-			]);			
+			]);
 		}
-	}	
+	}
 	public function add() {
 		if (request()->isPost()) {
 			//接收数据
@@ -229,7 +302,6 @@ class Control extends Base {
 			'list' => $list,
 		]);
 	}
-
 
 	/**
 	 * 删除

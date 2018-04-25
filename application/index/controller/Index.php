@@ -17,26 +17,29 @@ class Index extends  Controller{
 		// }
 //        echo strtotime('00:00:00');
 //        echo date('Y-m-t', strtotime('-1 month'));
-        $mon = new \app\admin\model\Monitor();
-$list = $mon->getOneDayTemp('cnki-232423');
-$date = [];
-$data = [];
-foreach ($list as $k => $v){
-    $date[$k]=$v['create_time'];
-    $data[] = $v['c_temp'];
-}
-        $type = input('get.type')?input('get.type'):1;
-        $data = [];
-        $date = [];
-        foreach ($list as $k=>$v){
-            $current = unserialize($v['c_current']);
-            $date[$k] = $v['create_time'];
-            $data[$k] = $current[$type]['Value'];
-        }
-    return $this->fetch('',[
-        'data' =>$data,
-            'date'=>$date,
-    ]);
+//        $mon = new \app\admin\model\Monitor();
+//$list = $mon->getOneDayTemp('cnki-232423');
+//$date = [];
+//$data = [];
+//foreach ($list as $k => $v){
+//    $date[$k]=$v['create_time'];
+//    $data[] = $v['c_temp'];
+//}
+//        $type = input('get.type')?input('get.type'):1;
+//        $data = [];
+//        $date = [];
+//        foreach ($list as $k=>$v){
+//            $current = unserialize($v['c_current']);
+//            $date[$k] = $v['create_time'];
+//            $data[$k] = $current[$type]['Value'];
+//        }
+//    return $this->fetch('',[
+//        'data' =>$data,
+//            'date'=>$date,
+//    ]);
+        $type = 'current';
+        $a = $type=='current'?'10':($type=='voltage'?'11':($type=='temp'?'12':'10'));
+        print_r($a);
 	}
 
 }
