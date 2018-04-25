@@ -54,7 +54,7 @@ private $data = [
         $this->client->on('Close', [$this, 'onClose']);
 
         //发起连接
-         $this->client->connect('47.95.220.109', 8090, 30);
+         $this->client->connect('127.0.0.1', 8090, 30);
         //$this->client->connect('127.0.0.1', 8901, 30);
         // print_r($this->client);
 

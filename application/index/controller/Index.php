@@ -15,6 +15,8 @@ class Index extends  Controller{
 		// if (!true && true) {
 		// 	echo "test";
 		// }
+//        echo strtotime('00:00:00');
+//        echo date('Y-m-t', strtotime('-1 month'));
     return $this->fetch();
 	}
 

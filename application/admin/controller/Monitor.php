@@ -9,11 +9,11 @@ namespace app\admin\controller;
 use app\service\Service;
 
 class Monitor extends Base {
-	public $device;
+	public $monitor;
 	public $type;
 	public $validate;
 	public function initialize() {
-		$this->device = model("Device");
+		$this->monitor = model("Monitor");
 		$this->type = config('device.deviceType');
 		$this->validate = validate('Device');
 		$this->assign('type', $this->type);
@@ -113,6 +113,48 @@ class Monitor extends Base {
         return $this->fetch('', [
             'title' => '数据展示',
             'list' => $list,
+        ]);
+    }
+
+    /**
+     * 返回电流的数据渲染图
+     * @return mixed
+     */
+    public function current(){
+        if(request()->isGet()){
+            $devicesn = input('get.devicesn');
+            $list = $this->monitor->getOneDayCurrent($devicesn);
+            foreach ($list as $k=>$v){
+                $list[$k]['c_current'] = unserialize($v['c_current']);
+            }
+            $temp = $list[0];
+//            var_dump($list[0]);die;
+            return $this->fetch('',[
+                'title'=>'电流数据渲染图',
+                'list' => $list,
+                'temp' => $temp,
+            ]);
+        }
+        $this->error('数据错误');
+    }
+
+    /**
+     * 渲染电压数据图
+     * @return mixed
+     */
+    public function voltage(){
+        return $this->fetch('',[
+            'title'=>'电压数据渲染图'
+        ]);
+    }
+
+    /**
+     * 渲染温度的数据图
+     * @return mixed
+     */
+    public function temp(){
+        return $this->fetch('',[
+            'title'=>'温度数据渲染图'
         ]);
     }
 	public function split($data){

@@ -5,7 +5,75 @@
 </head>
 <body>
 
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <font style="vertical-align: inherit;">	<font style="vertical-align: inherit;">	电流近期监控数据展示</font></font></h3>
+                        <div class="panel-options">
+                            <a href="#" data-toggle="panel">
+									<span class="collapse-icon">
+										<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">-</font></font></span> <span class="expand-icon">+</span>
+                            </a>
+                            <a href="#" data-toggle="remove">
+                                <font style="vertical-align: inherit;">	<font style="vertical-align: inherit;">	×</font></font></a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <script type="text/javascript">
+                            jQuery(document).ready(function($)
+                            {
+                                if( ! $.isFunction($.fn.dxChart))
+                                    return;
+                                var dataSource = [
+                                    {volist name="list" id="do"}
+                                    {volist name="do.c_current" id="vo"}
 
+                                    { month: {$do.create_time}, {volist name="do.c_current" id="co"}"no{$co.No}": {$co.Value}, {/volist} },
+
+                                    {/volist}
+                                        {/volist}
+                                ];
+                                $("#bar-3").dxChart({
+                                    dataSource: dataSource,
+                                    commonSeriesSettings: {
+                                        argumentField: "month"
+                                    },
+                                    series: [
+                                        {volist name="temp" id="co"}
+                                        { valueField: "no{$co.No}", name: "电流{$co.No}", color: "#40bbea" },
+                                        {/volist}
+                                        }
+                                    ],
+                                    argumentAxis:{
+                                        grid:{
+                                            visible: true
+                                        }
+                                    },
+                                    tooltip:{
+                                        enabled: true
+                                    },
+                                    title: "电流电压近期监控图",
+                                    legend: {
+                                        verticalAlignment: "bottom",
+                                        horizontalAlignment: "center"
+                                    },
+                                    commonPaneSettings: {
+                                        border:{
+                                            visible: true,
+                                            right: false
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+                        <div id="bar-3" style="height: 400px; width: 100%; user-select: none;" class="dx-visibility-change-handler">
+
+                        </div>
+                    </div>
+                </div>
+            </div> </div>
 
 
 

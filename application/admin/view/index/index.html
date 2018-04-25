@@ -31,7 +31,7 @@
                     if( ! $.isFunction($.fn.dxChart))
                         return;
                     var dataSource = [
-                        { month: 1, europe: 546, americas: 332, africa: 227 },
+                        { month: 00:32:06, europe: 546, americas: 332, africa: 227 },
                         { month: 2, europe: 705, americas: 417, africa: 283 },
                         { month: 3, europe: 856, americas: 513, africa: 361 },
                         { month: 4, europe: 1294, americas: 614, africa: 471 },
@@ -42,7 +42,7 @@
                     $("#bar-3").dxChart({
                         dataSource: dataSource,
                         commonSeriesSettings: {
-                            argumentField: "month"
+                            argumentField: "day"
                         },
                         series: [
                             { valueField: "europe", name: "电流一", color: "#40bbea" },
