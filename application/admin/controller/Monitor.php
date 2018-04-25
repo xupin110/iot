@@ -123,38 +123,8 @@ class Monitor extends Base {
      */
     public function current(){
         if(request()->isGet()){
-            $no = input('get.no')?input('get.no'):1;
-            $type=input('get.type')?input('get.type'):'day';
-            $data = [];
-            $date = [];
-            $current= [];
-            $nos = [];
-            $devicesn = input('get.devicesn');
-            $list = $this->monitor->getMonitor($devicesn,$type);
-            foreach ($list as $k=>$v){
-                $current = unserialize($v['c_current']);
-                $date[$k] = $v['create_time'];
-                $data[$k] = $current[$no-1]['Value'];
-            }
-            foreach ($current as $v) {
-              $nos[] = $v['No'];
-            }
-            if($type == "day")
-                $content ="今天";
-            elseif($type == "week")
-                $content="本周";
-            else
-                $content="本月";
-            return $this->fetch('',[
-                'title'=>'电流数据渲染图',
-                'content' =>$content,
-                'data' => json_encode($data),
-                'date' => json_encode($date),
-                'nos' => $nos,
-                'no' => $no,
-                'type'=>$type,
-                'devicesn' => $devicesn,
-            ]);
+        	$this->dataDeal('c_current','电流');
+            return $this->fetch();
         }
         $this->error('数据错误');
     }
@@ -164,30 +134,36 @@ class Monitor extends Base {
      */
     public function voltage(){
         if(request()->isGet()){
-            $no = input('get.no')?input('get.no'):1;
-            $type=input('get.type')?input('get.type'):'day';
-            $data = [];
-            $date = [];
-            $current= [];
-            $nos = [];
-            $devicesn = input('get.devicesn');
-            $list = $this->monitor->getMonitor($devicesn,$type);
-            foreach ($list as $k=>$v){
-                $current = unserialize($v['c_voltage']);
-                $date[$k] = $v['create_time'];
-                $data[$k] = $current[$no-1]['Value'];
-            }
-            foreach ($current as $v) {
-                $nos[] = $v['No'];
-            }
-            if($type == "day")
-                $content ="今天";
-            elseif($type == "week")
-                $content="本周";
-            else
-                $content="本月";
-            return $this->fetch('',[
-                'title'=>'电压数据渲染图',
+        $this->dataDeal('c_voltage','电压');
+        return $this->fetch();
+        }
+        $this->error('数据错误');
+    }
+    public function dataDeal($dataType,$name){
+        $no = input('get.no')?input('get.no'):1;
+        $type=input('get.type')?input('get.type'):'day';
+        $data = [];
+        $date = [];
+        $current= [];
+        $nos = [];
+        $devicesn = input('get.devicesn');
+        $list = $this->monitor->getMonitor($devicesn,$type);
+        foreach ($list as $k=>$v){
+            $current = unserialize($v[$dataType]);
+            $date[$k] = $v['create_time'];
+            $data[$k] = $current[$no-1]['Value'];
+        }
+        foreach ($current as $v) {
+            $nos[] = $v['No'];
+        }
+        if($type == "day")
+            $content ="今天";
+        elseif($type == "week")
+            $content="本周";
+        else
+            $content="本月";
+        $this->assign([
+                'title'=>$name.'数据渲染图',
                 'content' =>$content,
                 'data' => json_encode($data),
                 'date' => json_encode($date),
@@ -195,11 +171,9 @@ class Monitor extends Base {
                 'no' => $no,
                 'type'=>$type,
                 'devicesn' => $devicesn,
-            ]);
-        }
-        $this->error('数据错误');
-    }
+        ]);
 
+    }
     /**
      * 渲染温度的数据图
      * @return mixed

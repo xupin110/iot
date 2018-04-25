@@ -68,7 +68,7 @@ return [
 				],
                 [
                     'action' => 'status',
-                    'name' => '数据展示',
+                    'name' => '数据渲染展示',
                     'font' => 'clone',
                     'href' => url('Monitor/datashow'),
                 ]
