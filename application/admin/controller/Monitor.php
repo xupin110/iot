@@ -7,6 +7,7 @@
 
 namespace app\admin\controller;
 use app\service\Service;
+use function Couchbase\defaultDecoder;
 
 class Monitor extends Base {
 	public $monitor;
@@ -122,30 +123,81 @@ class Monitor extends Base {
      */
     public function current(){
         if(request()->isGet()){
+            $no = input('get.no')?input('get.no'):1;
+            $type=input('get.type')?input('get.type'):'day';
+            $data = [];
+            $date = [];
+            $current= [];
+            $nos = [];
             $devicesn = input('get.devicesn');
-            $list = $this->monitor->getOneDayCurrent($devicesn);
+            $list = $this->monitor->getMonitor($devicesn,$type);
             foreach ($list as $k=>$v){
-                $list[$k]['c_current'] = unserialize($v['c_current']);
+                $current = unserialize($v['c_current']);
+                $date[$k] = $v['create_time'];
+                $data[$k] = $current[$no-1]['Value'];
             }
-            $temp = $list[0];
-//            var_dump($list[0]);die;
+            foreach ($current as $v) {
+              $nos[] = $v['No'];
+            }
+            if($type == "day")
+                $content ="今天";
+            elseif($type == "week")
+                $content="本周";
+            else
+                $content="本月";
             return $this->fetch('',[
                 'title'=>'电流数据渲染图',
-                'list' => $list,
-                'temp' => $temp,
+                'content' =>$content,
+                'data' => json_encode($data),
+                'date' => json_encode($date),
+                'nos' => $nos,
+                'no' => $no,
+                'type'=>$type,
+                'devicesn' => $devicesn,
             ]);
         }
         $this->error('数据错误');
     }
-
     /**
      * 渲染电压数据图
      * @return mixed
      */
     public function voltage(){
-        return $this->fetch('',[
-            'title'=>'电压数据渲染图'
-        ]);
+        if(request()->isGet()){
+            $no = input('get.no')?input('get.no'):1;
+            $type=input('get.type')?input('get.type'):'day';
+            $data = [];
+            $date = [];
+            $current= [];
+            $nos = [];
+            $devicesn = input('get.devicesn');
+            $list = $this->monitor->getMonitor($devicesn,$type);
+            foreach ($list as $k=>$v){
+                $current = unserialize($v['c_voltage']);
+                $date[$k] = $v['create_time'];
+                $data[$k] = $current[$no-1]['Value'];
+            }
+            foreach ($current as $v) {
+                $nos[] = $v['No'];
+            }
+            if($type == "day")
+                $content ="今天";
+            elseif($type == "week")
+                $content="本周";
+            else
+                $content="本月";
+            return $this->fetch('',[
+                'title'=>'电压数据渲染图',
+                'content' =>$content,
+                'data' => json_encode($data),
+                'date' => json_encode($date),
+                'nos' => $nos,
+                'no' => $no,
+                'type'=>$type,
+                'devicesn' => $devicesn,
+            ]);
+        }
+        $this->error('数据错误');
     }
 
     /**
@@ -153,10 +205,34 @@ class Monitor extends Base {
      * @return mixed
      */
     public function temp(){
-        return $this->fetch('',[
-            'title'=>'温度数据渲染图'
-        ]);
+        if(request()->isGet()){
+            $type=input('get.type')?input('get.type'):'day';
+            $data = [];
+            $date = [];
+            $devicesn = input('get.devicesn');
+            $list = $this->monitor->getMonitor($devicesn,$type);
+            foreach ($list as $k=>$v){
+                $date[$k] = $v['create_time'];
+                $data[$k] = $v['c_temp'];
+            }
+            if($type == "day")
+                $content ="今天";
+            elseif($type == "week")
+                $content="本周";
+            else
+                $content="本月";
+            return $this->fetch('',[
+                'title'=>'温度数据渲染图',
+                'content' =>$content,
+                'data' => json_encode($data),
+                'date' => json_encode($date),
+                'type'=>$type,
+                'devicesn' => $devicesn,
+            ]);
+        }
+        $this->error('数据错误');
     }
+
 	public function split($data){
 		foreach ($data as $k => $v) {
 					# code...

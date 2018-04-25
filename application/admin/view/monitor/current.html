@@ -5,75 +5,121 @@
 </head>
 <body>
 
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <font style="vertical-align: inherit;">	<font style="vertical-align: inherit;">	电流近期监控数据展示</font></font></h3>
-                        <div class="panel-options">
-                            <a href="#" data-toggle="panel">
-									<span class="collapse-icon">
-										<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">-</font></font></span> <span class="expand-icon">+</span>
-                            </a>
-                            <a href="#" data-toggle="remove">
-                                <font style="vertical-align: inherit;">	<font style="vertical-align: inherit;">	×</font></font></a>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <script type="text/javascript">
-                            jQuery(document).ready(function($)
-                            {
-                                if( ! $.isFunction($.fn.dxChart))
-                                    return;
-                                var dataSource = [
-                                    {volist name="list" id="do"}
-                                    {volist name="do.c_current" id="vo"}
 
-                                    { month: {$do.create_time}, {volist name="do.c_current" id="co"}"no{$co.No}": {$co.Value}, {/volist} },
+  <nav class="navbar navbar-inverse" role="navigation"> 
+   <!-- Brand and toggle get grouped for better mobile display --> 
 
-                                    {/volist}
-                                        {/volist}
-                                ];
-                                $("#bar-3").dxChart({
-                                    dataSource: dataSource,
-                                    commonSeriesSettings: {
-                                        argumentField: "month"
-                                    },
-                                    series: [
-                                        {volist name="temp" id="co"}
-                                        { valueField: "no{$co.No}", name: "电流{$co.No}", color: "#40bbea" },
-                                        {/volist}
-                                        }
-                                    ],
-                                    argumentAxis:{
-                                        grid:{
-                                            visible: true
-                                        }
-                                    },
-                                    tooltip:{
-                                        enabled: true
-                                    },
-                                    title: "电流电压近期监控图",
-                                    legend: {
-                                        verticalAlignment: "bottom",
-                                        horizontalAlignment: "center"
-                                    },
-                                    commonPaneSettings: {
-                                        border:{
-                                            visible: true,
-                                            right: false
-                                        }
-                                    }
-                                });
-                            });
-                        </script>
-                        <div id="bar-3" style="height: 400px; width: 100%; user-select: none;" class="dx-visibility-change-handler">
+   <!-- Collect the nav links, forms, and other content for toggling --> 
+   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2"> 
+    <ul class="nav navbar-nav"> 
+    <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><font style="vertical-align: inherit;">
+            <font style="vertical-align: inherit;">设备号 </font></font><b class="caret"></b></a>
+      <ul class="dropdown-menu dropdown-primary">
+          {volist name="nos" id="vo"}
+       <li> <a href="{:url('Monitor/current',['type' =>$type,'no'=>$vo,'devicesn' => $devicesn])}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$vo}</font></font></a> </li>
+       {/volist}
+      </ul>
+    </li> 
 
-                        </div>
-                    </div>
-                </div>
-            </div> </div>
+    <li> <a href="{:url('Monitor/current',['type'=>'day','no'=>$no,'devicesn'=>$devicesn])}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">当天电流质量情况</font></font></a> </li>
+    <li> <a href="{:url('Monitor/current',['type'=>'week','no'=>$no,'devicesn'=>$devicesn])}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">本周电流质量情况</font></font></a> </li>
+    <li> <a href="{:url('Monitor/current',['type'=>'month','no'=>$no,'devicesn'=>$devicesn])}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">本月电流质量情况</font></font></a> </li>
+    </ul> 
+    <li>
+
+    </li>
+   </div> 
+
+   <!-- /.navbar-collapse --> 
+  </nav>
+
+
+
+<div id="line">
+
+</div>
+
+<script>
+    var myChart = echarts.init(document.getElementById('line'));
+    var data={$data|raw};
+    var date = {$date|raw};
+
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            position: function (pt) {
+                return [pt[0], '10%'];
+            }
+        },
+        title: {
+            left: 'center',
+            text: '{$content}电流大数据量面积图',
+        },
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: date
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%']
+        },
+        dataZoom: [{
+            type: 'inside',
+            start: 0,
+            end: 10
+        }, {
+            start: 0,
+            end: 10,
+            handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+            handleSize: '80%',
+            handleStyle: {
+                color: '#fff',
+                shadowBlur: 3,
+                shadowColor: 'rgba(0, 0, 0, 0.6)',
+                shadowOffsetX: 2,
+                shadowOffsetY: 2
+            }
+        }],
+        series: [
+            {
+                name:'模拟数据',
+                type:'line',
+                smooth:true,
+                symbol: 'none',
+                sampling: 'average',
+                itemStyle: {
+                    normal: {
+                        color: 'rgb(255, 70, 131)'
+                    }
+                },
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgb(255, 158, 68)'
+                        }, {
+                            offset: 1,
+                            color: 'rgb(255, 70, 131)'
+                        }])
+                    }
+                },
+                data: data
+            }
+        ]
+    };
+
+    myChart.setOption(option);
+</script>
 
 
 

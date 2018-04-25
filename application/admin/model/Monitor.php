@@ -27,8 +27,26 @@ class Monitor extends Model
         $this->startMonth = strtotime('-1 month');
         $this->endDay = time();
     }
-    public function getOneDayCurrent($devicesn){
-        $where[] = ['create_time','between',[$this->startDay,$this->endDay]];
+
+    /**
+     * @param $devicesn
+     * @return array|\PDOStatement|string|\think\Collection
+     * 获取一天之类的电流数据
+     */
+    public function getMonitor($devicesn,$type){
+        switch ($type){
+            case "day":
+                $where[] = ['create_time','between',[$this->startDay,$this->endDay]];
+                break;
+            case "week":
+                        $where[] = ['create_time','between',[$this->startWeek,$this->endDay]];
+                        break;
+            case "month":
+                $where[] = ['create_time','between',[$this->startMonth,$this->endDay]];
+                break;
+            default:
+                $where[] = ['create_time','between',[$this->startDay,$this->endDay]];
+        }
         $where[] = ['c_devicesn','=',$devicesn];
         return $this->where($where)->select();
     }

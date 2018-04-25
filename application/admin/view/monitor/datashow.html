@@ -77,7 +77,7 @@
                                 <td>{$vo.c_deviceid}</td>
                                 <td>{$vo.c_devicesn}</td>
                                 <td>
-                                <a href="javascript:;" onclick="o2o_open('电流数据','{:url('Monitor/current',['devicesn' => $vo.c_devicesn])}',1000,650);" class="btn btn-turquoise">
+                                <a href="javascript:;" onclick="o2o_open('电流数据','{:url('Monitor/current',['devicesn' => $vo.c_devicesn])}',1000,750);" class="btn btn-turquoise">
                                     <font style="vertical-align: inherit;">
                                             <font style="vertical-align: inherit;">电流最新数据</font>
                                     </font>
@@ -85,15 +85,14 @@
                                 </td>
 
                                 <td>
-                                    <a href="javascript:;" onclick="o2o_open('电压数据','{:url('Monitor/voltage')}',1000,650);" class="btn btn-red">
+                                    <a href="javascript:;" onclick="o2o_open('电压数据','{:url('Monitor/voltage',['devicesn'=>$vo.c_devicesn])}',1000,750);" class="btn btn-red">
                                         <font style="vertical-align: inherit;">
                                             <font style="vertical-align: inherit;">电压最新数据</font>
                                         </font>
                                     </a>
                                 </td>
-
                                 <td>
-                                    <a href="javascript:;" onclick="o2o_open('电流数据','{:url('Monitor/temp')}',1000,650);" class="btn btn-warning">
+                                    <a href="javascript:;" onclick="o2o_open('温度数据','{:url('Monitor/temp',['devicesn' => $vo.c_devicesn])}',1000,750);" class="btn btn-warning">
                                         <font style="vertical-align: inherit;">
                                             <font style="vertical-align: inherit;">温度最新数据</font>
                                         </font>
