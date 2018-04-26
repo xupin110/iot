@@ -71,7 +71,17 @@ private $data = [
         //         "3" => "0"
         //     ];
         print_r($data);
+              $ret = $this->data([
+                         "DeviceSn" => '127.0.0.1',
+                         "RequestControl" => "10",
+                         "TempCon" => [
+                             "Lower" => "10",
+                             "Upper" => "100"
+                         ],
+                         "ControlStatus" => "1"
+             ]);
         $cli->send($this->data($data));
+//         $cli->send($ret);
     }
     public function data($data = []){
         // $data = [
@@ -104,26 +114,41 @@ private $data = [
         $a = substr($data, 16);
         $b = unserialize($a);
         print_r($b);
-        if(isset($b['Relay']))
-        {
-            if($b['Relay']['1'] == '1'){
-                $ret = $this->data;
-                $ret['Relay']['1'] = '1';
-                $ret = $this->data($ret);
-                echo 'open-'.PHP_EOL;
-                print_r($ret);
-                $cli->send($ret);            
-            }else if ($b['Relay']['1'] == '0') {
-                # code...
-                $ret =$this->data;
-                $ret['Relay']['1'] = '0';
-                $ret = $this->data($ret);
-                echo "close".PHP_EOL;
-                print_r($ret);
-                $cli->send($ret); 
-            }
+        // if(isset($b['Relay']))
+        // {
+        //     if($b['Relay']['1'] == '1'){
+        //         $ret = $this->data;
+        //         $ret['Relay']['1'] = '1';
+        //         $ret = $this->data($ret);
+        //         echo 'open-'.PHP_EOL;
+        //         print_r($ret);
+        //         $cli->send($ret);            
+        //     }else if ($b['Relay']['1'] == '0') {
+        //         # code...
+        //         $ret =$this->data;
+        //         $ret['Relay']['1'] = '0';
+        //         $ret = $this->data($ret);
+        //         echo "close".PHP_EOL;
+        //         print_r($ret);
+        //         $cli->send($ret); 
+        //     }
 
-        }
+        // }
+          if(isset($b['TempCon']))
+         {
+            $ret = $this->data([
+                        "DeviceSn" => $b['DeviecSn'],
+                        "ServerControl" => "10",
+                        "TempCon" => [ 
+                            "Lower" => "10",
+                            "Upper" => "100"
+                        ],
+                        "ControlStatus" => "1"
+            ]);
+
+                $cli->send($ret); 
+
+         }
 
         //     print_r($b);
         //     print_r($b['errno']);

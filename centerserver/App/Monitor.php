@@ -62,7 +62,9 @@ class Monitor {
 		}
 		return $list;
 	}
-
+    public static function getMonitor($devicesn){
+        return $monitor = Lib\Monitor::$table->get($devicesn);
+    }
 
 	/**
 	 * 添加任务

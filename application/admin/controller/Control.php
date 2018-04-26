@@ -69,10 +69,21 @@ class Control extends Base {
 		if (request()->isGet()) {
 			$devicesn = input('get.devicesn');
 			$type = input('get.type');
+            $res = Service::getInstance()->call("Monitor::getMonitor",$devicesn)->getResult(10);
+            $safeType = 'c_'.$type;
+            $count=[];
+            if($type != 'temp'){
+                $no = unserialize($res[$safeType]);
+                $count = [];
+                foreach($no as $v){
+                    $count[] = $v['No'];
+                }
+            }
 			return $this->fetch('', [
 				'devicesn' => $devicesn,
 				'type' => $type,
-                'title' =>'阈值控制'
+                'title' =>'阈值控制',
+                'no' => $count,
 			]);
 		}
 		$this->error('参数错误');
@@ -86,19 +97,36 @@ class Control extends Base {
             if(empty($upper) || empty($lower) || empty($devicesn) || empty($type)){
                 return json(['msg'=> 'arg error','status' => 1]);
               }
-            $data = [
-                "DeviceSn" => $devicesn,
-                "ServerControl" => $type=='current'?'10':($type=='voltage'?'11':($type=='temp'?'12':'10')),
-                $type=='current'?'CurrentCon':($type=='voltage'?'VdcCon':($type=='temp'?'TempCon':'CurrentCon')) => [
-                    "Lower" => $lower,
-                    "Upper" => $upper,
-                ]
-            ];
+              if($type == 'temp'){
+                  $data = [
+                      "DeviceSn" => $devicesn,
+                      "ServerControl" => $type=='current'?'10':($type=='voltage'?'11':($type=='temp'?'12':'10')),
+                      $type=='current'?'CurrentCon':($type=='voltage'?'VdcCon':($type=='temp'?'TempCon':'CurrentCon')) => [
+                          "Lower" => $lower,
+                          "Upper" => $upper,
+                      ]
+                  ];
+              }else{
+                  $data = [
+                      "DeviceSn" => $devicesn,
+                      "ServerControl" => $type=='current'?'10':($type=='voltage'?'11':($type=='temp'?'12':'10')),
+                      $type=='current'?'CurrentCon':($type=='voltage'?'VdcCon':($type=='temp'?'TempCon':'CurrentCon')) => [
+                          "Lower" => $lower,
+                          "Upper" => $upper,
+                          "No" => input('post.no'),
+                      ],
+                  ];
+              }
+            $res = Service::getInstance()->call("Control::doLimit",$data)->getResult(10);
+            if($res){
+                return json([
+                    'msg' => '控制成功',
+                    'status' => 0,
+                ]);
+            }
             return json([
-                'msg'=>'succes',
-                'status'=>0,
-                'type'=>$type,
-                'data' => $data,
+                'msg' => '控制失败',
+                'status' => 1,
             ]);
 		}
 		return json([

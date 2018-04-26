@@ -54,4 +54,5 @@ Swoole::$php->config->setPath(__DIR__ . '/configs'); //共有配置
 Swoole\Loader::addNameSpace('App', __DIR__ . '/App');
 Swoole\Loader::addNameSpace('Lib', __DIR__ . '/Lib');
 Swoole\Loader::addNameSpace('Device', __DIR__ . '/Device');
+Swoole\Loader::addNameSpace('Table', __DIR__ . '/Table');
 Swoole\Loader::addNameSpace('model', __DIR__ . '/model');

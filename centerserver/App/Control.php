@@ -84,11 +84,67 @@ class Control {
     }
 
     /**
-     * 电流电压阈值控制
+     * 电流电压温度阈值控制
      * @param $data
      */
     public static function doLimit($data){
-
+        $devicesn = $data['DeviceSn'];
+        $fd = Robot::$table->get($devicesn);
+        if(!$fd){
+            return false;
+        }
+        $call = $data;
+        $client = new Client($devicesn);
+        $client->control($call);
+        switch ($data['ServerControl']){
+            case '10':
+                sleep(2);
+                $current = \Table\SafeLimit::$table->get($devicesn);
+                $current = unserialize($current['safe_limit']);
+                if($current){
+                    if($current['CurrentCon']['No'] == $data['CurrentCon']['No']){
+                        if($current['ControlStatus'] == '1'){
+                            return true;
+                        }
+                    }
+                }
+                $res = false;
+                break;
+            case '11':
+                sleep(2);
+                $vdc = \Table\SafeLimit::$table->get($devicesn);
+                $vdc = unserialize($vdc['safe_limit']);
+                if($vdc){
+                    if($vdc['VdcCon']['No'] == $data['VdcCon']['No']){
+                        if($vdc['ControlStatus'] == '1'){
+                            return  true;
+                        }
+                    }
+                }
+                $res = false;
+                break;
+            case '12':
+                sleep(2);
+                $temp = \Table\SafeLimit::$table->get($devicesn);
+                $temp = unserialize($temp['safe_limit']);
+                echo "--------------------".PHP_EOL;
+                print_r($temp);
+                print_r($data);
+                echo "---------------------";
+                if($temp){
+                    if($temp['TempCon']){
+                        if($temp['ControlStatus'] == '1'){
+                            return true;
+                        }
+                    }
+                }
+                $res = false;
+                break;
+            default:
+                $res = false;
+                break;
+        }
+        return $res;
     }
 	/**
 	 *  修改任务

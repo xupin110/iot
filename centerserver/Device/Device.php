@@ -3,6 +3,7 @@ namespace Device;
 use Lib\Robot;
 use Lib\Util;
 use Lib\Monitor;
+use Table\SafeLimit;
 class Device {
 	//初始连接
 	public function initConnect($data) {
@@ -53,5 +54,25 @@ class Device {
 		}
 		return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '1']); 
 	}
-
+    //电流设置状态
+    public function currentSet($data) {
+        if(!SafeLimit::updateSafeLimit($data)){
+            return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
+        }
+        return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '1']);
+    }
+    //电压设置状态
+    public function voltagetSet($data) {
+        if(!SafeLimit::updateSafeLimit($data)){
+            return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
+        }
+        return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '1']);
+    }
+    //温度设置状态
+    public function tempSet($data) {
+        if(!SafeLimit::updateSafeLimit($data)){
+            return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
+        }
+        return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '1']);
+    }
 }

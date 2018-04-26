@@ -37,9 +37,9 @@ class Index extends  Controller{
 //        'data' =>$data,
 //            'date'=>$date,
 //    ]);
-        $type = 'current';
-        $a = $type=='current'?'10':($type=='voltage'?'11':($type=='temp'?'12':'10'));
-        print_r($a);
+//        $type = 'current';
+//        $a = $type=='current'?'10':($type=='voltage'?'11':($type=='temp'?'12':'10'));
+//        print_r($a);
 	}
 
 }

@@ -93,6 +93,25 @@
                         <form action="{:url('Control/doLimit')}" method="post" id="myform" class="form-horizontal">
                             <input type="hidden" name="devicesn" value="{$devicesn}" />
                             <input type="hidden" name="type" value="{$type}" />
+                            {if $type != 'temp'}
+                            <div class="row">
+                            <div class="col-sm-5">
+                                <div class="dataTables_length" id="example-4_length">
+                                    <label><font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit;">编号 </font>
+                                </font>
+                                <select name="no" aria-controls="example-4" class="form-control input-sm">
+                                    {volist name="no" id="n"}
+                                    <option value="{$n}"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$n}</font></font>
+                                    </option>
+                                    {/volist}
+
+                                    </select>
+                                    </label>
+                                </div>
+                            </div>
+                            </div>
+                            {/if}
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" >上限</label>
@@ -100,16 +119,12 @@
                                     <input onkeyup="checkNull(this)" name="upper" type="text" class="form-control"  placeholder="请输入上限参数">
                                 </div>
                             </div>
-                            <div class="form-group-separator"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" >下限</label>
                                 <div class="col-sm-10">
                                     <input onkeyup="checkNull(this)" name="lower" type="text" class="form-control"  placeholder="请输入下限参数" >
                                 </div>
                             </div>
-                            <div class="form-group-separator"></div>
-
-
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2 ">
                                     <input class="btn btn-secondary btn-single" id="sub" value="修改" type="button">

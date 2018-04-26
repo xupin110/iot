@@ -74,6 +74,15 @@ class RequestCate {
 		case '7':
 			$res = $device->deviceSet($data);
 			break;
+        case '8':
+            $res = $device->currentSet($data);
+                break;
+        case '9':
+            $res = $device->voltageSet($data);
+                break;
+        case '10':
+            $res = $device->tempSet($data);
+                break;
 		default:
 			$res = Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
 			break;

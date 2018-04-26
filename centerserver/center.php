@@ -35,6 +35,7 @@ Swoole\Network\Server::start(function ($opt) {
 	\Lib\Tasks::init(); //创建task表
 	\Lib\Monitor::init(); //创建监控状态表
 	\Lib\Robot::init(); //创建任务处理服务表
+    \Table\SafeLimit::init();//创建安全上下限表
 	Swoole::$php->db->close();
 	$host = CENTER_HOST;
 	$port = CENTRE_PORT;
