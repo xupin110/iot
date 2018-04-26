@@ -64,7 +64,7 @@ class Tasks
         if(!$fd){
             return false;
         }
-        $call = Util::msg('9',['DeviceSn' => $devicesn,'WifiCon' => ['Acount' => 'user123','Pass' => 'pass123']]);
+        $call = Util::msg('9',['DeviceSn' => $devicesn,'WifiCon' => ['Acount' => $data['username'],'Pass' => $data['passwd']]]);
         $client = new Client($devicesn);
         $client->control($call);                
         return true;       

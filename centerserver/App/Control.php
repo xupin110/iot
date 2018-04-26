@@ -177,7 +177,34 @@ class Control {
 			return false;
 		}
 		return true;
-	}	
+	}
+
+    /**
+     * 心跳设置
+     * @param $data
+     */
+	public static function heartSet($data){
+        $devicesn = $data['devicesn'];
+        $fd = Robot::$table->get($devicesn);
+        if(!$fd){
+            return false;
+        }
+        $call = Util::msg('4',['DeviceSn' => $devicesn,'Heartbeat' => $data['heart']]);
+        $client = new Client($devicesn);
+        $client->control($call);
+        sleep(3);
+        $heart = \Table\SafeLimit::$table->get($devicesn);
+        $heart = unserialize($heart['safe_limit']);
+        print_r($heart);
+        if($heart){
+            if($heart['RequestControl']== '2'){
+                if($heart['ControlStatus'] == '1'){
+                    return  true;
+                }
+            }
+        }
+       return false;
+    }
 	/**
 	 *del the device
 	 * @param    [type]      $id [deviceid]

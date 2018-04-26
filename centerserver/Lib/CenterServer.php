@@ -118,7 +118,7 @@ class CenterServer extends Swoole\Protocol\SOAServer {
 		print_r($request);
 		// print_r($header);
         if(isset($request['RequestControl'])){
-            if(in_array($request['RequestControl'],['10','11','12'])){
+            if(in_array($request['RequestControl'],['10','11','12','2'])){
                 return Device\RequestCate::distributeRquest($request,$request['RequestControl']);
             }
         }

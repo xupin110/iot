@@ -61,6 +61,7 @@
                                 <th>连接状态</th>
                                 <th style="text-align: center">继电器控制</th>
                                 <th>链接方式</th>
+                                <th>心跳设置</th>
                                 <th>预订单检查</th>
                             </tr>
                             </thead>
@@ -112,13 +113,26 @@
                                     </td>
                                      <td>
                                         {$vo.connecttype}
-                                        <p style="float: right;">
-                                            
-                                            <button id='connecttype' c_sn="{$vo.c_devicesn}" c_value="{if $vo.connecttype == 'GPRS'}WIFI{elseif $vo.connecttype == 'WIFI'}GPS{/if}">{if $vo.connecttype == 'GPS'}改为WIFI连接{elseif $vo.connecttype == 'WIFI'}改为WIFI连接{/if}</button>
-                                            
-                                        </p>
+                                         {if $vo.connecttype == 'GPS'}
+                                         <a href="javascript:;" onclick="o2o_open('更改WIFI链接','{:url('Control/changeConnect',['devicesn' => $vo.c_devicesn])}',700,550);" class="btn btn-turquoise">
+                                             <font style="vertical-align: inherit;">
+                                                 <font style="vertical-align: inherit;">更改链接方式</font>
+                                             </font>
+                                         </a>
+                                         {/if}
+                                        <!--<p style="float: right;">-->
+                                                    <!---->
+                                            <!--<button id='connecttype' c_sn="{$vo.c_devicesn}" c_value="{if $vo.connecttype == 'GPRS'}WIFI{elseif $vo.connecttype == 'WIFI'}GPS{/if}">{if $vo.connecttype == 'GPS'}改为WIFI连接{elseif $vo.connecttype == 'WIFI'}改为WIFI连接{/if}</button>-->
+                                            <!---->
+                                        <!--</p>-->
                                     </td>
-
+                                    <td>
+                                        <a href="javascript:;" onclick="o2o_open('心跳设置','{:url('Control/heartSet',['devicesn' => $vo.c_devicesn])}',700,550);" class="btn btn-turquoise">
+                                            <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">心跳设置</font>
+                                            </font>
+                                        </a>
+                                    </td>
 
                                     <td>
                                         <button id='preOrderCheck' c_sn="{$vo.c_devicesn}" >预订单检查测试</button>

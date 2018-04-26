@@ -189,21 +189,29 @@ class Control extends Base {
 				'status' => 1,
 			]);
 		}
-	}/**
+	}
+    public function changeConnect(){
+	    $devicesn = input('get.devicesn');
+	    $this->assign('devicesn',$devicesn);
+	    return $this->fetch('',[
+	        'title' => '更改wifi链接',
+        ]);
+    }
+	/**
 	 * 添加渲染
 	 */
 	public function contype() {
-		/**
-		 * [
-		 * 		'id' => '11',
-		 * 		'sn' => '127.0.0.1',
-		 * 		'key' => '2',
-		 * 		'value' => '0'
-		 * ]
-		 */
 		if (request()->isPost()) {
-			$data['c_devicesn'] = input('post.sn');
+			$data['c_devicesn'] = input('post.devicesn');
 			$data['c_connect_type'] = input('post.value');
+			if(empty($data['username']) || $data['passwd']){
+                return json([
+                    'msg' => '失败',
+                    'status' => 1,
+                ]);
+            }
+			$data['username'] = input('post.username');
+			$data['passwd'] = input('post.passwd');
 			$res = Service::getInstance()->call("Control::contype", $data)->getResult(2);
 			if ($res) {
 				return json([
@@ -222,6 +230,37 @@ class Control extends Base {
 			]);
 		}
 	}
+	public function heartSet(){
+	    if(request()->isPost()){
+            $devicesn = input('post.devicesn');
+            $heart = input('post.heart');
+            if(empty($heart)){
+                return json([
+                    'msg' => 'error',
+                    'status' =>1,
+                ]);
+            }
+            $data['devicesn'] = $devicesn;
+            $data['heart'] = $heart;
+
+            $res = Service::getInstance()->call("Control::heartSet", $data)->getResult(10);
+            if($res){
+                return json([
+                    'msg' => '心跳设置成功',
+                    'status' => 0
+                ]);
+            }
+            return json([
+                'msg' => '心跳设置失败',
+                'status' => 1
+            ]);
+        }
+        $devicesn = input('get.devicesn');
+	    $this->assign('devicesn',$devicesn);
+	    return $this->fetch('',[
+	        'title' => '心跳设置'
+        ]);
+    }
 	public function add() {
 		if (request()->isPost()) {
 			//接收数据

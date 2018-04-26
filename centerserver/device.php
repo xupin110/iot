@@ -112,7 +112,7 @@ private $data = [
     public function onReceive(\swoole_client $cli, $data)
     {
         $a = substr($data, 16);
-        $b = unserialize($a);
+        $b = json_decode($a);
         print_r($b);
         // if(isset($b['Relay']))
         // {
@@ -134,21 +134,21 @@ private $data = [
         //     }
 
         // }
-          if(isset($b['TempCon']))
-         {
-            $ret = $this->data([
-                        "DeviceSn" => $b['DeviecSn'],
-                        "ServerControl" => "10",
-                        "TempCon" => [ 
-                            "Lower" => "10",
-                            "Upper" => "100"
-                        ],
-                        "ControlStatus" => "1"
-            ]);
-
-                $cli->send($ret); 
-
-         }
+//          if(isset($b['TempCon']))
+//         {
+//            $ret = $this->data([
+//                        "DeviceSn" => $b['DeviecSn'],
+//                        "ServerControl" => "10",
+//                        "TempCon" => [
+//                            "Lower" => "10",
+//                            "Upper" => "100"
+//                        ],
+//                        "ControlStatus" => "1"
+//            ]);
+//
+//                $cli->send($ret);
+//
+//         }
 
         //     print_r($b);
         //     print_r($b['errno']);

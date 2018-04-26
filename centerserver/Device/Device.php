@@ -18,7 +18,10 @@ class Device {
 	}
 	//心跳设置状态
 	public function heartbeatSet($data) {
-			return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0','msg' => 'not allow use the heartbeat set']);
+        if(!SafeLimit::updateSafeLimit($data)){
+            return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
+        }
+        return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '1']);
 	}
 	//预订单状态检查
 	public function preOrderCheck($data) {
