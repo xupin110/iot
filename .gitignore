@@ -5,7 +5,6 @@ public/charge
 swoole_crontab.sql
 vendor
 backup
-public/admin
 public/upload
 centerserver/logs
 centerserver/logs/application.log
