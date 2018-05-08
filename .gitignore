@@ -8,3 +8,4 @@ backup
 public/upload
 centerserver/logs
 centerserver/logs/application.log
+public/admin/qrcode

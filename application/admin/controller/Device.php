@@ -62,7 +62,103 @@ class Device extends Base {
 			'so' => empty($so) ? '' : $so,
 		]);
 	}
+    /**
+     * 初始化设备，设置安全限值
+     */
+    public function init() {
+        $list = model('SafeLimit')->getSafeLimitList();
+         return $this->fetch('', [
+            'title' => '初始化设备',
+            'list' => $list,
+        ]);
+    }
 
+    /**
+     * 初始化设备设置
+     */
+    public function doinit(){
+        if (request()->isPost()) {
+            //接收数据
+            $id = input('post.deviceid');
+            //获取设备的初始化状态
+            $re = db('SafeLimit')->where('c_deviceid',$id)->find();
+            if(empty($re) || $re['c_status'] == 1 || empty($id)){
+                return json([
+                    'msg' => '已初始化过，无需再次进行初始化',
+                    'status' => 1,
+                ]);
+            }
+            $currentUpper1 = input('post.current_upper1');
+            $currentLower1 = input('post.current_lower1');
+            $currentUpper2 = input('post.current_upper2');
+            $currentLower2 = input('post.current_lower2');
+            $currentUpper3 = input('post.current_upper3');
+            $currentLower3 = input('post.current_lower3');
+            $voltageUpper1 = input('post.voltage_upper1');
+            $voltageLower1 = input('post.voltage_lower1');
+            $voltageUpper2 = input('post.voltage_upper2');
+            $voltageLower2 = input('post.voltage_lower2');
+            $tempUpper = input('post.temp_upper');
+            $tempLower = input('post.temp_lower');
+            if(empty($currentLower1) || empty($currentLower2) || empty($currentLower3) ||empty($currentUpper1) ||empty($currentUpper2) || empty($currentUpper3)||empty($voltageLower1) ||empty($voltageLower2) ||empty($voltageUpper1) ||empty($voltageUpper2) ||empty($tempLower) ||empty($tempUpper)){
+                return json([
+                    'msg' => '缺少数据，请核对数据后提交',
+                    'status' => 1,
+                ]);
+            }
+            $data['c_currentcon'] = serialize([
+                [
+                    "No" => "1",
+                    "Upper" => $currentUpper1,
+                    "Lower" => $currentLower1,
+                ],
+                [
+                    "No" => "2",
+                    "Upper" => $currentUpper2,
+                    "Lower" => $currentLower2,
+                ],
+                [
+                    "No" => "3",
+                    "Upper" => $currentUpper3,
+                    "Lower" => $currentLower3
+                ]
+            ]);
+            $data['c_vdccon'] = serialize([
+                [
+                    "No" => "1",
+                    "Upper" => $voltageUpper1,
+                    "Lower" => $voltageLower1,
+                ],
+                [
+                    "No" => "2",
+                    "Upper" => $voltageUpper2,
+                    "Lower" => $voltageLower2
+                ]
+            ]);
+            $data['c_tempcon'] = serialize([
+                "Upper" => $tempUpper,
+                "Lower" => $tempLower,
+            ]);
+            $data['c_status'] = 1;
+            $res = db("SafeLimit")->where('c_deviceid',$id)->update($data);
+            if(!$res){
+                return json([
+                    'msg' => '初始化失败',
+                    'status' => 1,
+                ]);
+            }
+            return json([
+                'msg' => '初始化成功',
+                'status' => 0,
+            ]);
+
+        }
+
+        return $this->fetch('',[
+            'title' => '设备初始化',
+            'deviceid' => input('get.id'),
+        ]);
+    }
 	/**
 	 * 添加渲染
 	 */
@@ -121,6 +217,7 @@ class Device extends Base {
 				]);
 			}
 		}
+
 		return $this->fetch('', [
 			'title' => '添加设备',
 		]);
@@ -202,7 +299,8 @@ class Device extends Base {
 		if (request()->isGet()) {
 			// $data['c_isdel'] = 1;
 			$deviceid = input('get.id');
-			$res = Service::getInstance()->call("Device::delDevice", $deviceid)->getResult(10);
+			$devicesn = input('get.sn');
+			$res = Service::getInstance()->call("Device::delDevice", $deviceid,$devicesn)->getResult(10);
 
 			if ($res) {
 				return json([

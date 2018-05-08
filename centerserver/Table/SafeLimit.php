@@ -10,6 +10,7 @@
 namespace Table;
 use model\Device;
 use model\Monitor as DbMonitor;
+use model\SafeLimit as DbSafeLimit;
 class SafeLimit {
     static public $table;
 
@@ -29,9 +30,10 @@ class SafeLimit {
         self::$table->create();
     }
     public static function updateSafeLimit($data){
-        echo "Lib ------ SafeLimit ----------updateMonitor\n" . PHP_EOL;
+        echo "table ------ SafeLimit ----------updatesafelimit\n" . PHP_EOL;
         $devicesn = $data['DeviceSn'];
         $safe = serialize($data);
+        DbSafeLimit::getInstance()->updateSafeLimit($data);
         if(!self::$table->set($devicesn,['safe_limit' =>$safe])){
             return false;
         }

@@ -30,11 +30,17 @@ return [
 					'href' => url('Device/index'),
 				),
 				[
-					'action' => 'index',
+					'action' => 'add',
 					'name' => '添加设备',
 					'font' => 'clone',
 					'href' => url('Device/add'),
 				],
+                [
+                    'action' => 'init',
+                    'name' => '设备初始化',
+                    'font' => 'clone',
+                    'href' => url('Device/init'),
+                ],
 				array(
 					'action' => 'index',
 					'name' => '展示设备列表',
@@ -42,7 +48,7 @@ return [
 					'href' => url('Deviceshow/index'),
 				),
 				[
-					'action' => 'index',
+					'action' => 'add',
 					'name' => '添加展示设备',
 					'font' => 'clone',
 					'href' => url('Deviceshow/add'),

@@ -73,6 +73,7 @@ class Device {
     }
     //温度设置状态
     public function tempSet($data) {
+        echo "Device ------ Device ----------tempSet\n" . PHP_EOL;
         if(!SafeLimit::updateSafeLimit($data)){
             return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
         }
