@@ -73,11 +73,17 @@ return [
 					'href' => url('Monitor/status'),
 				],
 				[
-					'action' => 'status',
+					'action' => 'datashow',
 					'name' => '数据渲染展示',
 					'font' => 'clone',
 					'href' => url('Monitor/datashow'),
 				],
+                [
+                    'action' => 'warning',
+                    'name' => '数据渲染展示',
+                    'font' => 'clone',
+                    'href' => url('Monitor/warning'),
+                ]
 			),
 		),
 		array(

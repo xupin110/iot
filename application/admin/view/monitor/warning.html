@@ -35,31 +35,20 @@
                         <div class="breadcrumb-env" >
                             <ol class="breadcrumb bc-1">
                                 <li><a href="{:url('Index/index')}"><i class="fa-home"></i> 首页</a></li>
-                                <li class="active"><strong>数据图表</strong></li>
+                                <li class="active"><strong>异常警报</strong></li>
                             </ol>
                         </div>
                     </div>
                     <div class="panel-body">
-                        <div class="row" style="padding: 12px 15px">
-                            <div class="col-sm-12">
-                                <!--<form method="get" class="form-inline" id="search" action="?">-->
 
-                                    <!--关键字：<input type="search" name="so" class="form-control" size="30" placeholder="ID，设备编号，名称" value="$so}">-->
-                                    <!--<button type="submit" class="btn btn-sm btn-primary" > <i class="fa fa-search"></i>查询 </button>-->
-                                    <!--<a href="{:url('index')}" class="btn btn-sm btn-primary"> 清除 </a>-->
-                                <!--</form>-->
-
-                            </div>
-                        </div>
                         <table style="padding: 0" class="table responsive" id="msg">
                             <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>设备编号</th>
-                                <th>设备电流</th>
-                                <th>设备电压</th>
-                                <th>设备温度</th>
-                            </tr>
+                                <th>异常查看</th>
+                                <th>继电器监控</th>
+                             </tr>
                             </thead>
 
                             <tbody>
@@ -74,7 +63,7 @@
                                 <td>{$vo.c_deviceid}</td>
                                 <td>{$vo.c_devicesn}</td>
                                 <td>
-                                <a href="javascript:;" onclick="o2o_open('电流数据','{:url('Monitor/current',['devicesn' => $vo.c_devicesn])}',1000,750);" class="btn btn-turquoise">
+                                <a href="javascript:;" onclick="o2o_open('查看异常数据','{:url('Monitor/current',['devicesn' => $vo.c_devicesn])}',1000,750);" class="btn btn-turquoise">
                                     <font style="vertical-align: inherit;">
                                             <font style="vertical-align: inherit;">电流最新数据</font>
                                     </font>
