@@ -7,9 +7,8 @@
  */
 
 namespace model;
-use \think\Model;
 
-class SafeLimit extends Model
+class SafeLimit
 {
     private static $_instance = null;
 
@@ -25,7 +24,9 @@ class SafeLimit extends Model
         }
         return self::$_instance;
     }
-
+    public function getSafeLimit($sn){
+        return db('SafeLimit')->where('c_devicesn',$sn)->find();
+    }
     /**
      * 将设备传上来的数据更新数据库安全值范围
      * @param $data

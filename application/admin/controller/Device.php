@@ -100,6 +100,12 @@ class Device extends Base {
             $voltageLower2 = input('post.voltage_lower2');
             $tempUpper = input('post.temp_upper');
             $tempLower = input('post.temp_lower');
+            if($currentUpper1<=$currentLower1 ||$currentUpper2<=$currentLower2 ||$currentUpper3<=$currentLower3 ||$voltageUpper1<=$voltageLower2||$voltageUpper2<=$voltageLower2||$tempUpper<=$tempLower){
+                return json([
+                    'msg' => '安全值大小不合理',
+                    'status' => 1,
+                ]);
+            }
             if(empty($currentLower1) || empty($currentLower2) || empty($currentLower3) ||empty($currentUpper1) ||empty($currentUpper2) || empty($currentUpper3)||empty($voltageLower1) ||empty($voltageLower2) ||empty($voltageUpper1) ||empty($voltageUpper2) ||empty($tempLower) ||empty($tempUpper)){
                 return json([
                     'msg' => '缺少数据，请核对数据后提交',

@@ -83,6 +83,12 @@ class RequestCate {
         case '10':
             $res = $device->tempSet($data);
                 break;
+        case '11':
+                $res = $device->getSafeLimit($data);
+                break;
+        case '12':
+                $res = $device->warnSet($data);
+                break;
 		default:
 			$res = Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
 			break;

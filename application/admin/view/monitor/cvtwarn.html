@@ -22,21 +22,17 @@
 </style>
 <body class="page-body">
 <div class="page-container">
-    <div class="sidebar-menu toggle-others fixed">
-        {include file="public/menu"/}
-    </div>
+
     <div class="main-content">
         <!-- User Info, Notifications and Menu Bar -->
-        {include file="public/nav"/}
-
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="breadcrumb-env" >
                             <ol class="breadcrumb bc-1">
-                                <li><a href="{:url('Index/index')}"><i class="fa-home"></i> 首页</a></li>
-                                <li class="active"><strong>设备列表</strong></li>
+
+                                <li class="active"><strong>{$sn}异常情况监控</strong></li>
                             </ol>
                         </div>
                     </div>
@@ -46,54 +42,39 @@
                             <tr>
                                 <th>ID</th>
                                 <th>设备编号</th>
-                                <th>电压</th>
-                                <th>电流</th>
-                                <th>温度</th>
-                                <th>状态</th>
+                                <th>异常类型</th>
+                                <th>数据状态</th>
+                                <th>安全阈值</th>
+                                <th>设备时间</th>
                             </tr>
                             </thead>
+
                             <tbody>
                             {empty name="list"}
                                 <tr>
-                                    <td colspan="12">没有数据。。。</td>
+                                    <td colspan="9">没有数据。。。</td>
                                 </tr>
                             {else /}
                             {volist name="list" id="vo"}
                                 <tr>
-                                    <td>{$vo.c_deviceid}</td>
-                                    <td>{$vo.c_devicesn}</td>
-                                    {if condition="$vo['c_status'] eq 1"}
-                                    <td>{$vo.c_currentcon|unserialize|json_encode}</td>
-                                    <td>{$vo.c_vdccon|unserialize|json_encode}</td>
-                                    <td>{$vo.c_tempcon|unserialize|json_encode}</td>
-                                    {else /}
-                                    <td colspan="3" align="center">
-                                        <font style="color:red">未初始化</font></td>
-                                    {/if}
                                     <td>
-                                        {if condition="$vo['c_status'] eq 1"}
-                                            <span style="color:#0dca0d;font-size:14px;" title="已初始化">
-                                                <i class="fa fa-check"></i>
-                                            </span>
-                                        {else /}
-                                        <a class="btn btn-xs btn-info" href="javascript:;" onclick="o2o_open('设备初始化','{:url('Device/doinit',['id' => $vo.c_deviceid])}',1000,550);" title="初始化">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        {/if}
+                                        {$vo.c_deviceid}
                                     </td>
+                                    <td>{$vo.c_devicesn}</td>
+                                    <td>{$vo.c_type}</td>
+                                    <td>NO.{$vo.c_no}------Value {$vo.c_value}</td>
+                                    <td>{$vo.c_upper}----{$vo.c_lower}</td>
+                                    <td>{$vo.c_time|date="Y-m-d H:i:s"}</td>
                                 </tr>
+
+                   
                             {/volist}
                             {/empty}
                             </tbody>
+
+
+
                         </table>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
-                                    <ul class="pagination">
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -101,18 +82,37 @@
     </div>
 </div>
 
+<div class="modal fade custom-width" id="modal-2" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" style="width: 60%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><font style="vertical-align: inherit;"> <font style="vertical-align: inherit;">&times;</font></font> </button>
+                <h4 class="modal-title"> <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">自定义宽度模式</font></font></h4>
+            </div>
+            <div class="modal-body">
+                <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 任何类型的宽度都可以应用。 </font></font>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">关</font></font></button>
+                <button type="button" class="btn btn-info"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">保存更改</font></font></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="modal fade" id="catorderinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document" style="z-index: 10000">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" > 个人资料 </h4>
+                <h4 class="modal-title"> 个人资料 </h4>
             </div>
             <div class="modal-body">
-
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal" >关闭</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
             </div>
         </div>
     </div>
@@ -129,7 +129,7 @@
             if(confirm('您确定要删除吗？')){
                 //实现删除业务逻辑
                 $.get("{:url('Device/del')}",
-                    {id:$(this).attr("c_id"),sn:$(this).attr("c_devicesn")},
+                    {id:$(this).attr("c_id")},
                     function (data) {
                         if(data.status == 0){
                             layer.msg(data.msg,{icon:1,time: 1000},function () {

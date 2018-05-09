@@ -221,7 +221,60 @@ class Monitor extends Base {
      */
     public function warning()
     {
+        $list = model('Device')->select();
+        foreach ($list as $v){
+           $res = db('Warning')->where('c_devicesn',$v['c_devicesn'])->find();
+           $relay = db('Relay')->where('c_devicesn',$v['c_devicesn'])->find();
+           if(empty($res)){
+                $v['warning'] = 0;
+            }else{
+                $v['warning'] = 1;
+            }
+            if(empty($relay)){
+                $v['relay'] = 0;
+            }else{
+                $v['relay'] = 1;
+            }
+        }
+        return $this->fetch('',[
+            'title' => '异常警报监控',
+            'list' => $list,
+        ]);
+    }
 
+    /**
+     * 电压电流温度监控模块
+     */
+    public function cvtwarn(){
+        $sn = input('get.devicesn');
+        if(empty($sn)){
+            $this->error('缺少设备编号');
+        }
+        $list = db('Warning')->where('c_devicesn',$sn)->paginate();
+       return $this->fetch('',[
+           'title' => '异常数据监控',
+            'list' => $list,
+               'sn' => $sn,
+           ]
+       );
+    }
+
+    /**
+     * 继电器开合统计
+     */
+    public function relaywarn()
+    {
+        $sn = input('get.devicesn');
+        if(empty($sn)){
+            $this->error('缺少设备编号');
+        }
+        $list = db('Relay')->where('c_devicesn',$sn)->paginate();
+        return $this->fetch('',[
+                'title' => '继电器数据监控',
+                'list' => $list,
+                'sn' => $sn,
+            ]
+        );
     }
 
 }

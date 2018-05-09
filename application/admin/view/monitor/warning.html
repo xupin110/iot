@@ -62,28 +62,32 @@
                             <tr>
                                 <td>{$vo.c_deviceid}</td>
                                 <td>{$vo.c_devicesn}</td>
+                                {if $vo.warning == 1}
                                 <td>
-                                <a href="javascript:;" onclick="o2o_open('查看异常数据','{:url('Monitor/current',['devicesn' => $vo.c_devicesn])}',1000,750);" class="btn btn-turquoise">
+                                <a href="javascript:;" onclick="o2o_open('查看异常数据','{:url('Monitor/cvtwarn',['devicesn' => $vo.c_devicesn])}',1000,750);" class="btn btn-turquoise">
                                     <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">电流最新数据</font>
+                                            <font style="vertical-align: inherit;">查看异常数据</font>
                                     </font>
                                 </a>
                                 </td>
-
+                                {else /}
+                                <td style="color:red">
+                                    无异常状态
+                                </td>
+                                {/if}
+                                {if $vo.relay == 1}
                                 <td>
-                                    <a href="javascript:;" onclick="o2o_open('电压数据','{:url('Monitor/voltage',['devicesn'=>$vo.c_devicesn])}',1000,750);" class="btn btn-red">
+                                    <a href="javascript:;" onclick="o2o_open('查看继电器控制情况','{:url('Monitor/relaywarn',['devicesn' => $vo.c_devicesn])}',1000,750);" class="btn btn-warning">
                                         <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">电压最新数据</font>
+                                            <font style="vertical-align: inherit;">查看继电器控制情况</font>
                                         </font>
                                     </a>
                                 </td>
-                                <td>
-                                    <a href="javascript:;" onclick="o2o_open('温度数据','{:url('Monitor/temp',['devicesn' => $vo.c_devicesn])}',1000,750);" class="btn btn-warning">
-                                        <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">温度最新数据</font>
-                                        </font>
-                                    </a>
+                                {else /}
+                                <td style="color:red">
+                                    无操作状态
                                 </td>
+                                {/if}
 
                             </tr>
                            {/volist}

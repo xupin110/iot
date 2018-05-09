@@ -3,7 +3,8 @@ namespace Device;
 use Lib\Robot;
 use Lib\Util;
 use Lib\Monitor;
-use Table\SafeLimit;
+use model\Warning;
+use model\SafeLimit;
 class Device {
 	//初始连接
 	public function initConnect($data) {
@@ -78,5 +79,21 @@ class Device {
             return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
         }
         return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '1']);
+    }
+    //获取设备安全阈值
+    public function getSafeLimit($data){
+	    echo "-----------------anquan ceshio yuzhi ---".PHP_EOL;
+        $res = \model\SafeLimit::getInstance()->getSafeLimit($data['DeviceSn']);
+         $msg = Util::msg('13',['DeviceSn' =>$data['DeviceSn'],'VdcCon' => unserialize($res['c_vdccon']),'TempCon' => unserialize($res['c_tempcon']),'CurrentCon' => unserialize($res['c_currentcon']),'RequestStatus' => '1']);
+         return $msg;
+
+    }
+    //安全警报
+    public function warnSet($data){
+	    $res = Warning::getInstance()->insertWarnData($data);
+	    if($res){
+            return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '1']);
+        }
+        return Util::msg('1',['DeviceSn' => $data['DeviceSn'],'RequestStatus' => '0']);
     }
 }

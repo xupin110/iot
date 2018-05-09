@@ -32,7 +32,7 @@ class Util
     public static function msg($type = '1' ,$msg = [])
     {
         print_r($msg);
-        if(!in_array($type, ['1','2','3','4','5','6','7','8','9'])){
+        if(!in_array($type, ['1','2','3','4','5','6','7','8','9','10','11','12','13'])){
             return ['error' => 9001 ,'msg' => 'server wrong 502'];
         }
         return self::split($type, $msg); 

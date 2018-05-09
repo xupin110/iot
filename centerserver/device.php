@@ -21,7 +21,7 @@ class Device
 //            "ConnectType" => "GPS",
 //        ];
 private $data = [
-                "DeviceSn"=>"127.0.0.1",
+                "DeviceSn"=>"cnki-232423",
                 "RequestControl"=>"1",
                 "Relay"=>[
                 "1"=>"0",
@@ -72,7 +72,7 @@ private $data = [
         //     ];
 
               $ret = $this->data([
-                         "DeviceSn" => '127.0.0.1',
+                         "DeviceSn" => 'cnki-232423',
                          "RequestControl" => "10",
                          "TempCon" => [
                              "Lower" => "10",
@@ -137,17 +137,18 @@ private $data = [
         // }
 //          if(isset($b['TempCon']))
 //         {
-//            $ret = $this->data([
-//                        "DeviceSn" => $b['DeviceSn'],
-//                        "RequestControl" => "10",
-//                        "TempCon" => [
-//                            "Lower" => "10",
-//                            "Upper" => "100"
-//                        ],
-//                        "ControlStatus" => "1"
-//            ]);
+            $ret = $this->data([
+                        "DeviceSn" => $b['DeviceSn'],
+                        "RequestControl" => "12",
+                        "WarnType" => "Current",
+                        "WarnStatus" => [
+                            "No" => "1",
+                            "Value" => "12"
+                        ]
+            ]);
+
 //
-//                $cli->send($ret);
+            $cli->send($ret);
 //
 //         }
 

@@ -29,12 +29,6 @@ return [
 					'font' => 'clone',
 					'href' => url('Device/index'),
 				),
-				[
-					'action' => 'add',
-					'name' => '添加设备',
-					'font' => 'clone',
-					'href' => url('Device/add'),
-				],
                 [
                     'action' => 'init',
                     'name' => '设备初始化',
@@ -80,7 +74,7 @@ return [
 				],
                 [
                     'action' => 'warning',
-                    'name' => '数据渲染展示',
+                    'name' => '异常警报监控',
                     'font' => 'clone',
                     'href' => url('Monitor/warning'),
                 ]
