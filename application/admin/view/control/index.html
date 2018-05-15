@@ -113,7 +113,7 @@
                                     </td>
                                      <td>
                                         {$vo.connecttype}
-                                         {if $vo.connecttype == 'GPS'}
+                                         {if $vo.connecttype == 'gprs'}
                                          <a href="javascript:;" onclick="o2o_open('更改WIFI链接','{:url('Control/changeConnect',['devicesn' => $vo.c_devicesn])}',700,550);" class="btn btn-turquoise">
                                              <font style="vertical-align: inherit;">
                                                  <font style="vertical-align: inherit;">更改链接方式</font>
