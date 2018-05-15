@@ -88,6 +88,7 @@ class Device extends Base {
                     'status' => 1,
                 ]);
             }
+            $heartbeat = input('post.heartbeat');
             $currentUpper1 = input('post.current_upper1');
             $currentLower1 = input('post.current_lower1');
             $currentUpper2 = input('post.current_upper2');
@@ -106,7 +107,7 @@ class Device extends Base {
                     'status' => 1,
                 ]);
             }
-            if(empty($currentLower1) || empty($currentLower2) || empty($currentLower3) ||empty($currentUpper1) ||empty($currentUpper2) || empty($currentUpper3)||empty($voltageLower1) ||empty($voltageLower2) ||empty($voltageUpper1) ||empty($voltageUpper2) ||empty($tempLower) ||empty($tempUpper)){
+            if(empty($currentLower1) || empty($currentLower2) || empty($currentLower3) ||empty($currentUpper1) ||empty($currentUpper2) || empty($currentUpper3)||empty($voltageLower1) ||empty($voltageLower2) ||empty($voltageUpper1) ||empty($voltageUpper2) ||empty($tempLower) ||empty($tempUpper) ||empty($heartbeat)){
                 return json([
                     'msg' => '缺少数据，请核对数据后提交',
                     'status' => 1,
@@ -145,6 +146,7 @@ class Device extends Base {
                 "Upper" => $tempUpper,
                 "Lower" => $tempLower,
             ]);
+            $data['c_heartbeat'] = $heartbeat;
             $data['c_status'] = 1;
             $res = db("SafeLimit")->where('c_deviceid',$id)->update($data);
             if(!$res){

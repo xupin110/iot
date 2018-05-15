@@ -21,7 +21,7 @@ class Device
 //            "ConnectType" => "GPS",
 //        ];
 private $data = [
-                "DeviceSn"=>"cnki-232423",
+                "DeviceSn"=>"127.0.0.1",
                 "RequestControl"=>"1",
                 "Relay"=>[
                 "1"=>"0",
@@ -72,7 +72,7 @@ private $data = [
         //     ];
 
               $ret = $this->data([
-                         "DeviceSn" => 'cnki-232423',
+                         "DeviceSn" => '127.0.0.1',
                          "RequestControl" => "10",
                          "TempCon" => [
                              "Lower" => "10",
@@ -112,7 +112,7 @@ private $data = [
     public function onReceive(\swoole_client $cli, $data)
     {
         $a = substr($data, 16);
-        $b = unserialize($a);
+        $b = json_decode($a);
         print_r($b);
 //        print_r($b);
         // if(isset($b['Relay']))
@@ -137,19 +137,19 @@ private $data = [
         // }
 //          if(isset($b['TempCon']))
 //         {
-            $ret = $this->data([
-                        "DeviceSn" => $b['DeviceSn'],
-                        "RequestControl" => "12",
-                        "WarnType" => "Current",
-                        "WarnStatus" => [
-                            "No" => "1",
-                            "Value" => "12"
-                        ]
-            ]);
-
+//            $ret = $this->data([
+//                        "DeviceSn" => $b['DeviceSn'],
+//                        "RequestControl" => "12",
+//                        "WarnType" => "Current",
+//                        "WarnStatus" => [
+//                            "No" => "1",
+//                            "Value" => "12"
+//                        ]
+//            ]);
 //
-            $cli->send($ret);
-//
+////
+//            $cli->send($ret);
+////
 //         }
 
         //     print_r($b);

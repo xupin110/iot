@@ -248,6 +248,7 @@ class Control extends Base {
 
             $res = Service::getInstance()->call("Control::heartSet", $data)->getResult(10);
             if($res){
+                db('SafeLimit')->where('c_devicesn',$devicesn)->update(['c_heartbeat' => $heart]);
                 return json([
                     'msg' => '心跳设置成功',
                     'status' => 0
@@ -259,6 +260,8 @@ class Control extends Base {
             ]);
         }
         $devicesn = input('get.devicesn');
+	    $res = db('SafeLimit')->where('c_devicesn',$devicesn)->find();
+	    $this->assign('heart',$res['c_heartbeat']);
 	    $this->assign('devicesn',$devicesn);
 	    return $this->fetch('',[
 	        'title' => '心跳设置'

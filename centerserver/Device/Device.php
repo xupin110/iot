@@ -84,7 +84,7 @@ class Device {
     public function getSafeLimit($data){
 	    echo "-----------------anquan ceshio yuzhi ---".PHP_EOL;
         $res = \model\SafeLimit::getInstance()->getSafeLimit($data['DeviceSn']);
-         $msg = Util::msg('13',['DeviceSn' =>$data['DeviceSn'],'VdcCon' => unserialize($res['c_vdccon']),'TempCon' => unserialize($res['c_tempcon']),'CurrentCon' => unserialize($res['c_currentcon']),'RequestStatus' => '1']);
+         $msg = Util::msg('13',['DeviceSn' =>$data['DeviceSn'],'VdcConArray' => unserialize($res['c_vdccon']),'TempConArray' => unserialize($res['c_tempcon']),'CurrentConArray' => unserialize($res['c_currentcon']),'RequestStatus' => '1']);
          return $msg;
 
     }

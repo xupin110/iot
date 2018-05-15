@@ -49,6 +49,7 @@
                                 <th>电压</th>
                                 <th>电流</th>
                                 <th>温度</th>
+                                <th>心跳</th>
                                 <th>状态</th>
                             </tr>
                             </thead>
@@ -66,8 +67,9 @@
                                     <td>{$vo.c_currentcon|unserialize|json_encode}</td>
                                     <td>{$vo.c_vdccon|unserialize|json_encode}</td>
                                     <td>{$vo.c_tempcon|unserialize|json_encode}</td>
+                                    <td>{$vo.c_heartbeat}</td>
                                     {else /}
-                                    <td colspan="3" align="center">
+                                    <td colspan="4" align="center">
                                         <font style="color:red">未初始化</font></td>
                                     {/if}
                                     <td>
